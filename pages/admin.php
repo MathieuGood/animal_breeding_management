@@ -2,7 +2,7 @@
 <?php
 
 // Connexion à la base de données
-$users_db = new Users();
+$users_db = new User();
 
 
 // On vérifie d'abord avef isset() si le formulaire a été envoyé

@@ -1,8 +1,8 @@
 <?php
     session_start();
-    // Imoprt de bdd.class avant users.class car le premier utilise le second
-    require_once('classes/bdd.class.php');
-    require_once('classes/users.class.php');
+    require_once('classes/dbconnect.class.php');
+    require_once('classes/user.class.php');
+    require_once('classes/animal.class.php');
 ?>
 
 <!DOCTYPE HTML>

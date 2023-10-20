@@ -1,6 +1,6 @@
 <?php
 
-class Bdd {
+class dbConnect {
 
     // Paramètres
     private $host;
@@ -16,7 +16,7 @@ class Bdd {
     }
 
     // Execution requête
-    public function execReq($req) {
+    public function sendQuery($req) {
         // Sécurisation de la requête
         // On autorise que les fonctions SQL SELECT, INSERT et UPDATE
         // trim() permet de supprimer tous les espaces perturbateurs notamment au début et à la fin de la chaîne
@@ -42,7 +42,7 @@ class Bdd {
     // Alternative insert function
     public function create($table) {
         $requete = "INSERT INTO `".$table."` (`id_".$table."`) VALUES (NULL)";
-        return $this->execReq($requete);
+        return $this->sendQuery($requete);
     }
 
     // Insert
@@ -74,7 +74,7 @@ class Bdd {
         // echo "<br />INSERT >>>><br />";
         // echo "SQL Query : ".$requete."<br />";
 
-        $resultat = $this->execReq($requete);
+        $resultat = $this->sendQuery($requete);
         return $resultat[0][0];
     }
     
@@ -87,13 +87,13 @@ class Bdd {
         // For debugging
         // echo "<br />UPDATE >>>><br />";
         // echo "SQL Query : ".$requete."<br />";
-        $this->execReq($requete);
+        $this->sendQuery($requete);
     }
 
     // Get
     public function select($table, $id, $col) {
         $requete = "SELECT `".$col."` FROM `".$table."` WHERE `id_".$table."` = ".$id;
-        $result = $this->execReq($requete);
+        $result = $this->sendQuery($requete);
         return stripslashes($result[0][0]);
     }
 }
