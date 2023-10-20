@@ -94,6 +94,20 @@ INSERT INTO animal_specie (id_animal_specie, specie_name, specie_name_plural)
     (2, 'cat', 'cats');
 
 
+-- name_source table : contains a database of names and sex used to create random animals
+
+CREATE TABLE name_source (
+    id_name_source INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name_example VARCHAR(50) DEFAULT NULL,
+    sex_example CHAR(1) DEFAULT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
+INSERT INTO name_source (id_name_source, name_example, sex_example)
+    VALUES
+    (1, 'Mathieu', 'M'),
+    (2, 'Agnès', 'F');
+
+
 -- Set keys
 
 ALTER TABLE animal
