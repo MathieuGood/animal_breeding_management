@@ -10,6 +10,17 @@ CREATE DATABASE breedingManagement
     COLLATE utf8mb4_general_ci;
 USE breedingManagement;
 
+-- user table : login and passwords for users
+
+CREATE TABLE user (
+    user_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_login VARCHAR(50) NOT NULL,
+    user_password VARCHAR(50) NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
+INSERT INTO user (user_id, user_login, user_password)
+    VALUES 
+    (1, 'admin', 'admin');
 
 -- animal table : all the animals that are breeded or have been bred
 
@@ -104,8 +115,8 @@ CREATE TABLE name_source (
 
 INSERT INTO name_source (id_name_source, name_example, sex_example)
     VALUES
-    (1, 'Mathieu', 'M'),
-    (2, 'Agnès', 'F');
+    (1, 'Donald', 'M'),
+    (2, 'Daisy', 'F');
 
 
 -- Set keys
