@@ -1,6 +1,6 @@
 <div id="menu" class="top-menu">
     <div class="menu-icon"><img src="images/snake.svg" alt="Animal Logo"></div>
-    <div class="menu-item"><a href="index.php?page=admin">Login</a></div>
+    <div class="menu-item"><a href="index.php?page=login">Login</a></div>
     <?php
     if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         ?>

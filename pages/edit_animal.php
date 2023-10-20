@@ -6,30 +6,30 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
     $users_db = new Users($id);
     
     if ($id == "new_entry") {
-        $title_display = "Création";
+        $title_display = "Create";
     } else {
-        $title_display = "Modification";
+        $title_display = "Edit";
     }
 
-    if (isset($_POST['validation'])) {
+    if (isset($_POST['form_submit'])) {
 
         if ($users_db->checkIfUsrLoginExists($id, trim($_POST['usr_login'])) == 0) {
 
             foreach ($_POST as $key => $value) {
-                if ($key != 'validation') {
+                if ($key != 'form_submit') {
                     $users_db->set($key, trim($value));
                 }
             }
-            header("Location: index.php?page=liste_users");
+            header("Location: index.php?page=animal_list");
             // Alternative JS pour changer de page
             // echo "<script>window.location='index.php?page=admin'</script>";
 
         } else {
-            echo "Erreur : Le nom d'utilisateur existe déjà.";
+            echo "User name already exists.";
         }    
     }
 } else {
-    header("Location: index.php?page=admin");
+    header("Location: index.php?page=login");
 }
 // Transformer les champs en text_area si besoin d'avoir des caractères spéciaux, surtout des ""
 ?>
@@ -54,6 +54,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
                 <td><input type="text" name="pwd" value="<?php echo $users_db->get('pwd') ?>"></td>
             </tr>
         </table></p>
-            <input class="button redbutton" type="button" onclick="window.location.href='index.php?page=liste_users'" value="Annuler">
-            <input class="button" type="submit" name="validation" value="Confirmer les modifications">
+            <input class="button redbutton" type="button" onclick="window.location.href='index.php?page=animal_list'" value="Cancel">
+            <input class="button" type="submit" name="form_submit" value="Submit">
     </form>

@@ -1,12 +1,12 @@
-<h3>Liste des utilisateurs</h3>
+<h3>List of <?php echo $_POST['animal_specie'] ?></h3>
 
 <?php
 if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     $users_db = new Users();
-    $count_users = $users_db->countUsers();
-    echo "Nombre d'utilisateurs enregistrés : ".$count_users[0][0].'<br><br>';
+    $count_snakes = $users_db->countSnakes();
+    echo "Total number of ".$animal_specie_plural." : ".$count_users[0][0]."<br><br>";
 ?>
-<input class="button" type="button" onclick="window.location.href='index.php?page=edit_user&id=new_entry'" value="Créer un nouvel utilisateur">
+<input class="button" type="button" onclick="window.location.href='index.php?page=edit_animal&id=new_entry'" value="Add new <?php echo $_POST['animal_specie'] ?>">
 <table>
     <tr>
         <th></th>
@@ -21,7 +21,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     $user_list = $users_db->getFullInfo();  
 
     foreach ($user_list as $user) {
-        echo "<td><a href='index.php?page=delete_user&id=".$user['id_users']."'>❌</a> <a href='index.php?page=edit_user&id=".$user['id_users']."'>✏️</a></td>";
+        echo "<td><a href='index.php?page=delete_animal&id=".$user['id_users']."'>❌</a> <a href='index.php?page=edit_animal&id=".$user['id_users']."'>✏️</a></td>";
         echo "<td>".$user['id_users']."</td>";
         echo "<td>".$user['usr_login']."</td>";
         echo "<td>".$user['lastname']."</td>";
