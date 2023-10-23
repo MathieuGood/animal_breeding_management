@@ -119,6 +119,26 @@ INSERT INTO name_source (id_name_source, name_example, sex_example)
     (2, 'Daisy', 'F');
 
 
+-- column_label table : label for each column in the database
+
+CREATE TABLE column_label (
+    column_label_id VARCHAR(50) NOT NULL PRIMARY KEY,
+    label VARCHAR(50) NOT NULL,
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
+INSERT INTO column_label (id_column_label, label)
+    VALUES 
+    ('id_animal', 'ID'),
+    ('id_breed', 'Breed'),
+    ('animal_name', 'Name'),
+    ('animal_sex', 'Sex'),
+    ('animal_weight', 'Weight'),
+    ('animal_lifespan', 'Lifespan'),
+    ('birth_timestamp', 'Birth'),
+    ('death_timestamp', 'Death'),
+    ('id_father', 'Father ID'),
+    ('id_mother', 'Mother ID');
+
 -- Set keys
 
 ALTER TABLE animal
@@ -129,6 +149,12 @@ ALTER TABLE breed
 
 ALTER TABLE animal_specie
     ADD KEY id_animal_specie (id_animal_specie);
+
+ALTER TABLE user
+    ADD KEY id_user (id_user);
+
+ALTER TABLE column_label
+    ADD KEY id_column_label (id_column_label);
 
 
 COMMIT;
