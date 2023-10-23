@@ -1,39 +1,39 @@
 <?php
 
-class dbConnect {
+class dbconnectect {
 
     // Paramètres
     private $host;
     private $dbname;
     private $user;
     private $passw;
-    private $conn;
+    private $connect;
 
     // Constructeur
-    public function __construct($h='localhost', $db='phpoo', $u='mariadb', $pw='mariadb*1') {
-        $this->conn = new PDO("mysql:host=".$h.";dbname=".$db, $u, $pw);
-        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    public function __construct($h='localhost', $db='breedingManagement', $u='mariadb', $pw='mariadb*1') {
+        $this->connect = new PDO("mysql:host=".$h.";dbname=".$db, $u, $pw);
+        $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     // Execution requête
-    public function sendQuery($req) {
+    public function sendQuery($query) {
         // Sécurisation de la requête
         // On autorise que les fonctions SQL SELECT, INSERT et UPDATE
         // trim() permet de supprimer tous les espaces perturbateurs notamment au début et à la fin de la chaîne
-        $startreq = explode(' ', trim($req));
-        if ($startreq[0] == 'SELECT' || $startreq[0] == 'INSERT' || $startreq[0] == 'UPDATE' || $startreq[0] == 'DELETE') {
+        $startquery = explode(' ', trim($query));
+        if ($startquery[0] == 'SELECT' || $startquery[0] == 'INSERT' || $startquery[0] == 'UPDATE' || $startquery[0] == 'DELETE') {
             // Exécution
-            $res = $this->conn->query($req);
+            $result = $this->connect->query($query);
             // Traitement du résultat
-            // Dans le cas d'un SELECT, on convertit le résulat de la requête en tableau PHP
-            if ($startreq[0] == 'SELECT') $res = $res->fetchAll();
+            // Dans le cas d'un SELECT, on convertit le résulat de la queryuête en tableau PHP
+            if ($startquery[0] == 'SELECT') $result = $result->fetchAll();
             // Dans le cas d'un INSERT, on récupère l'id du nouvel élément créé dans la base
-            if ($startreq[0] == 'INSERT') {
-                $res = $this->conn->lastInsertId();
-                echo "lastInsertId is ".$res."<br />";
+            if ($startquery[0] == 'INSERT') {
+                $result = $this->connect->lastInsertId();
+                echo "lastInsertId is ".$result."<br />";
             }
             // Renvoi du résultat
-            return $res;
+            return $result;
         } else {
             return FALSE;
         }
@@ -41,8 +41,8 @@ class dbConnect {
 
     // Alternative insert function
     public function create($table) {
-        $requete = "INSERT INTO `".$table."` (`id_".$table."`) VALUES (NULL)";
-        return $this->sendQuery($requete);
+        $query = "INSERT INTO `".$table."` (`id_".$table."`) VALUES (NULL)";
+        return $this->sendQuery($query);
     }
 
     // Insert
@@ -68,32 +68,32 @@ class dbConnect {
         $values_list = rtrim($values_list, ", ");
         // echo "Values list : ".$values_list."<br />";
 
-        $requete = "INSERT INTO `".$table."` (".$cols_list.") VALUES (".$values_list.")";
+        $query = "INSERT INTO `".$table."` (".$cols_list.") VALUES (".$values_list.")";
 
         // For debugging
         // echo "<br />INSERT >>>><br />";
-        // echo "SQL Query : ".$requete."<br />";
+        // echo "SQL Query : ".$query."<br />";
 
-        $resultat = $this->sendQuery($requete);
-        return $resultat[0][0];
+        $result = $this->sendQuery($query);
+        return $result[0][0];
     }
     
     // Setter pour UPDATE
     public function execUpdate($table, $id, $col, $value) {
         // Previous version
-        // $requete = 'UPDATE `'.$table.'` SET `'.$col.'` = "'.addslashes($value).'" WHERE `id_'.$table.'` = '.$id;
-        $requete = "UPDATE `".$table."` SET `".$col."` = '".addslashes($value)."' WHERE `id_".$table."` = ".$id;
-        echo $requete;
+        // $query = 'UPDATE `'.$table.'` SET `'.$col.'` = "'.addslashes($value).'" WHERE `id_'.$table.'` = '.$id;
+        $query = "UPDATE `".$table."` SET `".$col."` = '".addslashes($value)."' WHERE `id_".$table."` = ".$id;
+        echo $query;
         // For debugging
         // echo "<br />UPDATE >>>><br />";
-        // echo "SQL Query : ".$requete."<br />";
-        $this->sendQuery($requete);
+        // echo "SQL Query : ".$query."<br />";
+        $this->sendQuery($query);
     }
 
     // Get
     public function select($table, $id, $col) {
-        $requete = "SELECT `".$col."` FROM `".$table."` WHERE `id_".$table."` = ".$id;
-        $result = $this->sendQuery($requete);
+        $query = "SELECT `".$col."` FROM `".$table."` WHERE `id_".$table."` = ".$id;
+        $result = $this->sendQuery($query);
         return stripslashes($result[0][0]);
     }
 }
