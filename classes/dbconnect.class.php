@@ -32,7 +32,6 @@ class dbConnect {
                 $result = $this->connect->lastInsertId();
                 echo "lastInsertId is ".$result."<br />";
             }
-            var_dump($result);
             // Renvoi du résultat
             return $result;
         } else {
@@ -96,6 +95,11 @@ class dbConnect {
         $query = "SELECT `".$col."` FROM `".$table."` WHERE `id_".$table."` = ".$id;
         $result = $this->sendQuery($query);
         return stripslashes($result[0][0]);
+    }
+
+    public function getColumnNames($table) {
+        $query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '".$table."'";
+        return $this->sendQuery($query);
     }
 }
 ?>

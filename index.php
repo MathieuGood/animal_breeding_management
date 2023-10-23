@@ -4,8 +4,8 @@
     require_once('classes/user.class.php');
     require_once('classes/animal.class.php');
 
-    $animal_specie = "snake";
-    $animal_specie_plural = "snakes";
+    $_SESSION['animal_specie'] = "snake";
+    $_SESSION['animal_specie_plural'] = "snakes";
 ?>
 
 <!DOCTYPE HTML>
@@ -14,10 +14,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charset="utf-8" />
         <link rel="stylesheet" href="style.css" type="text/css" />
-        <title><?php echo ucfirst($animal_specie) ?> Breeding Management</title>
+        <title><?php echo ucfirst($_SESSION['animal_specie']) ?> Breeding Management</title>
     </head>
     <body>
-        <h1><?php echo ucfirst($animal_specie) ?> Breeding Management</h1>
+        <h1><?php echo ucfirst($_SESSION['animal_specie']) ?> Breeding Management</h1>
         <?php
             include('menu.php');
         ?>

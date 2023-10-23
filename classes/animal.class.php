@@ -62,6 +62,10 @@ class Animal {
         return $db_connect->sendQuery($query)[0][0];
     }
 
+    public function getColumnNames() {
+        $db_connect = new dbConnect();
+        return $db_connect->getColumnNames($this->table);
+    }
 
 }
 

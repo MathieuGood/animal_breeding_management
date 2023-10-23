@@ -50,7 +50,7 @@ if (!isset($_SESSION['open']) || $_SESSION['open'] < 1) {
 <?php 
 } else {
     // echo "<meta http-equiv='refresh' content='0'>";
-    echo "Hello ".$_SESSION["user_name"]." and welcome to your ".$animal_specie." breeding management<br /><br />";
+    echo "Hello ".$_SESSION["user_name"]." and welcome to your ".$_SESSION['animal_specie']." breeding management<br /><br />";
 ?>
 
 <form method="POST" action="">
