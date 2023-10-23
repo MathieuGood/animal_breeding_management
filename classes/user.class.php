@@ -2,7 +2,7 @@
 
 class User {
 
-    private $table = "users";
+    private $table = "user";
     private $id = "";
 
     public function __construct($my_id="nothing") {
@@ -55,7 +55,7 @@ class User {
 
     public function checkIfPwdIsCorrect($usr_name, $pwd) {
         $db_connect = new dbConnect();
-        $result = $db_connect->sendQuery('SELECT `pwd` FROM `'.$this->table.'` WHERE `user_name` = "'.$usr_name.'"');
+        $result = $db_connect->sendQuery('SELECT `user_password` FROM `'.$this->table.'` WHERE `user_login` = "'.$usr_name.'"');
         if ($result != array() && $result[0][0] == $pwd) {
             return TRUE;
         } else {
@@ -65,7 +65,7 @@ class User {
 
     public function getIdFromUserName($usr_name) {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery('SELECT id_table FROM `'.$this->table.'` WHERE user_name = "'.$usr_name.'"');
+        return $db_connect->sendQuery('SELECT id_'.$table.' FROM `'.$this->table.'` WHERE user_name = "'.$usr_name.'"');
     }
 
     // Retourne le nombre de usr_name égalant $usr_name en omettant le usr_name actuel du $id_to_exclude renseigné

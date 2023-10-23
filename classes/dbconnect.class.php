@@ -1,6 +1,6 @@
 <?php
 
-class dbconnectect {
+class dbConnect {
 
     // Paramètres
     private $host;
@@ -32,6 +32,7 @@ class dbconnectect {
                 $result = $this->connect->lastInsertId();
                 echo "lastInsertId is ".$result."<br />";
             }
+            var_dump($result);
             // Renvoi du résultat
             return $result;
         } else {
