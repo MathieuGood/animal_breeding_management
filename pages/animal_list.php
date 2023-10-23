@@ -2,7 +2,7 @@
 
 <?php
 if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
-    $users_db = new Users();
+    $users_db = new Snake();
     $count_snakes = $users_db->countSnakes();
     echo "Total number of ".$animal_specie_plural." : ".$count_users[0][0]."<br><br>";
 ?>
