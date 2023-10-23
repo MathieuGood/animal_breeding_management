@@ -13,15 +13,15 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
         $animal_columns = $animal->getColumnNames();
         var_dump($animal_columns);
+        echo "<br><br><br>";
         foreach ($animal_columns as $column) {
-            echo "<th>".$column['COLUMN_NAME']."</th>";
+            echo "<th>".$column['label']."</th>";
         }
+
         ?>
     </tr>
-    <tr>
     <?php
 
-    
     $animal_list = $animal->getFullInfo();  
 
 

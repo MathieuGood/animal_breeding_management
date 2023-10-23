@@ -98,7 +98,10 @@ class dbConnect {
     }
 
     public function getColumnNames($table) {
-        $query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '".$table."'";
+        $query = "SELECT label
+                    FROM(SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'animal') as ids
+                         INNER JOIN column_label
+                                 ON ids.COLUMN_NAME = column_label.id_column_label;";
         return $this->sendQuery($query);
     }
 }
