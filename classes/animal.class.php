@@ -18,6 +18,11 @@ class Animal {
         return $db_connect->select($this->table, $this->id, $col);
     }
 
+    public function getEverything() {
+        $db_connect = new dbConnect();
+        return $db_connect->sendQuery("SELECT * FROM `".$this->table."`");
+    }
+
     public function set($col, $value) {
         $db_connect = new dbConnect();
         return $db_connect->execUpdate($this->table, $this->id, $col, $value);

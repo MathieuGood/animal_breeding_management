@@ -21,7 +21,7 @@
         <?php
             include('menu.php');
         ?>
-        <div id="content">
+        <div id="container">
         <?php
 
         // La chaîne de caractères $_GET['page'] doit correspondre exactement au nom du fichier
@@ -31,7 +31,7 @@
             if (file_exists($file_import)) {
                 include($file_import);
             } else {
-                echo "Page ".$file_import." is note available";
+                echo "Page ".$file_import." is not available";
             }
         ?>
         </div>

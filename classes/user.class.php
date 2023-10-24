@@ -56,7 +56,7 @@ class User {
     public function checkIfPwdIsCorrect($usr_name, $pwd) {
         $db_connect = new dbConnect();
         $result = $db_connect->sendQuery('SELECT `user_password` FROM `'.$this->table.'` WHERE `user_login` = "'.$usr_name.'"');
-        if ($result != array() && $result[0][0] == $pwd) {
+        if ($result != array() && $result[0]['user_password'] == $pwd) {
             return TRUE;
         } else {
             return FALSE;

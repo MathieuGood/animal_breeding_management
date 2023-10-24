@@ -26,7 +26,7 @@ class dbConnect {
             $result = $this->connect->query($query);
             // Traitement du résultat
             // Dans le cas d'un SELECT, on convertit le résulat de la queryuête en tableau PHP
-            if ($startquery[0] == 'SELECT') $result = $result->fetchAll();
+            if ($startquery[0] == 'SELECT') $result = $result->fetchAll(PDO::FETCH_ASSOC);
             // Dans le cas d'un INSERT, on récupère l'id du nouvel élément créé dans la base
             if ($startquery[0] == 'INSERT') {
                 $result = $this->connect->lastInsertId();
