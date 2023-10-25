@@ -47,24 +47,9 @@ class Animal {
         return $result[0][0]." ".$result[0][1];
     }
 
-    public function getFullInfo() {
-        $db_connect = new dbConnect();
-        $query = "SELECT * FROM `".$this->table."`";
-        return $db_connect->sendQuery($query);
-    }
-
     public function selectAll() {
         $db_connect = new dbConnect();
         return $db_connect->sendQuery("SELECT * FROM `".$this->table."`");
-    }
-
-    // Retourne le nombre de usr_login égalant $usr_login en omettant le usr_login actuel du $id_to_exclude renseigné
-    public function checkIfUsrLoginExists($id_to_exclude, $usr_login=-1) {
-        $db_connect = new dbConnect();
-        $query_select = 'SELECT COUNT(*) FROM `'.$this->table.'` WHERE usr_login = "'.$usr_login.'"';
-        $query_and = ' AND id_'.$this->table.' != "'.$id_to_exclude.'"';
-        $query = $query_select.$query_and;
-        return $db_connect->sendQuery($query)[0][0];
     }
 
     public function getColumnNames() {

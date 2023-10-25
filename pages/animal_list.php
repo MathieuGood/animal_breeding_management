@@ -11,7 +11,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     <tr>
         <th></th>
         <?php
-        $animal_columns = $animal->getColumnNames();
+        $animal_columns = $animal->getColumnNames('animal');
         foreach ($animal_columns as $column) {
             echo "<th>".$column['label']."</th>";
         }
@@ -21,7 +21,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
     $animal_list = $animal->getEverything();  
     foreach ($animal_list as $animal) {
-        echo "<td><a href='index.php?page=delete_animal&id=".$animal['id_animal']."'>❌</a> <a href='index.php?page=edit_animal&id=".$animal['id_animal']."'>✏️</a></td>";
+        echo "<td><a href='index.php?page=declare_deathd&id=".$animal['id_animal']."'>💀</a> <a href='index.php?page=edit_animal&id=".$animal['id_animal']."'>✏️</a></td>";
         foreach ($animal as $value) {
             echo "<td>".$value."</td>";
         }
