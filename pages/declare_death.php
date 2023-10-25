@@ -1,4 +1,4 @@
-<h3>Declare <?php echo $_POST['animal_specie'] ?> as deceased</h3>
+<h3>Declare <?php echo $_SESSION['animal_specie'] ?> as death ?</h3>
 <p>
     Would you like to declare deceased the following <?php echo $_POST['animal_specie'] ?> ?
 </p>
