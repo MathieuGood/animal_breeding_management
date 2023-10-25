@@ -2,7 +2,7 @@
 <?php
 
 // Connexion à la base de données
-$users_db = new User();
+$user_db = new User();
 
 
 // On vérifie d'abord avef isset() si le formulaire a été envoyé
@@ -10,7 +10,7 @@ if (isset($_POST["form_submit"])) {
     $id = $_POST["user_name"];
     $pwd = $_POST["password"];
     // Si l'identifiant et le mot de passe correspondent, renseigner la variable SESSION
-    if ($users_db->checkIfPwdIsCorrect($id, $pwd)) {
+    if ($user_db->checkIfPwdIsCorrect($id, $pwd)) {
         $_SESSION['open'] = 1;
         $_SESSION['user_name'] = $_POST["user_name"];
         // Rafraîchir la page pour recharger le menu avec les nouvelles entrées pour admin

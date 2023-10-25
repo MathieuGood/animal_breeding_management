@@ -17,9 +17,6 @@ class dbConnect {
 
     // Execution requête
     public function sendQuery($query) {
-        // Sécurisation de la requête
-        // On autorise que les fonctions SQL SELECT, INSERT et UPDATE
-        // trim() permet de supprimer tous les espaces perturbateurs notamment au début et à la fin de la chaîne
         $startquery = explode(' ', trim($query));
         if ($startquery[0] == 'SELECT' || $startquery[0] == 'INSERT' || $startquery[0] == 'UPDATE' || $startquery[0] == 'DELETE') {
             // Exécution
@@ -29,7 +26,7 @@ class dbConnect {
             if ($startquery[0] == 'SELECT') $result = $result->fetchAll(PDO::FETCH_ASSOC);
             // Dans le cas d'un INSERT, on récupère l'id du nouvel élément créé dans la base
             if ($startquery[0] == 'INSERT') {
-                $result = $this->connect->lastInsertId();
+                $result = $this->connect->lastInsertId(); 
                 echo "lastInsertId is ".$result."<br />";
             }
             // Renvoi du résultat
@@ -79,7 +76,7 @@ class dbConnect {
     }
     
     // Setter pour UPDATE
-    public function execUpdate($table, $id, $col, $value) {
+    public function update($table, $id, $col, $value) {
         // Previous version
         // $query = 'UPDATE `'.$table.'` SET `'.$col.'` = "'.addslashes($value).'" WHERE `id_'.$table.'` = '.$id;
         $query = "UPDATE `".$table."` SET `".$col."` = '".addslashes($value)."' WHERE `id_".$table."` = ".$id;
