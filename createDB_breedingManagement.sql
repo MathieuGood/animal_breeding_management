@@ -13,14 +13,15 @@ USE breedingManagement;
 -- user table : login and passwords for users
 
 CREATE TABLE user (
-    user_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_user INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_login VARCHAR(50) NOT NULL,
     user_password VARCHAR(50) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
-INSERT INTO user (user_id, user_login, user_password)
+INSERT INTO user (id_user, user_login, user_password)
     VALUES 
-    (1, 'admin', 'admin');
+    (1, 'admin', 'admin'),
+    (2, 'mbon', 'mb');
 
 -- animal table : all the animals that are breeded or have been bred
 
@@ -29,6 +30,7 @@ CREATE TABLE animal (
     id_breed INT DEFAULT NULL,
     animal_name VARCHAR(30) DEFAULT NULL,
     animal_sex CHAR(1) DEFAULT NULL,
+    animal_heigth DECIMAL DEFAULT NULL,
     animal_weight DECIMAL DEFAULT NULL,
     animal_lifespan DECIMAL DEFAULT NULL,
     birth_timestamp TIMESTAMP DEFAULT NULL,
@@ -41,7 +43,8 @@ INSERT INTO animal (
     id_animal,
     id_breed, 
     animal_name, 
-    animal_sex, 
+    animal_sex,
+    animal_heigth,
     animal_weight, 
     animal_lifespan, 
     birth_timestamp, 
@@ -49,11 +52,11 @@ INSERT INTO animal (
     id_father,
     id_mother
     ) VALUES 
-    (1, 1, 'Desmond', 'M', 3.2, 10.5, '2023-10-21 19:30:20', NULL, 3, 2),
-    (2, 2, 'Mary', 'F', 2.1, 9.1, '2023-10-03 19:00:00', NULL, NULL, NULL),
-    (3, 2, 'Jasper', 'M', 1.9, 8.5, '2023-10-01 22:11:40', NULL, NULL, NULL),
-    (4, 2, 'Katy', 'F', 2.0, 8.7, '2023-10-30 05:20:20', NULL, 1, 5),
-    (5, 1, 'Cindarella', 'F', 3.5, 10.1, '2023-10-19 14:53:00', NULL, NULL, NULL);
+    (1, 1, 'Desmond', 'M', 150, 3.2, 10.5, '2023-10-21 19:30:20', NULL, 3, 2),
+    (2, 2, 'Mary', 'F', 162, 2.1, 9.1, '2023-10-03 19:00:00', NULL, NULL, NULL),
+    (3, 2, 'Jasper', 'M', 107, 1.9, 8.5, '2023-10-01 22:11:40', NULL, NULL, NULL),
+    (4, 2, 'Katy', 'F', 181, 2.0, 8.7, '2023-10-30 05:20:20', NULL, 1, 5),
+    (5, 1, 'Cindarella', 'F', 165, 3.5, 10.1, '2023-10-19 14:53:00', NULL, NULL, NULL);
 
 
 -- breed table : different breeds of animals
@@ -122,8 +125,8 @@ INSERT INTO name_source (id_name_source, name_example, sex_example)
 -- column_label table : label for each column in the database
 
 CREATE TABLE column_label (
-    column_label_id VARCHAR(50) NOT NULL PRIMARY KEY,
-    label VARCHAR(50) NOT NULL,
+    id_column_label VARCHAR(50) NOT NULL PRIMARY KEY,
+    label VARCHAR(50) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
 INSERT INTO column_label (id_column_label, label)
@@ -132,6 +135,7 @@ INSERT INTO column_label (id_column_label, label)
     ('id_breed', 'Breed'),
     ('animal_name', 'Name'),
     ('animal_sex', 'Sex'),
+    ('animal_heigth', 'Height'),
     ('animal_weight', 'Weight'),
     ('animal_lifespan', 'Lifespan'),
     ('birth_timestamp', 'Birth'),
