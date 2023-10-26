@@ -45,11 +45,10 @@ class Animal {
     }
 
     // Récupère prénom + nom à partir du usr_login
-    public function getFullName($usr_login) {
+    public function getName() {
         $db_connect = new dbConnect();
-        $query = "SELECT `firstname`, `lastname` FROM `".$this->table."` WHERE usr_login = '".$usr_login."'";
-        $result = $db_connect->sendQuery($query);
-        return $result[0][0]." ".$result[0][1];
+        $result = $db_connect->sendQuery("SELECT `animal_name` FROM `".$this->table."` WHERE id_".$this->table." = '".$this->id."'");
+        return $result[0]['animal_name'];
     }
 
     public function selectAll() {
