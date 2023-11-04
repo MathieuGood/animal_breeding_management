@@ -2,7 +2,6 @@
 
 class dbConnect {
 
-    // Paramètres
     private $host;
     private $dbname;
     private $user;
