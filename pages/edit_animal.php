@@ -37,21 +37,20 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
 } else {
     header("Location: index.php?page=login");
 }
-// Transformer les champs en text_area si besoin d'avoir des caractères spéciaux, surtout des ""
+
 ?>
 <h3><?php echo $title_display." ".$_SESSION['animal_specie'] ?></h3>
 
     <form class="userform" method="POST" action="">
         <table class="formtable"><p>
             <?php
-            $animal_columns = $animal->getColumnNamesAndInputType();
-
             $animal_values = $animal->getAnimalData();
-            echo $animal_values['animal_name'];
-
 
             $breeds = $animal->getAnimalBreeds();
-            echo '<pre>'; var_dump($animal_values); echo '</pre>';
+
+            // For debugging
+            // echo '<pre>'; var_dump($animal_values); echo '</pre>';
+            // echo '<pre>'; var_dump($breeds); echo '</pre>';
             ?>
 
             <tr>
@@ -59,9 +58,12 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                 <td>
                     <select name="breed">
                     <?php
-                    $breeds = $animal->getAnimalBreeds();
                     foreach ($breeds as $breed) {
-                        echo '<option value="'.$breed['id_breed'].'">'.$breed['breed_name'].'</option>';
+                        echo '<option ';
+                        if ($breed['id_breed'] == $animal_values['id_breed']) {
+                            echo ' selected="selected" ';
+                        }
+                        echo 'value="'.$breed['id_breed'].'">'.$breed['breed_name'].'</option>';
                     }
                     ?>
                     </select>
@@ -79,8 +81,15 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                 <td>Sex</td>
                 <td>
                     <select name="sex">
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
+                        <?php
+                        foreach (['M', 'F'] as $sex) {
+                            echo '<option ';
+                            if ($sex == $animal_values['animal_sex']) {
+                                echo ' selected="selected" ';
+                            }
+                            echo 'value="'.$sex.'">'.$sex.'</option>';
+                        }
+                        ?>
                     </select>
                 </td>
             </tr>

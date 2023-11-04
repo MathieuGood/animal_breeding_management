@@ -36,6 +36,12 @@ class Animal {
         return $result[0]['animal_name'];
     }
 
+    public function getBreedName($id_breed) {
+        $db_connect = new dbConnect();
+        $result = $db_connect->sendQuery("SELECT `breed_name` FROM `breed` WHERE id_breed = '".$id_breed."'");
+        return $result[0]['breed_name'];
+    }
+
     public function update($col, $value) {
         $db_connect = new dbConnect();
         return $db_connect->update($this->table, $this->id, $col, $value);
