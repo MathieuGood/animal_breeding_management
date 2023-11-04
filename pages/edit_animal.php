@@ -54,6 +54,11 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
         //         $users_db->set($key, trim($value));
         //     }
         // }
+        if ($choice == 'new') {
+
+        } else {
+
+        }
 
     }
 } else {
@@ -112,7 +117,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             <tr>
                 <td>Heigth</td>
                 <td>
-                    <input type=text name="animal_heigth" value="<?php echo $animal_values['animal_heigth'] ?>">
+                    <input type=number step=".1" min="1" max="1400" name="animal_heigth" value="<?php echo $animal_values['animal_heigth'] ?>">
                 </td>
             </tr>
 
