@@ -133,22 +133,24 @@ INSERT INTO name_source (id_name_source, name_example, sex_example)
 
 CREATE TABLE column_label (
     id_column_label VARCHAR(50) NOT NULL PRIMARY KEY,
-    label VARCHAR(50) NOT NULL
+    label VARCHAR(50) DEFAULT NULL,
+    html_input_type VARCHAR(50) DEFAULT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
-INSERT INTO column_label (id_column_label, label)
+INSERT INTO column_label (id_column_label, label, html_input_type)
     VALUES 
-    ('id_animal', 'ID'),
-    ('id_breed', 'Breed'),
-    ('animal_name', 'Name'),
-    ('animal_sex', 'Sex'),
-    ('animal_heigth', 'Height'),
-    ('animal_weight', 'Weight'),
-    ('animal_lifespan', 'Lifespan'),
-    ('birth_timestamp', 'Birth'),
-    ('death_timestamp', 'Death'),
-    ('id_father', 'Father ID'),
-    ('id_mother', 'Mother ID');
+    ('id_animal', 'ID', 'text'),
+    ('id_breed', 'Breed ID', 'text'),
+    ('animal_name', 'Name', 'text'),
+    ('animal_sex', 'Sex', 'text'),
+    ('animal_heigth', 'Height', 'text'),
+    ('animal_weight', 'Weight', 'text'),
+    ('animal_lifespan', 'Lifespan', 'text'),
+    ('birth_timestamp', 'Birth', 'datetime-local'),
+    ('death_timestamp', 'Death', 'datetime-local'),
+    ('id_father', 'Father ID', 'text'),
+    ('id_mother', 'Mother ID', 'text'),
+    ('breed_name', 'Breed', 'text');
 
 -- Set keys
 
@@ -156,7 +158,7 @@ ALTER TABLE animal
     ADD KEY id_animal (id_animal);
 
 ALTER TABLE breed
-    ADD KEY id_bredd (id_breed);
+    ADD KEY id_breed (id_breed);
 
 ALTER TABLE animal_specie
     ADD KEY id_animal_specie (id_animal_specie);
