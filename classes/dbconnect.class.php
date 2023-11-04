@@ -50,7 +50,7 @@ class dbConnect {
 
     // Insert
     // execInsert($table, ['col1', 'col2', 'col3,], ['value1', value2', 'value3'])
-    public function execInsert($table, $cols, $values) {
+    public function insert($table, $cols, $values) {
         // Boucle sur l'array $cols qui contient toutes les colonnes à traiter
         // On transforme l'array en une string au bon format pour la requête SQL
         // Format de sortie : `col1`, `col2`, `col3`
@@ -109,13 +109,6 @@ class dbConnect {
                             as ids
                          INNER JOIN column_label
                                  ON ids.COLUMN_NAME = column_label.id_column_label;";
-        return $this->sendQuery($query);
-    }
-
-    public function getInputType($table, $column_name) {
-        $query = "SELECT html_input_type
-                    FROM column_label
-                    WHERE id_column_label = '".$column_name."'";
         return $this->sendQuery($query);
     }
 
