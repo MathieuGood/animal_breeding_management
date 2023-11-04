@@ -7,8 +7,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     echo "Total number of ".$_SESSION['animal_specie_plural']." : ".$count_animals[0]['count_table']."<br><br>";
     echo time()."<br>";
 ?>
-<input class="button" type="button" onclick="window.location.href='index.php?page=edit_animal&id=new_entry'" value="Add new <?php echo $_SESSION['animal_specie'] ?>">
-
+<input class="button" type="button" onclick="window.location.href='index.php?page=edit_animal&choice=new'" value="Add new <?php echo $_SESSION['animal_specie'] ?>">
 <table>
     <tr>
         <th></th>
@@ -23,7 +22,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
     $animal_list = $animal->getEverything();  
     foreach ($animal_list as $animal) {
-        echo "<td><a href='index.php?page=declare_death&id=".$animal['id_animal']."'>💀</a> <a href='index.php?page=edit_animal&id=".$animal['id_animal']."'>✏️</a></td>";
+        echo "<td><a href='index.php?page=declare_death&id=".$animal['id_animal']."'>💀</a> <a href='index.php?page=edit_animal&choice=edit&id=".$animal['id_animal']."'>✏️</a></td>";
         foreach ($animal as $value) {
             echo "<td>".$value."</td>";
         }

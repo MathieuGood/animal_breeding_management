@@ -3,14 +3,10 @@
 class Animal {
 
     private $table = "animal";
-    private $id = "";
+    private $id;
 
-    public function __construct($my_id="nothing") {
-        if ($my_id != "nothing" and $my_id != "new_entry") $this->id = $my_id;
-        if ($my_id == "new_entry") {
-            $db_connect = new dbConnect();
-            $this->id = $db_connect->create($this->table);
-        }
+    public function __construct($id='') {
+        $this->id = $id;
     }
     
     public function get($col) {
@@ -21,6 +17,11 @@ class Animal {
     public function getEverything() {
         $db_connect = new dbConnect();
         return $db_connect->sendQuery("SELECT * FROM `".$this->table."`");
+    }
+
+    public function getAnimalData() {
+        $db_connect = new dbConnect();
+        return $db_connect->sendQuery("SELECT * FROM `".$this->table."` WHERE `id_".$this->table."` = ".$this->id)[0];
     }
 
     public function update($col, $value) {
@@ -61,6 +62,10 @@ class Animal {
         return $db_connect->getColumnNames($this->table);
     }
 
+    public function getColumnNamesAndInputType() {
+        $db_connect = new dbConnect();
+        return $db_connect->getColumnNamesAndInputType($this->table);
+    }
 }
 
 

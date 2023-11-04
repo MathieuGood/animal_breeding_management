@@ -105,5 +105,24 @@ class dbConnect {
                                  ON ids.COLUMN_NAME = column_label.id_column_label;";
         return $this->sendQuery($query);
     }
+
+    public function getInputType($table, $column_name) {
+        $query = "SELECT html_input_type
+                    FROM column_label
+                    WHERE id_column_label = '".$column_name."'";
+        return $this->sendQuery($query);
+    }
+
+    public function getColumnNamesAndInputType($table) {
+        $query = "SELECT label, html_input_type
+                    FROM (SELECT DISTINCT COLUMN_NAME 
+                            FROM INFORMATION_SCHEMA.COLUMNS 
+                            WHERE TABLE_NAME = '".$table."')
+                            as ids
+                         INNER JOIN column_label
+                                 ON ids.COLUMN_NAME = column_label.id_column_label;";
+        return $this->sendQuery($query);
+    }
+
 }
 ?>
