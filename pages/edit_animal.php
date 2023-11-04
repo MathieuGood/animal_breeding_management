@@ -10,16 +10,12 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
 
     if ($choice == 'new') {
         $animal = new Animal();
-    } else {
-        $animal = new Animal($id);
-    }
-        
-    
-    if ($choice == "new") {
         $title_display = "Create";
     } else {
+        $animal = new Animal($id);
         $title_display = "Edit";
     }
+        
 
     if (isset($_POST['form_submit'])) {
 

@@ -19,9 +19,21 @@ class Animal {
         return $db_connect->sendQuery("SELECT * FROM `".$this->table."`");
     }
 
+    public function getAllAnimals() {
+        $db_connect = new dbConnect();
+        return $db_connect->sendQuery("SELECT * FROM `".$this->table."`");
+    }
+
     public function getAnimalData() {
         $db_connect = new dbConnect();
         return $db_connect->sendQuery("SELECT * FROM `".$this->table."` WHERE `id_".$this->table."` = ".$this->id)[0];
+    }
+
+    // Get animal_name from id
+    public function getAnimalName() {
+        $db_connect = new dbConnect();
+        $result = $db_connect->sendQuery("SELECT `animal_name` FROM `".$this->table."` WHERE id_".$this->table." = '".$this->id."'");
+        return $result[0]['animal_name'];
     }
 
     public function update($col, $value) {
@@ -45,12 +57,7 @@ class Animal {
         return $db_connect->sendQuery("SELECT COUNT(*) as count_table FROM `".$this->table."`");
     }
 
-    // Récupère prénom + nom à partir du usr_login
-    public function getName() {
-        $db_connect = new dbConnect();
-        $result = $db_connect->sendQuery("SELECT `animal_name` FROM `".$this->table."` WHERE id_".$this->table." = '".$this->id."'");
-        return $result[0]['animal_name'];
-    }
+
 
     public function selectAll() {
         $db_connect = new dbConnect();

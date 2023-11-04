@@ -4,7 +4,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
     $animal = new Animal($id);
     ?>
     <p>
-    Would you like to declare the death of <?php echo $_SESSION['animal_specie']." ".$animal->getName() ?> ?
+    Would you like to declare the death of <?php echo $_SESSION['animal_specie']." ".$animal->getAnimalName() ?> ?
     </p>
     <form method="POST" action="">
         <p>
