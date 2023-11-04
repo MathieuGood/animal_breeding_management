@@ -14,14 +14,14 @@ class Animal {
         return $db_connect->select($this->table, $this->id, $col);
     }
 
-    public function getEverything() {
-        $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT * FROM `".$this->table."`");
-    }
-
     public function getAllAnimals() {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT * FROM `".$this->table."`");
+        return $db_connect->sendQuery("SELECT * FROM `".$this->table."`", "num");
+    }
+
+    public function getAnimalBreeds() {
+        $db_connect = new dbConnect();
+        return $db_connect->sendQuery("SELECT id_breed, breed_name FROM `breed`");
     }
 
     public function getAnimalData() {
