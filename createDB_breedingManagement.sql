@@ -143,7 +143,7 @@ INSERT INTO column_label (id_column_label, label, html_input_type)
     ('id_breed', 'Breed ID', 'text'),
     ('animal_name', 'Name', 'text'),
     ('animal_sex', 'Sex', 'text'),
-    ('animal_heigth', 'Height', 'text'),
+    ('animal_heigth', 'Heigth', 'text'),
     ('animal_weight', 'Weight', 'text'),
     ('animal_lifespan', 'Lifespan', 'text'),
     ('birth_timestamp', 'Birth', 'datetime-local'),
