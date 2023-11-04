@@ -16,14 +16,21 @@ class dbConnect {
     }
 
     // Execution requête
-    public function sendQuery($query) {
+    public function sendQuery($query, $fetch_type="both") {
         $startquery = explode(' ', trim($query));
         if ($startquery[0] == 'SELECT' || $startquery[0] == 'INSERT' || $startquery[0] == 'UPDATE' || $startquery[0] == 'DELETE') {
             // Exécution
             $result = $this->connect->query($query);
             // Traitement du résultat
             // Dans le cas d'un SELECT, on convertit le résulat de la queryuête en tableau PHP
-            if ($startquery[0] == 'SELECT') $result = $result->fetchAll(PDO::FETCH_ASSOC);
+            if ($startquery[0] == 'SELECT') {
+                if ($fetch_type == "num") {
+                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                } else {
+                    $result = $result->fetchAll();
+                }
+                
+            }
             // Dans le cas d'un INSERT, on récupère l'id du nouvel élément créé dans la base
             if ($startquery[0] == 'INSERT') {
                 $result = $this->connect->lastInsertId(); 
