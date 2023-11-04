@@ -46,20 +46,47 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
         
     // When form is submitted
     if (isset($_POST['form_submit'])) {
+
         echo '<pre>'; var_dump($_POST); echo '</pre>';
         
-        // Old code for inspiration
-        // foreach ($_POST as $key => $value) {
-        //     if ($key != 'form_submit') {
-        //         $users_db->set($key, trim($value));
-        //     }
-        // }
-        if ($choice == 'new') {
+        // Creating two arrays to contatins column names and values for SQL insert query
+        $columns = array();
+        $values = array();
+        
+        // Iterating over $_POST form values with keys as input field names
+        foreach ($_POST as $key => $value) {
+            if ($key != 'form_submit') {
+                // If the the field in the array has datetime-local value
+                if (in_array($key, ['birth_timestamp', 'death_timestamp'])) {
+                    // If it is empty, update value to datetime compatible output
+                    if ($value == "") {
+                        $value = "0000-00-00 00:00:00";
+                    } else {
+                    // Trim the "T" from the datetime-local input value
+                        $value = str_replace('T', " ", $value);
+                    }
+                }
 
-        } else {
+                // Trim value from spaces
+                $value = trim($value);
+                
+                // Add column names and values $columns and $values for createAnimal()
+                array_push($columns, $key);
+                array_push($values, $value);
 
+                // Editing existing animal
+                if ($choice == 'edit') {
+                    $animal->update($key, $value);
+                }
+            }
         }
 
+        // Creating new animal
+        if ($choice == 'new') {
+            $animal->createAnimal($columns, $values);
+        }
+    // Retrieve the update values of the edited/created animal
+    $animal_values = $animal->getAnimalData();
     }
 } else {
     header("Location: index.php?page=login");
@@ -74,7 +101,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             <tr>
                 <td>Breed</td>
                 <td>
-                    <select name="breed">
+                    <select name="id_breed">
                     <?php
                     // Get the list of all breeds for the select options input
                     $breeds = $animal->getAnimalBreeds();
@@ -100,7 +127,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             <tr>
                 <td>Sex</td>
                 <td>
-                    <select name="sex">
+                    <select name="animal_sex">
                         <?php
                         foreach (['M', 'F'] as $sex) {
                             echo '<option ';
@@ -117,21 +144,21 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             <tr>
                 <td>Heigth</td>
                 <td>
-                    <input type=number step=".1" min="1" max="1400" name="animal_heigth" value="<?php echo $animal_values['animal_heigth'] ?>">
+                    <input type=number step="1" min="1" max="1400" name="animal_heigth" value="<?php echo $animal_values['animal_heigth'] ?>">
                 </td>
             </tr>
 
             <tr>
                 <td>Weigth</td>
                 <td>
-                    <input type=text name="animal_weight" value="<?php echo $animal_values['animal_weight'] ?>">
+                    <input type=number step="1" min="1" max="200000" name="animal_weight" value="<?php echo $animal_values['animal_weight'] ?>">
                 </td>
             </tr>
 
             <tr>
                 <td>Lifespan</td>
                 <td>
-                    <input type=text name="animal_lifespan" value="<?php echo $animal_values['animal_lifespan'] ?>">
+                    <input type=number step="1" min="1" max="300" name="animal_lifespan" value="<?php echo $animal_values['animal_lifespan'] ?>">
                 </td>
             </tr>
 

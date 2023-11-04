@@ -43,14 +43,14 @@ class dbConnect {
     }
 
     // Alternative insert function
-    public function create($table) {
-        $query = "INSERT INTO `".$table."` (`id_".$table."`) VALUES (NULL)";
+    public function insert($table, $col, $value) {
+        $query = "INSERT INTO `".$table."` (`".$col."`) VALUES ('".$value."')";
         return $this->sendQuery($query);
     }
 
     // Insert
     // execInsert($table, ['col1', 'col2', 'col3,], ['value1', value2', 'value3'])
-    public function insert($table, $cols, $values) {
+    public function insertMultiple($table, $cols, $values) {
         // Boucle sur l'array $cols qui contient toutes les colonnes à traiter
         // On transforme l'array en une string au bon format pour la requête SQL
         // Format de sortie : `col1`, `col2`, `col3`
@@ -74,22 +74,20 @@ class dbConnect {
         $query = "INSERT INTO `".$table."` (".$cols_list.") VALUES (".$values_list.")";
 
         // For debugging
-        // echo "<br />INSERT >>>><br />";
-        // echo "SQL Query : ".$query."<br />";
+        echo "SQL Query : ".$query."<br />";
 
         $result = $this->sendQuery($query);
         return $result[0][0];
     }
     
-    // Setter pour UPDATE
     public function update($table, $id, $col, $value) {
         // Previous version
         // $query = 'UPDATE `'.$table.'` SET `'.$col.'` = "'.addslashes($value).'" WHERE `id_'.$table.'` = '.$id;
-        $query = "UPDATE `".$table."` SET `".$col."` = '".addslashes($value)."' WHERE `id_".$table."` = ".$id;
-        echo $query;
+        $query = "UPDATE `".$table."` SET `".$col."` = '".addslashes($value)."' WHERE `id_".$table."` = '".$id."'";
+
         // For debugging
-        // echo "<br />UPDATE >>>><br />";
-        // echo "SQL Query : ".$query."<br />";
+        echo $query."<br>";
+ 
         $this->sendQuery($query);
     }
 
