@@ -127,14 +127,13 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             <tr>
                 <td>Sex</td>
                 <td>
-                    <select name="animal_sex">
                         <?php
                         foreach (['M', 'F'] as $sex) {
-                            echo '<option ';
+                            echo '<div=><input type="radio" id="'.$sex.'" name="animal_sex" value="'.$sex.'"';
                             if ($sex == $animal_values['animal_sex']) {
-                                echo ' selected="selected" ';
+                                echo ' checked';
                             }
-                            echo 'value="'.$sex.'">'.$sex.'</option>';
+                            echo '>&nbsp;<label for="'.$sex.'">'.$sex.'</label></div>&nbsp;&nbsp;';
                         }
                         ?>
                 </td>
