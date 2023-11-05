@@ -20,7 +20,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     </tr>
     <?php
 
-    $animal_list = $animal->getAllAnimals();
+    $animal_list = $animal->getAllLiveAnimals();
     foreach ($animal_list as $animal) {
         echo "<td><a href='index.php?page=declare_death&id=".$animal['id_animal']."'>💀</a> <a href='index.php?page=edit_animal&choice=edit&id=".$animal['id_animal']."'>✏️</a></td>";
         foreach ($animal as $value) {

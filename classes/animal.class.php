@@ -19,6 +19,16 @@ class Animal {
         return $db_connect->sendQuery("SELECT * FROM `".$this->table."`", "num");
     }
 
+    public function getAllLiveAnimals() {
+        $db_connect = new dbConnect();
+        return $db_connect->sendQuery("SELECT * FROM `".$this->table."` WHERE death_timestamp = '0000-00-00 00:00:00'", "num");
+    }
+
+    public function getAllDeadAnimals() {
+        $db_connect = new dbConnect();
+        return $db_connect->sendQuery("SELECT * FROM `".$this->table."` WHERE death_timestamp != '0000-00-00 00:00:00'", "num");
+    }
+
     public function getAnimalBreeds() {
         $db_connect = new dbConnect();
         return $db_connect->sendQuery("SELECT id_breed, breed_name FROM `breed`");
