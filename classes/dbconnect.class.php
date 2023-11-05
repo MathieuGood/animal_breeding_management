@@ -66,7 +66,7 @@ class dbConnect {
         // Format de sortie : "value1", "value2", "value3"
         $values_list = '';
         foreach ($values as $value) {
-            $values_list = $values_list.'"'.addslashes($value).'", ';
+            $values_list = $values_list.'"'.$value.'", ';
         }
         $values_list = rtrim($values_list, ", ");
         // echo "Values list : ".$values_list."<br />";
@@ -81,9 +81,7 @@ class dbConnect {
     }
     
     public function update($table, $id, $col, $value) {
-        // Previous version
-        // $query = 'UPDATE `'.$table.'` SET `'.$col.'` = "'.addslashes($value).'" WHERE `id_'.$table.'` = '.$id;
-        $query = "UPDATE `".$table."` SET `".$col."` = '".addslashes($value)."' WHERE `id_".$table."` = '".$id."'";
+        $query = "UPDATE `".$table."` SET `".$col."` = '".$value."' WHERE `id_".$table."` = '".$id."'";
 
         // For debugging
         echo $query."<br>";
@@ -96,7 +94,7 @@ class dbConnect {
         $query = "SELECT `".$col."` FROM `".$table."` WHERE `id_".$table."` = ".$id;
         $result = $this->sendQuery($query);
         var_dump($result);
-        return stripslashes($result[0][0]);
+        return $result[0][0];
     }
 
     public function getColumnNames($table) {
