@@ -93,14 +93,14 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
 }
 ?>
 
-<h3><?php echo $title_display." ".$_SESSION['animal_specie'] ?></h3>
+<h3 class="drac-heading drac-heading-xl drac-text-green drac-p-xs"><?php echo $title_display." ".$_SESSION['animal_specie'] ?></h3>
 
     <form class="userform" method="POST" action="">
-        <table class="formtable"><p>
+        <table class="formtable drac-table drac-table-green"><p>
 
             <tr>
-                <td>Breed</td>
-                <td>
+                <td class="drac-text drac-text-white">Breed</td>
+                <td class="drac-text drac-text-white">
                     <select name="id_breed">
                     <?php
                     // Get the list of all breeds for the select options input
@@ -118,98 +118,136 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             </tr>
 
             <tr>
-                <td>Name</td>
-                <td>
-                    <input type=text name="animal_name" value="<?php echo $animal_values['animal_name'] ?>">
+                <td class="drac-text drac-text-white">Name</td>
+                <td class="drac-text drac-text-white">
+                    <input class="drac-input drac-input-border-sm drac-input-green drac-text-green drac-m-xs"  type=text name="animal_name" value="<?php echo $animal_values['animal_name'] ?>">
                 </td>
             </tr>
 
             <tr>
-                <td>Sex</td>
-                <td>
+                <td class="drac-text drac-text-white">Sex</td>
+                <td class="drac-text drac-text-white">
                         <?php
                         foreach (['M', 'F'] as $sex) {
-                            echo '<div=><input type="radio" id="'.$sex.'" name="animal_sex" value="'.$sex.'"';
+                            echo '<input class="drac-input drac-input-border-sm drac-input-green drac-text-green drac-m-xs"  type="radio" id="'.$sex.'" name="animal_sex" value="'.$sex.'"';
                             if ($sex == $animal_values['animal_sex']) {
                                 echo ' checked';
                             }
-                            echo '>&nbsp;<label for="'.$sex.'">'.$sex.'</label></div>&nbsp;&nbsp;';
+                            echo '>&nbsp;<label for="'.$sex.'">'.$sex.'</label>';
                         }
                         ?>
                 </td>
             </tr>
 
             <tr>
-                <td>Heigth</td>
-                <td>
-                    <input type=number step="1" min="1" max="1400" name="animal_heigth" value="<?php echo $animal_values['animal_heigth'] ?>">
+                <td class="drac-text drac-text-white">Heigth</td>
+                <td class="drac-text drac-text-white">
+                    <input class="drac-input drac-input-border-sm drac-input-green drac-text-green drac-m-xs"  type=number step="1" min="1" max="1400" name="animal_heigth" value="<?php echo $animal_values['animal_heigth'] ?>">
                 </td>
             </tr>
 
             <tr>
-                <td>Weigth</td>
-                <td>
-                    <input type=number step="1" min="1" max="200000" name="animal_weight" value="<?php echo $animal_values['animal_weight'] ?>">
+                <td class="drac-text drac-text-white">Weigth</td>
+                <td class="drac-text drac-text-white">
+                    <input class="drac-input drac-input-border-sm drac-input-green drac-text-green drac-m-xs"  type=number step="1" min="1" max="200000" name="animal_weight" value="<?php echo $animal_values['animal_weight'] ?>">
                 </td>
             </tr>
 
             <tr>
-                <td>Lifespan</td>
-                <td>
-                    <input type=number step="1" min="1" max="300" name="animal_lifespan" value="<?php echo $animal_values['animal_lifespan'] ?>">
+                <td class="drac-text drac-text-white">Lifespan</td>
+                <td class="drac-text drac-text-white">
+                    <input class="drac-input drac-input-border-sm drac-input-green drac-text-green drac-m-xs"  class="drac-input drac-input-border-sm drac-input-green drac-text-green drac-m-xs"  type=number step="1" min="1" max="300" name="animal_lifespan" value="<?php echo $animal_values['animal_lifespan'] ?>">
                 </td>
             </tr>
 
             <tr>
-                <td>Birth</td>
-                <td>
-                    <input type=datetime-local name="birth_timestamp" value="<?php echo $animal_values['birth_timestamp'] ?>">
+                <td class="drac-text drac-text-white">Birth</td>
+                <td class="drac-text drac-text-white">
+                    <input class="drac-input drac-input-border-sm drac-input-green drac-text-green drac-m-xs"  type=datetime-local name="birth_timestamp" value="<?php echo $animal_values['birth_timestamp'] ?>">
                 </td>
             </tr>
 
             <tr>
-                <td>Death</td>
-                <td>
-                    <input type=datetime-local name="death_timestamp" value="<?php echo $animal_values['death_timestamp'] ?>">
+                <td class="drac-text drac-text-white">Death</td>
+                <td class="drac-text drac-text-white">
+                    <input class="drac-input drac-input-border-sm drac-input-green drac-text-green drac-m-xs"  type=datetime-local name="death_timestamp" value="<?php echo $animal_values['death_timestamp'] ?>">
                 </td>
             </tr>
 
             <tr>
-                <td>Father</td>
-                <td>
-                    <select name="id_father">
-                    <?php
-                    // Get the list of all male animal names
-                    $males = $animal->getAllAnimalNames('M');
-    
-                    foreach ($males as $male) {
-                        echo '<option ';
-                        if ($male['id_animal'] == $animal_values['id_father']) {
-                            echo ' selected="selected" ';
-                        }
-                        echo 'value="'.$male['id_animal'].'">#'.$male['id_animal'].' '.$male['animal_name'].'</option>';
-                    }
-                    ?>
-                </td>
+                <td class="drac-text drac-text-white">Father</td>
+                <td class="drac-text drac-text-white">
+                <div style="display: flex; flex-direction: column">
+                    <div style="margin-bottom: 10px">
+                        <div style="position: relative">
+                            <select class="drac-select drac-select-lg drac-select-pink"  name="id_father">
+                                <?php
+                                // Get the list of all male animal names
+                                $males = $animal->getAllAnimalNames('M');
+                
+                                foreach ($males as $male) {
+                                    echo '<option ';
+                                    if ($male['id_animal'] == $animal_values['id_father']) {
+                                        echo ' selected="selected" ';
+                                    }
+                                    echo 'value="'.$male['id_animal'].'">#'.$male['id_animal'].' '.$male['animal_name'].'</option>';
+                                }
+                                ?>
+                            </select>
+                            <div class="drac-select-arrow drac-text-white">
+                                <svg
+                                viewBox="0 0 24 24"
+                                focusable="false"
+                                role="presentation"
+                                aria-hidden="true"
+                                >
+                                    <path
+                                    fill="currentColor"
+                                    d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                                    ></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                            </td>
+
             </tr>
 
             <tr>
-                <td>Mother</td>
-                <td>
-                <select name="id_mother">
-                    <?php
-                    // Get the list of all male animal names
-                    $females = $animal->getAllAnimalNames('F');
-    
-                    foreach ($females as $female) {
-                        echo '<option ';
-                        if ($female['id_animal'] == $animal_values['id_mother']) {
-                            echo ' selected="selected" ';
-                        }
-                        echo 'value="'.$female['id_animal'].'">#'.$female['id_animal'].' '.$female['animal_name'].'</option>';
-                    }
-                    ?>
-                    </select>
+                <td class="drac-text drac-text-white">Mother</td>
+                <td class="drac-text drac-text-white">
+                <div style="display: flex; flex-direction: column">
+                    <div style="margin-bottom: 10px">
+                        <div style="position: relative">
+                            <select class="drac-select drac-select-lg drac-select-pink" name="id_mother">
+                                <?php
+                                // Get the list of all male animal names
+                                $females = $animal->getAllAnimalNames('F');
+                
+                                foreach ($females as $female) {
+                                    echo '<option ';
+                                    if ($female['id_animal'] == $animal_values['id_mother']) {
+                                        echo ' selected="selected" ';
+                                    }
+                                    echo 'value="'.$female['id_animal'].'">#'.$female['id_animal'].' '.$female['animal_name'].'</option>';
+                                }
+                                ?>
+                            </select>
+                            <div class="drac-select-arrow drac-text-white">
+                                <svg
+                                viewBox="0 0 24 24"
+                                focusable="false"
+                                role="presentation"
+                                aria-hidden="true"
+                                >
+                                    <path
+                                    fill="currentColor"
+                                    d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                                    ></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
 

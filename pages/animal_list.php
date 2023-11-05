@@ -1,4 +1,4 @@
-<h3><?php echo ucfirst($_SESSION['animal_specie']) ?> list</h3>
+<h3 class="drac-heading drac-heading-xl drac-text-green  drac-p-xs"><?php echo ucfirst($_SESSION['animal_specie']) ?> list</h3>
 
 <?php
 if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
@@ -8,7 +8,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     echo time()."<br>";
 ?>
 <input class="button" type="button" onclick="window.location.href='index.php?page=edit_animal&choice=new'" value="Add new <?php echo $_SESSION['animal_specie'] ?>">
-<table>
+<table class="drac-table drac-table-green">
     <tr>
         <th></th>
         <?php
@@ -22,9 +22,9 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
     $animal_list = $animal->getAllAnimals();
     foreach ($animal_list as $animal) {
-        echo "<td><a href='index.php?page=declare_death&id=".$animal['id_animal']."'>💀</a> <a href='index.php?page=edit_animal&choice=edit&id=".$animal['id_animal']."'>✏️</a></td>";
+        echo "<td class='drac-text drac-text-white'><a href='index.php?page=declare_death&id=".$animal['id_animal']."'>💀</a> <a href='index.php?page=edit_animal&choice=edit&id=".$animal['id_animal']."'>✏️</a></td>";
         foreach ($animal as $value) {
-            echo "<td>".$value."</td>";
+            echo "<td class='drac-text drac-text-white'>".$value."</td>";
         }
         echo "</tr>";
     }
