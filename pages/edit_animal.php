@@ -136,13 +136,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                                 echo ' selected="selected" ';
                             }
                             echo 'value="'.$sex.'">'.$sex.'</option>';
-
-                            // Replace with radio buttons :
-                            // <input type="radio" id="contactChoice1" name="contact" value="email" />
-                            // <label for="contactChoice1">Email</label>
-                      
-                            // <input type="radio" id="contactChoice2" name="contact" value="phone" />
-                            // <label for="contactChoice2">Phone</label>
                         }
                         ?>
                     </select>
