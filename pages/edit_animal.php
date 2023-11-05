@@ -69,7 +69,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
 
                 // Trim value from spaces
                 $value = trim($value);
-                
+
                 // Add column names and values $columns and $values for createAnimal()
                 array_push($columns, $key);
                 array_push($values, $value);
@@ -85,7 +85,8 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
         if ($choice == 'new') {
             $animal->createAnimal($columns, $values);
         }
-    // Retrieve the update values of the edited/created animal
+
+    // Retrieve the updated values after animal creation/edit
     $animal_values = $animal->getAnimalData();
     }
 } else {
@@ -135,6 +136,13 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                                 echo ' selected="selected" ';
                             }
                             echo 'value="'.$sex.'">'.$sex.'</option>';
+
+                            // Replace with radio buttons :
+                            // <input type="radio" id="contactChoice1" name="contact" value="email" />
+                            // <label for="contactChoice1">Email</label>
+                      
+                            // <input type="radio" id="contactChoice2" name="contact" value="phone" />
+                            // <label for="contactChoice2">Phone</label>
                         }
                         ?>
                     </select>
