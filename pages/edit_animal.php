@@ -178,18 +178,20 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                 <td>Father</td>
                 <td>
                     <select name="id_father">
-                    <?php
-                    // Get the list of all male animal names
-                    $males = $animal->getAllAnimalNames('M');
-    
-                    foreach ($males as $male) {
-                        echo '<option ';
-                        if ($male['id_animal'] == $animal_values['id_father']) {
-                            echo ' selected="selected" ';
+                        <option value='0'>No known father</option>
+                        <?php
+                        // Get the list of all male animal names
+                        $males = $animal->getAllAnimalNames('M');
+        
+                        foreach ($males as $male) {
+                            echo '<option ';
+                            if ($male['id_animal'] == $animal_values['id_father']) {
+                                echo ' selected="selected" ';
+                            }
+                            echo 'value="'.$male['id_animal'].'">#'.$male['id_animal'].' '.$male['animal_name'].'</option>';
                         }
-                        echo 'value="'.$male['id_animal'].'">#'.$male['id_animal'].' '.$male['animal_name'].'</option>';
-                    }
-                    ?>
+                        ?>
+                    </select>
                 </td>
             </tr>
 
@@ -197,6 +199,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                 <td>Mother</td>
                 <td>
                 <select name="id_mother">
+                    <option value='0'>No known mother</option>
                     <?php
                     // Get the list of all male animal names
                     $females = $animal->getAllAnimalNames('F');
