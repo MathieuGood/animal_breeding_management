@@ -32,7 +32,7 @@ CREATE TABLE animal (
     animal_sex CHAR(1) DEFAULT NULL,
     animal_heigth DECIMAL DEFAULT NULL,
     animal_weight DECIMAL DEFAULT NULL,
-    animal_lifespan DECIMAL DEFAULT NULL,
+    animal_lifespan INT DEFAULT NULL,
     birth_timestamp TIMESTAMP DEFAULT 0,
     death_timestamp TIMESTAMP DEFAULT 0,
     id_father INT DEFAULT 0,
@@ -52,11 +52,11 @@ INSERT INTO animal (
     id_father,
     id_mother
     ) VALUES 
-    (1, 1, 'Desmond', 'M', 150, 3.2, 10.5, '2023-10-20 19:30:00', 0, 3, 2),
-    (2, 2, 'Mary', 'F', 162, 2.1, 9.1, '2023-10-03 19:00:00', 0, 0, 0),
-    (3, 2, 'Jasper', 'M', 107, 1.9, 8.5, '2023-10-01 22:11:00', 0, 0, 0),
-    (4, 5, 'Katy', 'F', 181, 2.0, 8.7, '2023-10-30 05:20:00', 0, 1, 5),
-    (5, 1, 'Cindarella', 'F', 165, 3.5, 10.1, '2023-10-19 14:53:00', 0, 0, 0);
+    (1, 1, 'Desmond', 'M', 150, 3.2, 10, '2023-10-20 19:30:00', 0, 3, 2),
+    (2, 2, 'Mary', 'F', 162, 2.1, 9, '2023-10-03 19:00:00', 0, 0, 0),
+    (3, 2, 'Jasper', 'M', 107, 1.9, 8, '2023-10-01 22:11:00', 0, 0, 0),
+    (4, 5, 'Katy', 'F', 181, 2.0, 8, '2023-10-30 05:20:00', 0, 1, 5),
+    (5, 1, 'Cindarella', 'F', 165, 3, 10.1, '2023-10-19 14:53:00', 0, 0, 0);
 
 
 -- breed table : different breeds of animals
