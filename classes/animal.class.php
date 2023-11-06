@@ -67,9 +67,11 @@ class Animal {
         return $db_connect->insertMultiple($this->table, $cols, $values);
     }
 
+    // Creates a new random animal with chraracteristics consistent with its breed
+    // Using the createRandomAnimal() stored procedure in database
     public function createRandomAnimal() {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery('CALL `CreateRandomAnimal`();');
+        return $db_connect->sendQuery('CALL createRandomAnimal();');
     }
 
     public function declareDead($death_timestamp) {
