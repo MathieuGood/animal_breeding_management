@@ -67,6 +67,11 @@ class Animal {
         return $db_connect->insertMultiple($this->table, $cols, $values);
     }
 
+    public function createRandomAnimal() {
+        $db_connect = new dbConnect();
+        return $db_connect->sendQuery('CALL `CreateRandomAnimal`();');
+    }
+
     public function declareDead($death_timestamp) {
         $db_connect = new dbConnect();
         return $db_connect->sendQuery("UPDATE `".$this->table."` SET `death_timestamp` = '".$death_timestamp."' WHERE `id_".$this->table."` = ".$this->id);
