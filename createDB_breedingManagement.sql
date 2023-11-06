@@ -470,7 +470,7 @@ ALTER TABLE column_label
 
 DELIMITER //
 
-CREATE PROCEDURE breedingManagement.CreateRandomAnimal()
+CREATE PROCEDURE breedingManagement.createRandomAnimal()
 BEGIN
 
 -- Random id_breed
