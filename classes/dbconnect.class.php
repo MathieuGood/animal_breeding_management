@@ -32,7 +32,6 @@ class dbConnect {
             // Dans le cas d'un INSERT, on récupère l'id du nouvel élément créé dans la base
             if ($startquery[0] == 'INSERT' || $startquery[0] == 'CALL') {
                 $result = $this->connect->lastInsertId(); 
-                echo "lastInsertId is ".$result."<br />";
             }
             // Renvoi du résultat
             return $result;
