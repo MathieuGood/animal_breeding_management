@@ -67,10 +67,10 @@ CREATE TABLE breed (
     id_animal_specie INT DEFAULT NULL,
     min_avg_lifespan INT DEFAULT NULL,
     max_avg_lifespan INT DEFAULT NULL,
-    min_avg_heigth DECIMAL DEFAULT NULL,
-    max_avg_heigth DECIMAL DEFAULT NULL,
-    min_avg_weight DECIMAL DEFAULT NULL,
-    max_avg_weight DECIMAL DEFAULT NULL
+    min_avg_heigth INT DEFAULT NULL,
+    max_avg_heigth INT DEFAULT NULL,
+    min_avg_weight INT DEFAULT NULL,
+    max_avg_weight INT DEFAULT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
 INSERT INTO breed (
@@ -83,21 +83,22 @@ INSERT INTO breed (
     min_avg_weight,
     max_avg_weight
 ) VALUES 
-    ('Ball Python', 1, 7300, 10950, 1.2, 1.8, 1.2, 1.6),
-    ('Corn Snake', 1, 3650, 5475, 1.2, 1.5, 0.3, 0.6),
-    ('Boa Constrictor', 1, 7300, 10950, 1.8, 4.0, 5, 9),
-    ('Green Tree Python', 1, 3650, 5475, 1.2, 1.8, 1, 1.8),
-    ('King Cobra', 1, 3650, 5475, 3.0, 4.0, 4, 6),
-    ('Black Mamba', 1, 3650, 5475, 2.0, 2.5, 1.8, 3),
-    ('Reticulated Python', 1, 7300, 10950, 1.8, 7.3, 45, 91),
-    ('Garter Snake', 1, 1825, 3650, 0.5, 0.7, 0.1, 0.3),
-    ('Anaconda', 1, 7300, 10950, 4.5, 6.0, 27, 45),
-    ('Gaboon Viper', 1, 3650, 5475, 1.0, 1.5, 6.5, 13),
-    ('Burmese Python', 1, 7300, 10950, 1.8, 4.5, 36, 68),
-    ('Indian Python', 1, 7300, 10950, 1.0, 3.7, 22, 45),
-    ('Carpet Python', 1, 5475, 7300, 1.8, 2.4, 3.5, 6),
-    ('Amazon Tree Boa', 1, 3650, 5475, 0.9, 1.5, 0.5, 1),
-    ('Western Hognose Snake', 1, 3650, 5475, 0.5, 0.7, 0.1, 0.2);
+    ('Ball Python', 1, 7300, 10950, 120, 180, 1200, 1600),
+    ('Corn Snake', 1, 3650, 5475, 120, 150, 300, 600),
+    ('Boa Constrictor', 1, 7300, 10950, 180, 400, 5000, 9000),
+    ('Green Tree Python', 1, 3650, 5475, 120, 180, 1000, 1800),
+    ('King Cobra', 1, 3650, 5475, 300, 400, 4000, 6000),
+    ('Black Mamba', 1, 3650, 5475, 200, 250, 1800, 3000),
+    ('Reticulated Python', 1, 7300, 10950, 180, 730, 45000, 91000),
+    ('Garter Snake', 1, 1825, 3650, 50, 70, 100, 300),
+    ('Anaconda', 1, 7300, 10950, 450, 600, 27000, 45000),
+    ('Gaboon Viper', 1, 3650, 5475, 100, 150, 6500, 13000),
+    ('Burmese Python', 1, 7300, 10950, 180, 450, 36000, 68000),
+    ('Indian Python', 1, 7300, 10950, 100, 370, 22000, 45000),
+    ('Carpet Python', 1, 5475, 7300, 180, 240, 3500, 6000),
+    ('Amazon Tree Boa', 1, 3650, 5475, 90, 150, 500, 1000),
+    ('Western Hognose Snake', 1, 3650, 5475, 50, 70, 100, 200);
+
 
 
 
