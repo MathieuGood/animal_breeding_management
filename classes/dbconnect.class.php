@@ -17,7 +17,7 @@ class dbConnect {
     // Execution requête
     public function sendQuery($query, $fetch_type="both") {
         $startquery = explode(' ', trim($query));
-        if ($startquery[0] == 'SELECT' || $startquery[0] == 'INSERT' || $startquery[0] == 'UPDATE' || $startquery[0] == 'DELETE') {
+        if ($startquery[0] == 'SELECT' || $startquery[0] == 'INSERT' || $startquery[0] == 'UPDATE' || $startquery[0] == 'DELETE' || $startquery[0] == 'CALL') {
             // Exécution
             $result = $this->connect->query($query);
             // Traitement du résultat
