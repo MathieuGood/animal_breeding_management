@@ -449,7 +449,7 @@ ALTER TABLE column_label
     ADD KEY id_column_label (id_column_label);
 
 
--- Creating a stored procedure to generate random values
+-- Creating a stored procedure to generate a random animal
 DELIMITER //
 
 CREATE PROCEDURE breedingManagement.createRandomAnimals(IN numCalls INT)
