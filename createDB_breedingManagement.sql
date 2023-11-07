@@ -1,17 +1,21 @@
 -- Creation of 'breedingManagement' database
 
+-- Setting start of commit
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 
+-- Deleting database if one exists with the same name
 DROP DATABASE
     IF EXISTS breedingManagement;
+
+-- Creating database
 CREATE DATABASE breedingManagement
     DEFAULT CHARACTER SET utf8mb4
     COLLATE utf8mb4_general_ci;
 USE breedingManagement;
 
--- user table : login and passwords for users
 
+-- `user` table : login and passwords for users
 CREATE TABLE user (
     id_user INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_login VARCHAR(50) NOT NULL,
@@ -23,8 +27,8 @@ INSERT INTO user (id_user, user_login, user_password)
     (1, 'admin', 'admin'),
     (2, 'mbon', 'mb');
 
--- animal table : all the animals that are breeded or have been bred
 
+-- `animal` table : all the animals that are breeded or have been bred
 CREATE TABLE animal (
     id_animal INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_breed INT DEFAULT NULL,
@@ -39,28 +43,8 @@ CREATE TABLE animal (
     id_mother INT DEFAULT 0
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
-INSERT INTO animal (
-    id_animal,
-    id_breed, 
-    animal_name, 
-    animal_sex,
-    animal_heigth,
-    animal_weight, 
-    animal_lifespan, 
-    birth_timestamp, 
-    death_timestamp,
-    id_father,
-    id_mother
-    ) VALUES 
-    (1, 1, 'Desmond', 'M', 150, 3.2, 10, '2023-10-20 19:30:00', 0, 3, 2),
-    (2, 2, 'Mary', 'F', 162, 2.1, 9, '2023-10-03 19:00:00', 0, 0, 0),
-    (3, 2, 'Jasper', 'M', 107, 1.9, 8, '2023-10-01 22:11:00', 0, 0, 0),
-    (4, 5, 'Katy', 'F', 181, 2.0, 8, '2023-10-30 05:20:00', 0, 1, 5),
-    (5, 1, 'Cindarella', 'F', 165, 3, 10.1, '2023-10-19 14:53:00', 0, 0, 0);
 
-
--- breed table : different breeds of animals
-
+-- `breed` table : different breeds of animals
 CREATE TABLE breed (
     id_breed INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     breed_name VARCHAR(50) DEFAULT NULL,
@@ -100,10 +84,7 @@ INSERT INTO breed (
     ('Western Hognose Snake', 1, 3650, 5475, 50, 70, 100, 200);
 
 
-
-
--- animal_specie table : references all the animal species
-
+-- `animal_specie` table : references all the animal species
 CREATE TABLE animal_specie (
     id_animal_specie INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     specie_name VARCHAR(50) DEFAULT NULL,
@@ -116,7 +97,7 @@ INSERT INTO animal_specie (id_animal_specie, specie_name, specie_name_plural)
     (2, 'cat', 'cats');
 
 
--- name_source table : contains a database of names and sex used to create random animals
+-- `name_source` table : contains a database of names and sex used to create random animals
 CREATE TABLE name_source (
     id_name_source INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name_example VARCHAR(50) DEFAULT NULL,
@@ -450,8 +431,8 @@ INSERT INTO column_label (id_column_label, label, html_input_type)
     ('id_mother', 'Mother ID', 'text'),
     ('breed_name', 'Breed', 'text');
 
--- Set keys
 
+-- Set keys
 ALTER TABLE animal
     ADD KEY id_animal (id_animal);
 
@@ -468,7 +449,7 @@ ALTER TABLE column_label
     ADD KEY id_column_label (id_column_label);
 
 
-
+-- Creating a stored procedure to generate random values
 DELIMITER //
 
 CREATE PROCEDURE breedingManagement.createRandomAnimals(IN numCalls INT)
@@ -503,7 +484,6 @@ WHILE i <= numCalls DO
     SELECT (SELECT DATE_FORMAT(CURRENT_TIMESTAMP() - INTERVAL FLOOR(RAND() * 604800) SECOND, '%Y-%m-%d %H:%i')) INTO @birth_timestamp;
 
     -- Create new animal with random values
-
     INSERT INTO animal (
         id_breed, 
         animal_name, 
@@ -531,5 +511,10 @@ END//
 DELIMITER ;
 
 
+-- Generating 20 random animals to populate the `animal` table
+CALL createRandomAnimals(20);
+
+
+-- End of commit
 COMMIT;
 SET AUTOCOMMIT = 1;
