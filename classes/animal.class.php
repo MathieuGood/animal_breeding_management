@@ -67,10 +67,12 @@ class Animal {
         return $db_connect->insertMultiple($this->table, $cols, $values);
     }
 
-    // Creates a new random animal with chraracteristics consistent with its breed
+    // Creates a new random animal with data consistent with its breed characteristics
     // Using the createRandomAnimal() stored procedure in database
-    public function createRandomAnimal($number=1) {
+    public function createRandomAnimal($number = 1) {
         $db_connect = new dbConnect();
+        if ($number == '' or $number > 100000) { $number = 0; }
+        echo 'CALL createRandomAnimals('.$number.');';
         return $db_connect->sendQuery('CALL createRandomAnimals('.$number.');');
     }
 
