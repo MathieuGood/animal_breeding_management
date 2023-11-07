@@ -46,8 +46,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
         
     // When form is submitted
     if (isset($_POST['form_submit'])) {
-
-        echo '<pre>'; var_dump($_POST); echo '</pre>';
         
         // Creating two arrays to contatins column names and values for SQL insert query
         $columns = array();
@@ -156,7 +154,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             <tr>
                 <td>Lifespan</td>
                 <td>
-                    <input type=number step="1" min="1" max="300" name="animal_lifespan" value="<?php echo $animal_values['animal_lifespan'] ?>">
+                    <input type=number step="1" min="1" max="11000" name="animal_lifespan" value="<?php echo $animal_values['animal_lifespan'] ?>">
                 </td>
             </tr>
 

@@ -72,7 +72,7 @@ class dbConnect {
         $query = "INSERT INTO `".$table."` (".$cols_list.") VALUES (".$values_list.")";
 
         // For debugging
-        echo "SQL Query : ".$query."<br />";
+        // echo "SQL Query : ".$query."<br />";
 
         $result = $this->sendQuery($query);
         return $result[0][0];
@@ -82,7 +82,7 @@ class dbConnect {
         $query = "UPDATE `".$table."` SET `".$col."` = '".$value."' WHERE `id_".$table."` = '".$id."'";
 
         // For debugging
-        echo $query."<br>";
+        // echo $query."<br>";
  
         $this->sendQuery($query);
     }

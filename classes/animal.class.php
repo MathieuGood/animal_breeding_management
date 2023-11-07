@@ -21,7 +21,7 @@ class Animal {
 
     public function getAllLiveAnimals() {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT * FROM `".$this->table."` WHERE death_timestamp = '0000-00-00 00:00:00'", "num");
+        return $db_connect->sendQuery("SELECT * FROM `".$this->table."` WHERE death_timestamp = '0000-00-00 00:00:00' ORDER BY id_animal DESC", "num");
     }
 
     public function getAllDeadAnimals() {
