@@ -524,5 +524,22 @@ END //
 
 DELIMITER ;
 
+
+DELIMITER //
+
+CREATE PROCEDURE breedingManagement.createMultipleRandomAnimals(IN numCalls INT)
+BEGIN
+  DECLARE i INT DEFAULT 1;
+  
+  WHILE i <= numCalls DO
+    CALL breedingManagement.createRandomAnimal();
+    SET i = i + 1;
+  END WHILE;
+  
+END//
+
+DELIMITER ;
+
+
 COMMIT;
 SET AUTOCOMMIT = 1;
