@@ -95,7 +95,7 @@ class dbConnect {
     }
 
     public function getColumnNames($table) {
-        $query = "SELECT label
+        $query = "SELECT id_column_label, label
                     FROM (SELECT DISTINCT COLUMN_NAME 
                             FROM INFORMATION_SCHEMA.COLUMNS 
                             WHERE TABLE_NAME = '".$table."')
