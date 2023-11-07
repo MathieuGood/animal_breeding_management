@@ -468,71 +468,61 @@ ALTER TABLE column_label
     ADD KEY id_column_label (id_column_label);
 
 
-DELIMITER //
-
-CREATE PROCEDURE breedingManagement.createRandomAnimal()
-BEGIN
-
--- Random id_breed
-SELECT (SELECT id_breed FROM breed ORDER BY RAND() LIMIT 1) INTO @id_breed;
-
--- Random animal_name and animal_sex
-SELECT (SELECT id_name_source FROM name_source ORDER BY RAND() LIMIT 1) INTO @id_name_source;
-SELECT (SELECT name_example FROM name_source WHERE id_name_source = @id_name_source) INTO @animal_name;
-SELECT (SELECT sex_example FROM name_source WHERE id_name_source = @id_name_source) INTO @animal_sex;
-
--- Random animal_heigth
-SELECT (SELECT min_avg_heigth FROM breed WHERE id_breed = @id_breed) INTO @min_avg_heigth;
-SELECT (SELECT max_avg_heigth FROM breed WHERE id_breed = @id_breed) INTO @max_avg_heigth;
-SELECT(FLOOR(@min_avg_heigth + RAND() * (@max_avg_heigth - @min_avg_heigth +1))) INTO @animal_heigth;
-
--- Random animal_weight
-SELECT (SELECT min_avg_weight FROM breed WHERE id_breed = @id_breed) INTO @min_avg_weight;
-SELECT (SELECT max_avg_weight FROM breed WHERE id_breed = @id_breed) INTO @max_avg_weight;
-SELECT(FLOOR(@min_avg_weight + RAND() * (@max_avg_weight - @min_avg_weight +1))) INTO @animal_weight;
-
--- Random animal_lifespan
-SELECT (SELECT min_avg_lifespan FROM breed WHERE id_breed = @id_breed) INTO @min_avg_lifespan; 
-SELECT (SELECT max_avg_lifespan  FROM breed WHERE id_breed = @id_breed) INTO @max_avg_lifespan; 
-SELECT(FLOOR(@min_avg_lifespan + RAND() * (@max_avg_lifespan - @min_avg_lifespan +1))) INTO @animal_lifespan;
-
--- Random datetime in the last 7 days
-SELECT (SELECT DATE_FORMAT(CURRENT_TIMESTAMP() - INTERVAL FLOOR(RAND() * 604800) SECOND, '%Y-%m-%d %H:%i')) INTO @birth_timestamp;
-
--- Create new animal with random values
-
-INSERT INTO animal (
-    id_breed, 
-    animal_name, 
-    animal_sex,
-    animal_heigth,
-    animal_weight, 
-    animal_lifespan, 
-    birth_timestamp
-    ) 
-    VALUES (
-        @id_breed,
-        @animal_name,
-        @animal_sex,
-        @animal_heigth,
-        @animal_weight,  
-        @animal_lifespan,
-        @birth_timestamp
-     );
-
-END //
-
-DELIMITER ;
-
 
 DELIMITER //
 
-CREATE PROCEDURE breedingManagement.createMultipleRandomAnimals(IN numCalls INT)
+CREATE PROCEDURE breedingManagement.createRandomAnimals(IN numCalls INT)
 BEGIN
-  DECLARE i INT DEFAULT 1;
-  
-  WHILE i <= numCalls DO
-    CALL breedingManagement.createRandomAnimal();
+DECLARE i INT DEFAULT 1;
+
+WHILE i <= numCalls DO
+        -- Random id_breed
+    SELECT (SELECT id_breed FROM breed ORDER BY RAND() LIMIT 1) INTO @id_breed;
+
+    -- Random animal_name and animal_sex
+    SELECT (SELECT id_name_source FROM name_source ORDER BY RAND() LIMIT 1) INTO @id_name_source;
+    SELECT (SELECT name_example FROM name_source WHERE id_name_source = @id_name_source) INTO @animal_name;
+    SELECT (SELECT sex_example FROM name_source WHERE id_name_source = @id_name_source) INTO @animal_sex;
+
+    -- Random animal_heigth
+    SELECT (SELECT min_avg_heigth FROM breed WHERE id_breed = @id_breed) INTO @min_avg_heigth;
+    SELECT (SELECT max_avg_heigth FROM breed WHERE id_breed = @id_breed) INTO @max_avg_heigth;
+    SELECT(FLOOR(@min_avg_heigth + RAND() * (@max_avg_heigth - @min_avg_heigth +1))) INTO @animal_heigth;
+
+    -- Random animal_weight
+    SELECT (SELECT min_avg_weight FROM breed WHERE id_breed = @id_breed) INTO @min_avg_weight;
+    SELECT (SELECT max_avg_weight FROM breed WHERE id_breed = @id_breed) INTO @max_avg_weight;
+    SELECT(FLOOR(@min_avg_weight + RAND() * (@max_avg_weight - @min_avg_weight +1))) INTO @animal_weight;
+
+    -- Random animal_lifespan
+    SELECT (SELECT min_avg_lifespan FROM breed WHERE id_breed = @id_breed) INTO @min_avg_lifespan; 
+    SELECT (SELECT max_avg_lifespan  FROM breed WHERE id_breed = @id_breed) INTO @max_avg_lifespan; 
+    SELECT(FLOOR(@min_avg_lifespan + RAND() * (@max_avg_lifespan - @min_avg_lifespan +1))) INTO @animal_lifespan;
+
+    -- Random datetime in the last 7 days
+    SELECT (SELECT DATE_FORMAT(CURRENT_TIMESTAMP() - INTERVAL FLOOR(RAND() * 604800) SECOND, '%Y-%m-%d %H:%i')) INTO @birth_timestamp;
+
+    -- Create new animal with random values
+
+    INSERT INTO animal (
+        id_breed, 
+        animal_name, 
+        animal_sex,
+        animal_heigth,
+        animal_weight, 
+        animal_lifespan, 
+        birth_timestamp
+        ) 
+        VALUES (
+            @id_breed,
+            @animal_name,
+            @animal_sex,
+            @animal_heigth,
+            @animal_weight,  
+            @animal_lifespan,
+            @birth_timestamp
+        );
+
     SET i = i + 1;
   END WHILE;
   
