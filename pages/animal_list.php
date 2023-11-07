@@ -7,7 +7,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     echo "Total number of ".$_SESSION['animal_specie_plural']." : ".$count_animals[0]['count_table']."<br><br>";
 
     if (isset($_POST['random_animal'])) {
-        var_dump($_POST['amount_to_create']);
         $animal->createRandomAnimal($_POST['amount_to_create']);
     }
 ?>

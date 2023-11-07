@@ -34,6 +34,11 @@ class Animal {
         return $db_connect->sendQuery("SELECT id_breed, breed_name FROM `breed`");
     }
 
+    public function getAllAliveAnimalsAndParentsBySex($sex) {
+    $db_connect = new dbConnect();
+    return $db_connect->sendQuery("SELECT id_animal, animal_name, id_father, id_mother FROM animal WHERE animal_sex = '".$sex."' AND death_timestamp = '0';");    
+    }
+
     public function getAllAnimalNames($sex) {
         $db_connect = new dbConnect();
         return $db_connect->sendQuery("SELECT id_animal, animal_name FROM `".$this->table."` WHERE `animal_sex` ='".$sex."' AND id_animal != '".$this->id."'");

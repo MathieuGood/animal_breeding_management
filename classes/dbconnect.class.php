@@ -91,7 +91,6 @@ class dbConnect {
     public function select($table, $id, $col) {
         $query = "SELECT `".$col."` FROM `".$table."` WHERE `id_".$table."` = ".$id;
         $result = $this->sendQuery($query);
-        var_dump($result);
         return $result[0][0];
     }
 
