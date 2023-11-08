@@ -15,7 +15,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
 <form method="POST" action="">
     <input type=number step="1" min="1" max="500000" name="amount_to_create" value="1">
-    <input class="button" type="submit" name="random_animal"value="Create random <?php echo $_SESSION['animal_specie_plural'] ?>">
+    <input class="button" type="submit" name="random_animal"value="Create random <?php echo $_SESSION['animal_specie_plural'] ?> ">
 </form>
 
 <table>
@@ -24,8 +24,21 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         <?php
         $animal_columns = $animal->getColumnNames('animal');
         foreach ($animal_columns as $column) {
-            echo "<th>".$column['label']."</th>";
+            echo "<th>".$column['label'];
+            // var_dump($column);
+            ?>
+                <form method="POST" action="">
+                    <button name="<?php echo $column['id_column_label']; ?>_asc" value="<?php echo $column['id_column_label']; ?> ASC">&uarr;</button>
+                    <button name="<?php echo $column['id_column_label']; ?>_desc" value="<?php echo $column['id_column_label']; ?> DESC">&darr;</button>
+                </form>
+                
+            </th>
+            <?php
+            
         }
+        // var_dump($_POST);
+        $query_sorts = ''
+
         ?>
     </tr>
     <?php
