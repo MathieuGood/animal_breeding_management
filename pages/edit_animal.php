@@ -132,6 +132,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                                 echo ' checked';
                             }
                             echo '>&nbsp;<label for="'.$sex.'">'.$sex.'</label></div>&nbsp;&nbsp;';
+
                         }
                         ?>
                 </td>
