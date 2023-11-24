@@ -22,9 +22,24 @@ class Animal
         $db_connect = new dbConnect();
         return $db_connect->sendQuery(
             "SELECT *
-               FROM `" . $this->table ."` 
+               FROM `" . $this->table . "` 
                WHERE death_timestamp = '0000-00-00 00:00:00' 
                ORDER BY id_animal DESC",
+            "num"
+        );
+    }
+
+    public function getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter)
+    {
+        $db_connect = new dbConnect();
+        $query = "SELECT * 
+                    FROM `" . $this->table . "` 
+                    WHERE `animal_name` LIKE '%" . $name_filter . "%' 
+                    AND `id_breed` LIKE '%" . $breed_filter . "%' 
+                    AND `animal_sex` LIKE '%" . $sex_filter . "%' 
+                    ORDER BY " . $sort;
+        return $db_connect->sendQuery(
+            $query,
             "num"
         );
     }
