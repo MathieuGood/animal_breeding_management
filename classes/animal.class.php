@@ -151,10 +151,14 @@ class Animal
         $db_connect->sendQuery($query);
     }
 
-    public function countAnimals()
+    public function countAllAliveAnimalsBySex($sex)
     {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT COUNT(*) as count_table FROM `" . $this->table . "` WHERE death_timestamp = '0000-00-00 00:00:00'");
+        return $db_connect->sendQuery(
+            "SELECT COUNT(*) as count
+                FROM `" . $this->table . "` 
+                WHERE death_timestamp = '0000-00-00 00:00:00'
+                AND animal_sex='".$sex."'")[0]['count'];
     }
 
 
