@@ -8,7 +8,8 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
     $animal = new Animal();
 
-    // Reset all filters and sorting
+    // Reset all filters, sorting and pagination
+    $_SESSION['page'] = 1;
     $_SESSION['sort'] = 'id_animal ASC';
     $_SESSION['name_filter'] = '';
     $_SESSION['breed_filter'] = '';
@@ -62,12 +63,9 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
             },
             cache: false,
             success: function (data) {
-                // For debugging
-                // console.log(data);
+
                 let animal_list_table = document.getElementById("animal_list");
-                console.log(animal_list_table);
                 animal_list_table.innerHTML = data;
-                console.log(animal_list_table);
             }
         });
     }

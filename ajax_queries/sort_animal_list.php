@@ -26,17 +26,19 @@ $sort = $_SESSION['sort'];
 $name_filter = $_SESSION['name_filter'];
 $breed_filter = $_SESSION['breed_filter'];
 $sex_filter = $_SESSION['sex_filter'];
+$limit_start = $_SESSION['page'] * 10 - 10;
+$limit_end = $_SESSION['page'] * 10;
 
 // Send query to get the animals
 $animal = new Animal();
-$result = $animal->getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter);
+$result = $animal->getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $limit_start, $limit_end);
 
 // For debugging
 // var_dump($result);
 
-?>
 
-<!-- Build the header -->
+// Build header row
+?>
 <tr id="animal_list_header">
     <th></th>
     <?php
@@ -60,7 +62,7 @@ $result = $animal->getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_fi
 </tr>
 
 <?php
-// Build the row for each animal
+// Build row for each animal
 foreach ($result as $one_animal) {
     echo "<td>
         <a href='index.php?page=declare_death&id=" . $one_animal['id_animal'] . "'>💀</a>

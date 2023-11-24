@@ -29,7 +29,7 @@ class Animal
         );
     }
 
-    public function getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter)
+    public function getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $limit_start, $limit_end)
     {
         $db_connect = new dbConnect();
         $query = "SELECT * 
@@ -37,7 +37,8 @@ class Animal
                     WHERE `animal_name` LIKE '%" . $name_filter . "%' 
                     AND `id_breed` LIKE '%" . $breed_filter . "%' 
                     AND `animal_sex` LIKE '%" . $sex_filter . "%' 
-                    ORDER BY " . $sort;
+                    ORDER BY " . $sort. " 
+                    LIMIT " . $limit_start . ", " . $limit_end;
         return $db_connect->sendQuery(
             $query,
             "num"
