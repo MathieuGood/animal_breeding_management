@@ -139,7 +139,7 @@ class Animal
     public function countAnimals()
     {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT COUNT(*) as count_table FROM `" . $this->table . "`");
+        return $db_connect->sendQuery("SELECT COUNT(*) as count_table FROM `" . $this->table . "` WHERE death_timestamp = '0000-00-00 00:00:00'");
     }
 
 
