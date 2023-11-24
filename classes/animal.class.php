@@ -58,11 +58,11 @@ class Animal
         return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "` WHERE `id_" . $this->table . "` = " . $this->id)[0];
     }
 
-    // Get animal_name from id (default: current animal)
-    public function getAnimalName($id = $this->id)
+    // Get animal_name from id
+    public function getAnimalName()
     {
         $db_connect = new dbConnect();
-        $result = $db_connect->sendQuery("SELECT `animal_name` FROM `" . $this->table . "` WHERE id_" . $this->table . " = '" . $id . "'");
+        $result = $db_connect->sendQuery("SELECT `animal_name` FROM `" . $this->table . "` WHERE id_" . $this->table . " = '" . $this->id . "'");
         return $result[0]['animal_name'];
     }
 
