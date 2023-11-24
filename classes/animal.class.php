@@ -22,8 +22,9 @@ class Animal
         $db_connect = new dbConnect();
         return $db_connect->sendQuery(
             "SELECT *
-               FROM `" . $this->table .
-            "` WHERE death_timestamp = '0000-00-00 00:00:00' ORDER BY id_animal DESC",
+               FROM `" . $this->table ."` 
+               WHERE death_timestamp = '0000-00-00 00:00:00' 
+               ORDER BY id_animal DESC",
             "num"
         );
     }
@@ -46,10 +47,19 @@ class Animal
         return $db_connect->sendQuery("SELECT id_animal, animal_name, id_father, id_mother FROM animal WHERE animal_sex = '" . $sex . "' AND death_timestamp = '0';");
     }
 
-    public function getAllAnimalNames($sex)
+    public function getAllPossibleParentAnimalNames($sex)
     {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT id_animal, animal_name FROM `" . $this->table . "` WHERE `animal_sex` ='" . $sex . "' AND id_animal != '" . $this->id . "'");
+        return $db_connect->sendQuery(
+            "SELECT id_animal, animal_name
+               FROM `" . $this->table . "` 
+                WHERE `animal_sex` ='" . $sex . "' 
+                AND `id_animal` != '" . $this->id . "' 
+                AND `death_timestamp` = '0000-00-00 00:00:00' 
+                AND `birth_timestamp` < (SELECT birth_timestamp 
+                                            FROM `" . $this->table . "` 
+                                            WHERE `id_" . $this->table . "` = '" . $this->id . "')"
+        );
     }
 
     public function getCurrentAnimalData()
