@@ -45,6 +45,21 @@ class Animal
         );
     }
 
+    public function countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter)
+    {
+        $db_connect = new dbConnect();
+        $query = "SELECT COUNT(*) AS animal_count
+                    FROM `" . $this->table . "` 
+                    WHERE `animal_name` LIKE '%" . $name_filter . "%' 
+                    AND `id_breed` LIKE '%" . $breed_filter . "%' 
+                    AND `animal_sex` LIKE '%" . $sex_filter . "%' 
+                    ORDER BY " . $sort;
+        return $db_connect->sendQuery(
+            $query,
+            "num"
+        )[0]['animal_count'];
+    }
+
     public function getAllDeadAnimals()
     {
         $db_connect = new dbConnect();
