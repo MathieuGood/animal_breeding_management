@@ -10,7 +10,8 @@ $post_values_to_save_in_session = [
     'sort',
     'name_filter',
     'breed_filter',
-    'sex_filter'
+    'sex_filter',
+    'page'
 ];
 
 
@@ -26,24 +27,49 @@ $sort = $_SESSION['sort'];
 $name_filter = $_SESSION['name_filter'];
 $breed_filter = $_SESSION['breed_filter'];
 $sex_filter = $_SESSION['sex_filter'];
-$limit_start = $_SESSION['page'] * 10 - 10;
-$limit_end = $_SESSION['page'] * 10;
 $current_page = $_SESSION['current_page'];
+$rows_per_page = $_SESSION['rows_per_page'];
 
-// Send query to get the animals
+// Create instance of Animal object
 $animal = new Animal();
-$result = $animal->getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $limit_start, $limit_end);
 
 // Send query to count the animals and store the value in SESSION
 $animal_count = $animal->countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter);
-$_SESSION['animal_count'] = $animal_count
+$_SESSION['animal_count'] = $animal_count;
 
-// For debugging
-// var_dump($result);
+// Values for pagination
+$total_page = ceil($animal_count / $rows_per_page);
+
+if ($current_page <= 1) {
+    $current_page = 1;
+    $first_page = "";
+    $prev_page = "";
+} else {
+    $first_page = 1;
+    $prev_page = $current_page - 1;
+}
+
+if ($current_page >= $total_page) {
+    $current_page = $total_page;
+    $last_page = "";
+    $next_page = "";
+} else {
+    $last_page = $total_page;
+    $next_page = $current_page + 1;
+}
 
 
-    // Build header row
-    ?>
+
+
+$offset = ($current_page - 1) * $rows_per_page;
+
+// Send query to get the animals
+$result = $animal->getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $rows_per_page, $offset);
+
+
+
+// Build header row
+?>
 <tr id="animal_list_header">
     <th></th>
     <?php
@@ -83,11 +109,38 @@ foreach ($result as $one_animal) {
 
 <tr>
     <td id="pagination" colspan="100%" style="text-align:center">
-        <span><?php echo $animal_count." pages /"?></span>
-        <span id="first_page">FIRST</span>
-        <span id="prev_page">PREV</span>
-        <span id="curr_page"><?php echo $current_page ?></span>
-        <span id="next_page">NEXT</span>
-        <span id="last_page">LAST</span>
+        <div id="display_stats">
+            <?php echo "Showing records ".($offset + 1)." to ".($offset + $rows_per_page)." out of ".$animal_count." total" ?>
+        </div>
+        <div id="page_selection">
+            <span>
+                <?php echo $animal_count . " pages /" ?>
+            </span>
+
+            <span id="first_page">
+                <?php echo $first_page ?>
+                <?php echo " ... " ?>
+            </span>
+
+            <span id="prev_page">
+                <?php echo $prev_page ?>
+            </span>
+            <?php echo " | " ?>
+
+            <span id="curr_page">
+                <?php echo $current_page ?>
+            </span>
+            <?php echo " | " ?>
+
+            <span id="next_page">
+                <?php echo $next_page ?>
+            </span>
+
+            <span id="last_page">
+                <?php echo " ... " ?>
+                <?php echo $last_page ?>
+            </span>
+        </div>
+
     </td>
 </tr>

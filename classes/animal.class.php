@@ -29,7 +29,7 @@ class Animal
         );
     }
 
-    public function getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $limit_start, $limit_end)
+    public function getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $limit, $offset)
     {
         $db_connect = new dbConnect();
         $query = "SELECT * 
@@ -37,8 +37,8 @@ class Animal
                     WHERE `animal_name` LIKE '%" . $name_filter . "%' 
                     AND `id_breed` LIKE '%" . $breed_filter . "%' 
                     AND `animal_sex` LIKE '%" . $sex_filter . "%' 
-                    ORDER BY " . $sort. " 
-                    LIMIT " . $limit_start . ", " . $limit_end;
+                    ORDER BY " . $sort . " 
+                    LIMIT " . $limit . " OFFSET " . $offset;
         return $db_connect->sendQuery(
             $query,
             "num"
@@ -126,15 +126,15 @@ class Animal
         return $db_connect->insertMultiple($this->table, $cols, $values);
     }
 
-    // Creates a new random animal with data consistent with its breed characteristics
-    // Using the createRandomAnimal() stored procedure in database
+    // Create one (default) or several (int as parameter) new random animal
+    // with data consistent with its breed characteristics
+    // using the createRandomAnimal() stored procedure in database
     public function createRandomAnimal($number = 1)
     {
         $db_connect = new dbConnect();
         if ($number == '' or $number > 100000) {
             $number = 0;
         }
-        echo 'CALL createRandomAnimals(' . $number . ');';
         return $db_connect->sendQuery('CALL createRandomAnimals(' . $number . ');');
     }
 
@@ -144,12 +144,6 @@ class Animal
         return $db_connect->sendQuery("UPDATE `" . $this->table . "` SET `death_timestamp` = '" . $death_timestamp . "' WHERE `id_" . $this->table . "` = " . $this->id);
     }
 
-    public function delete($id)
-    {
-        $db_connect = new dbConnect();
-        $query = "DELETE FROM `" . $this->table . "` WHERE `id_" . $this->table . "` = '" . $id . "'";
-        $db_connect->sendQuery($query);
-    }
 
     public function countAllAliveAnimalsBySex($sex)
     {
@@ -158,7 +152,8 @@ class Animal
             "SELECT COUNT(*) as count
                 FROM `" . $this->table . "` 
                 WHERE death_timestamp = '0000-00-00 00:00:00'
-                AND animal_sex='".$sex."'")[0]['count'];
+                AND animal_sex='" . $sex . "'"
+        )[0]['count'];
     }
 
 

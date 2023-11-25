@@ -9,13 +9,16 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     $animal = new Animal();
 
     // Reset all filters, sorting and pagination
-    $_SESSION['current_page'] = 1;
     $_SESSION['sort'] = 'id_animal ASC';
     $_SESSION['name_filter'] = '';
     $_SESSION['breed_filter'] = '';
     $_SESSION['sex_filter'] = '';
+    $_SESSION['current_page'] = 1;
+    $_SESSION['rows_per_page'] = 6;
 
     // Display the total number of animals
+    // REFRESHES ON PAGE RELOAD ONLY
+    // FOR FUTURE : make it part of AJAX query
     $count_male = $animal->countAllAliveAnimalsBySex('M');
     $count_female = $animal->countAllAliveAnimalsBySex('F');
     $count_animals = $count_male + $count_female;
@@ -49,7 +52,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         <?php
         // Display the pagination
         // Structure First page / ... / Previous page / Current page number / Next page / ... / Last page
-        $page = $_SESSION['page'];
 
         // If current page <= 3, specific display
         // If current page >= page_count - 3, specific display
@@ -71,7 +73,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 data: {
                     sort: type,
                 },
-                cache: false,
                 // If the ajax query returns a success, update the table
                 success: function (data) {
                     let animal_list_table = document.getElementById("animal_list");
