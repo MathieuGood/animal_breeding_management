@@ -142,5 +142,7 @@ foreach ($result as $one_animal) {
             </span>
         </div>
 
+        
+
     </td>
 </tr>
