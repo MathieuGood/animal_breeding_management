@@ -37,8 +37,8 @@ CREATE TABLE animal (
     animal_heigth DECIMAL DEFAULT NULL,
     animal_weight DECIMAL DEFAULT NULL,
     animal_lifespan INT DEFAULT NULL,
-    birth_timestamp TIMESTAMP DEFAULT 0,
-    death_timestamp TIMESTAMP DEFAULT 0,
+    birth_time TIMESTAMP DEFAULT 0,
+    death_time TIMESTAMP DEFAULT 0,
     id_father INT DEFAULT 0,
     id_mother INT DEFAULT 0
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
@@ -425,8 +425,8 @@ INSERT INTO column_label (id_column_label, label, html_input_type)
     ('animal_heigth', 'Heigth', 'text'),
     ('animal_weight', 'Weight', 'text'),
     ('animal_lifespan', 'Lifespan', 'text'),
-    ('birth_timestamp', 'Birth', 'datetime-local'),
-    ('death_timestamp', 'Death', 'datetime-local'),
+    ('birth_time', 'Birth', 'datetime-local'),
+    ('death_time', 'Death', 'datetime-local'),
     ('id_father', 'Father ID', 'text'),
     ('id_mother', 'Mother ID', 'text'),
     ('breed_name', 'Breed', 'text');
@@ -481,7 +481,7 @@ WHILE i <= numCalls DO
     SELECT(FLOOR(@min_avg_lifespan + RAND() * (@max_avg_lifespan - @min_avg_lifespan +1))) INTO @animal_lifespan;
 
     -- Random datetime in the last 7 days
-    SELECT (SELECT DATE_FORMAT(CURRENT_TIMESTAMP() - INTERVAL FLOOR(RAND() * 604800) SECOND, '%Y-%m-%d %H:%i')) INTO @birth_timestamp;
+    SELECT (SELECT DATE_FORMAT(CURRENT_TIMESTAMP() - INTERVAL FLOOR(RAND() * 604800) SECOND, '%Y-%m-%d %H:%i')) INTO @birth_time;
 
     -- Create new animal with random values
     INSERT INTO animal (
@@ -491,7 +491,7 @@ WHILE i <= numCalls DO
         animal_heigth,
         animal_weight, 
         animal_lifespan, 
-        birth_timestamp
+        birth_time
         ) 
         VALUES (
             @id_breed,
@@ -500,7 +500,7 @@ WHILE i <= numCalls DO
             @animal_heigth,
             @animal_weight,  
             @animal_lifespan,
-            @birth_timestamp
+            @birth_time
         );
 
     SET i = i + 1;
