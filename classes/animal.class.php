@@ -23,7 +23,7 @@ class Animal
         return $db_connect->sendQuery(
             "SELECT *
                FROM `" . $this->table . "` 
-               WHERE death_timestamp = '0000-00-00 00:00:00' 
+               WHERE death_time = '0000-00-00 00:00:00' 
                ORDER BY id_animal DESC",
             "num"
         );
@@ -36,9 +36,11 @@ class Animal
                     FROM `" . $this->table . "` 
                     WHERE `animal_name` LIKE '%" . $name_filter . "%' 
                     AND `id_breed` LIKE '%" . $breed_filter . "%' 
-                    AND `animal_sex` LIKE '%" . $sex_filter . "%' 
+                    AND `animal_sex` LIKE '%" . $sex_filter . "%'
+                    AND death_time = '0000-00-00 00:00:00' 
                     ORDER BY " . $sort . " 
                     LIMIT " . $limit . " OFFSET " . $offset;
+        var_dump($query);
         return $db_connect->sendQuery(
             $query,
             "num"
@@ -63,7 +65,7 @@ class Animal
     public function getAllDeadAnimals()
     {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "` WHERE death_timestamp != '0000-00-00 00:00:00'", "num");
+        return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "` WHERE death_time != '0000-00-00 00:00:00'", "num");
     }
 
     public function getAnimalBreeds()
@@ -75,7 +77,7 @@ class Animal
     public function getAllAliveAnimalsAndParentsBySex($sex)
     {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT id_animal, animal_name, id_father, id_mother FROM animal WHERE animal_sex = '" . $sex . "' AND death_timestamp = '0';");
+        return $db_connect->sendQuery("SELECT id_animal, animal_name, id_father, id_mother FROM animal WHERE animal_sex = '" . $sex . "' AND death_time = '0';");
     }
 
     public function getAllPossibleParentAnimalNames($sex)
@@ -86,8 +88,8 @@ class Animal
                FROM `" . $this->table . "` 
                 WHERE `animal_sex` ='" . $sex . "' 
                 AND `id_animal` != '" . $this->id . "' 
-                AND `death_timestamp` = '0000-00-00 00:00:00' 
-                AND `birth_timestamp` < (SELECT birth_timestamp 
+                AND `death_time` = '0000-00-00 00:00:00' 
+                AND `birth_time` < (SELECT birth_time 
                                             FROM `" . $this->table . "` 
                                             WHERE `id_" . $this->table . "` = '" . $this->id . "')"
         );
@@ -138,10 +140,10 @@ class Animal
         return $db_connect->sendQuery('CALL createRandomAnimals(' . $number . ');');
     }
 
-    public function declareDead($death_timestamp)
+    public function declareDead($death_time)
     {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery("UPDATE `" . $this->table . "` SET `death_timestamp` = '" . $death_timestamp . "' WHERE `id_" . $this->table . "` = " . $this->id);
+        return $db_connect->sendQuery("UPDATE `" . $this->table . "` SET `death_time` = '" . $death_time . "' WHERE `id_" . $this->table . "` = " . $this->id);
     }
 
 
@@ -151,7 +153,7 @@ class Animal
         return $db_connect->sendQuery(
             "SELECT COUNT(*) as count
                 FROM `" . $this->table . "` 
-                WHERE death_timestamp = '0000-00-00 00:00:00'
+                WHERE death_time = '0000-00-00 00:00:00'
                 AND animal_sex='" . $sex . "'"
         )[0]['count'];
     }
