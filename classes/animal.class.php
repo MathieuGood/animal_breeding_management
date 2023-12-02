@@ -33,11 +33,10 @@ class Animal
     {
         $db_connect = new dbConnect();
         $query = "SELECT * 
-                    FROM `" . $this->table . "` 
+                    FROM animalList 
                     WHERE `animal_name` LIKE '%" . $name_filter . "%' 
-                    AND `id_breed` LIKE '%" . $breed_filter . "%' 
+                    AND `breed_name` LIKE '%" . $breed_filter . "%' 
                     AND `animal_sex` LIKE '%" . $sex_filter . "%'
-                    AND death_time = '0000-00-00 00:00:00' 
                     ORDER BY " . $sort . " 
                     LIMIT " . $limit . " OFFSET " . $offset;
         var_dump($query);
@@ -51,9 +50,9 @@ class Animal
     {
         $db_connect = new dbConnect();
         $query = "SELECT COUNT(*) AS animal_count
-                    FROM `" . $this->table . "` 
+                    FROM animalList 
                     WHERE `animal_name` LIKE '%" . $name_filter . "%' 
-                    AND `id_breed` LIKE '%" . $breed_filter . "%' 
+                    AND `breed_name` LIKE '%" . $breed_filter . "%' 
                     AND `animal_sex` LIKE '%" . $sex_filter . "%' 
                     ORDER BY " . $sort;
         return $db_connect->sendQuery(
@@ -169,7 +168,7 @@ class Animal
     public function getColumnNames()
     {
         $db_connect = new dbConnect();
-        return $db_connect->getColumnNames($this->table);
+        return $db_connect->getColumnNames('animalList');
     }
 
     public function getColumnNamesAndInputType()
