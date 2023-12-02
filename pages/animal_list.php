@@ -8,25 +8,25 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
     $animal = new Animal();
 
-    // Reset all filters, sorting and pagination
+    // On page load, reset all filters, sorting and pagination stored in $_SESSION
     $_SESSION['sort'] = 'id_animal ASC';
     $_SESSION['name_filter'] = '';
     $_SESSION['breed_filter'] = '';
     $_SESSION['sex_filter'] = '';
     $_SESSION['current_page'] = 1;
-    $_SESSION['rows_per_page'] = 6;
+    $_SESSION['rows_per_page'] = 5;
 
     // Display the total number of animals
     // REFRESHES ON PAGE RELOAD ONLY
-    // FOR FUTURE : make it part of AJAX query
+    // FOR FUTURE : make it part of AJAX query when creating animals
     $count_male = $animal->countAllAliveAnimalsBySex('M');
     $count_female = $animal->countAllAliveAnimalsBySex('F');
     $count_animals = $count_male + $count_female;
     echo "Total number of " . $_SESSION['animal_specie_plural'] . " : " . $count_animals;
     echo "<br>";
-    echo "Male : ".$count_male;
+    echo "Male : " . $count_male;
     echo "<br>";
-    echo "Female : ".$count_female;
+    echo "Female : " . $count_female;
     echo "<br>";
 
 
@@ -44,40 +44,51 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
             value="Create random <?php echo $_SESSION['animal_specie_plural'] ?> ">
     </form>
 
-    <table id="animal_list">
+    <div id="animal_list">
 
-    </table>
-
-    <div id="pagination">
-        <?php
-        // Display the pagination
-        // Structure First page / ... / Previous page / Current page number / Next page / ... / Last page
-
-        // If current page <= 3, specific display
-        // If current page >= page_count - 3, specific display
-         
-
-        ?>
     </div>
+
+
     <script>
-        // When the page loads, execute sortAnimalList() with 'animal_id DESC' as default parameter
+        // When the page loads, execute sortAnimalList() with 'animal_id DESC' as default parameter 
         window.onload = function () {
             sortAnimalList('id_animal DESC');
         }
 
-        // When the user clicks on the button, sort the list
+
+
+
+
+        // When the user clicks on the button, sort according to the type parameter and reset current_page to 1
         function sortAnimalList(type) {
             $.ajax({
                 type: "POST",
                 url: "ajax_queries/update_animal_list.php",
                 data: {
                     sort: type,
+                    current_page: '1',
                 },
                 // If the ajax query returns a success, update the table
                 success: function (data) {
                     let animal_list_table = document.getElementById("animal_list");
                     animal_list_table.innerHTML = data;
-                    
+                }
+            });
+        }
+
+
+        // When the user clicks on the button, navigate to input current_page number
+        function pageAnimalList(page_number) {
+            $.ajax({
+                type: "POST",
+                url: "ajax_queries/update_animal_list.php",
+                data: {
+                    current_page: page_number,
+                },
+                // If the ajax query returns a success, update the table
+                success: function (data) {
+                    let animal_list_table = document.getElementById("animal_list");
+                    animal_list_table.innerHTML = data;
                 }
             });
         }
@@ -86,6 +97,4 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 } else {
     header("Location: index.php?page=login");
 }
-
-
 ?>
