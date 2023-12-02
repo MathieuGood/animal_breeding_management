@@ -59,6 +59,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
 
 
+        
         // When the user clicks on the button, sort according to the type parameter and reset current_page to 1
         function sortAnimalList(type) {
             $.ajax({
