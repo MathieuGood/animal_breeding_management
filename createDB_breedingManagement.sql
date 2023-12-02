@@ -430,6 +430,7 @@ INSERT INTO column_label (id_column_label, label, html_input_type)
     ('id_father', 'Father ID', 'text'),
     ('id_mother', 'Mother ID', 'text'),
     ('breed_name', 'Breed', 'text');
+    
 
 
 -- Set keys
@@ -447,6 +448,22 @@ ALTER TABLE user
 
 ALTER TABLE column_label
     ADD KEY id_column_label (id_column_label);
+
+
+-- Creating a view to generate the content for animal_list.php
+CREATE VIEW breedingManagement.animalList AS (SELECT 
+                                                id_animal, 
+                                                animal_name, 
+                                                breed_name, 
+                                                animal_sex, 
+                                                animal_heigth, 
+                                                animal_weight, 
+                                                animal_lifespan, 
+                                                birth_time
+                                                  FROM animal
+                                                    INNER JOIN breed
+                                                            ON animal.id_breed = breed.id_breed
+                                                            WHERE death_time = '0000-00-00 00:00:00');
 
 
 -- Creating a stored procedure to generate a random animal
@@ -513,6 +530,7 @@ DELIMITER ;
 
 -- Generating 20 random animals to populate the `animal` table
 CALL createRandomAnimals(20);
+
 
 
 -- End of commit
