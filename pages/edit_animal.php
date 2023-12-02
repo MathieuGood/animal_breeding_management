@@ -24,8 +24,8 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             'animal_heigth' => '',
             'animal_weight' => '',
             'animal_lifespan' => '',
-            'birth_timestamp' => '',
-            'death_timestamp' => '',
+            'birth_time' => '',
+            'death_time' => '',
             'id_father' => '',
             'id_mother' => ''
         );
@@ -55,7 +55,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
         foreach ($_POST as $key => $value) {
             if ($key != 'form_submit') {
                 // If the the field in the array has datetime-local value
-                if (in_array($key, ['birth_timestamp', 'death_timestamp'])) {
+                if (in_array($key, ['birth_time', 'death_time'])) {
                     // If it is empty, update value to datetime compatible output
                     if ($value == "") {
                         $value = "0000-00-00 00:00:00";
@@ -168,16 +168,16 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             <tr>
                 <td>Birth</td>
                 <td>
-                    <input type=datetime-local name="birth_timestamp"
-                        value="<?php echo $animal_values['birth_timestamp'] ?>">
+                    <input type=datetime-local name="birth_time"
+                        value="<?php echo $animal_values['birth_time'] ?>">
                 </td>
             </tr>
 
             <tr>
                 <td>Death</td>
                 <td>
-                    <input type=datetime-local name="death_timestamp"
-                        value="<?php echo $animal_values['death_timestamp'] ?>">
+                    <input type=datetime-local name="death_time"
+                        value="<?php echo $animal_values['death_time'] ?>">
                 </td>
             </tr>
 
