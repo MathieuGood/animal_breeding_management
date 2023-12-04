@@ -64,13 +64,10 @@ $filtered_animal_data = $animal->getAllFilteredAndSortedAnimals($sort, $name_fil
 $filtered_breed_list = $animal->getAllFilteredAndSortedBreeds($name_filter, $breed_filter, $sex_filter);
 
 $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_filter, $sex_filter);
-echo '<br><br>';
-var_dump($filtered_sex_list);
-echo '<br><br>';
 ?>
 
 <!-- Dropdown selector for breed filter -->
-
+<br>
 <div class="btn-group">
     <!-- Sex filter -->
     <div class="dropdown">
