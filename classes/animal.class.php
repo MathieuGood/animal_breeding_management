@@ -173,7 +173,7 @@ class Animal
     public function createRandomAnimal($number = 1)
     {
         $db_connect = new dbConnect();
-        if ($number == '' or $number > 100000) {
+        if ($number == '' or $number > 1000) {
             $number = 0;
         }
         return $db_connect->sendQuery('CALL createRandomAnimals(' . $number . ');');
