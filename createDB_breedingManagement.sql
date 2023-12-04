@@ -412,7 +412,7 @@ VALUES
 
 CREATE TABLE column_label (
     id_column_label VARCHAR(50) NOT NULL PRIMARY KEY,
-    label VARCHAR(50) DEFAULT NULL,
+    label VARCHAR(50) DEFAULT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
 INSERT INTO column_label (id_column_label, label)
@@ -453,8 +453,8 @@ ALTER TABLE column_label
 CREATE VIEW breedingManagement.animalList AS (SELECT 
                                                 id_animal, 
                                                 animal_name, 
-                                                breed_name, 
-                                                animal_sex, 
+                                                animal_sex,                                                 
+                                                breed_name,
                                                 animal_heigth, 
                                                 animal_weight, 
                                                 animal_lifespan, 
