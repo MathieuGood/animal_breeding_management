@@ -60,8 +60,23 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
         // Set all the parameters stored in SESSION to default
         function resetSearchParameters() {
-            $.post("ajax_queries/reset_search_parameters.php");
             sortAnimalList('id_animal DESC');
+            $.ajax({
+                type: "POST",
+                url: "ajax_queries/update_animal_list.php",
+                data: {
+                    sort: 'id_animal DESC',
+                    breed_filter: '',
+                    sex_filter: '',
+                    name_filter: '',
+                    current_page: '1',
+                },
+                // If the ajax query returns a success, update the table
+                success: function (data) {
+                    let animal_list_table = document.getElementById("animal_list");
+                    animal_list_table.innerHTML = data;
+                }
+            });
         }
 
 
