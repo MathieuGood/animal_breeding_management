@@ -24,12 +24,12 @@ foreach ($post_values_to_save_in_session as $value) {
 
 
 // For debugging
-var_dump($_POST);
-echo '<br>';
-echo '<br>';
-var_dump($_SESSION);
-echo '<br>';
-echo '<br>';
+// var_dump($_POST);
+// echo '<br>';
+// echo '<br>';
+// var_dump($_SESSION);
+// echo '<br>';
+// echo '<br>';
 
 // Get the values from SESSION
 $sort = $_SESSION['sort'];
