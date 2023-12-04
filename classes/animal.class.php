@@ -34,6 +34,7 @@ class Animal
                     ORDER BY " . $sort . " 
                     LIMIT " . $limit . " OFFSET " . $offset;
         echo '<br/>';
+        echo '<br/>getAllFilteredAndSortedAnimals';
         var_dump($query);
         return $db_connect->sendQuery(
             $query,
@@ -55,6 +56,29 @@ class Animal
                                     GROUP BY breed_name
                                         ORDER BY breed_name ASC";
         echo '<br/>';
+        echo '<br/>getAllFilteredAndSortedBreeds';
+        var_dump($query);
+        return $db_connect->sendQuery(
+            $query,
+            "num"
+        );
+    }
+
+    public function getAllFilteredAndSortedSex($name_filter, $breed_filter, $sex_filter)
+    {
+        $db_connect = new dbConnect();
+        $query = "    SELECT animal_sex, COUNT(id_animal) AS sex_count
+                        FROM animal
+                        INNER JOIN breed
+                                ON animal.id_breed = breed.id_breed
+                                WHERE death_time = '0000-00-00 00:00:00'
+                                    AND `animal_name` LIKE '%" . $name_filter . "%'
+                                    AND `breed_name` LIKE '%" . $breed_filter . "%'
+                                    AND `animal_sex` LIKE '%" . $sex_filter . "%'
+                                        GROUP BY animal_sex
+                                            ORDER BY breed_name ASC";
+        echo '<br/>';
+        echo '<br/>getAllFilteredAndSortedSex';
         var_dump($query);
         return $db_connect->sendQuery(
             $query,
@@ -162,15 +186,15 @@ class Animal
     }
 
 
-    public function countAllAliveAnimalsBySex($sex)
+    public function countAllAliveAnimalsBySex()
     {
         $db_connect = new dbConnect();
         return $db_connect->sendQuery(
-            "SELECT COUNT(*) as count
+            "SELECT animal_sex, COUNT(*) as count
                 FROM `" . $this->table . "` 
                 WHERE death_time = '0000-00-00 00:00:00'
-                AND animal_sex='" . $sex . "'"
-        )[0]['count'];
+                    GROUP BY animal_sex"
+        );
     }
 
 
