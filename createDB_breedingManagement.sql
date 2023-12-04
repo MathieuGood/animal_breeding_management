@@ -413,23 +413,22 @@ VALUES
 CREATE TABLE column_label (
     id_column_label VARCHAR(50) NOT NULL PRIMARY KEY,
     label VARCHAR(50) DEFAULT NULL,
-    html_input_type VARCHAR(50) DEFAULT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
-INSERT INTO column_label (id_column_label, label, html_input_type)
+INSERT INTO column_label (id_column_label, label)
     VALUES 
-    ('id_animal', 'ID', 'text'),
-    ('id_breed', 'Breed ID', 'text'),
-    ('animal_name', 'Name', 'text'),
-    ('animal_sex', 'Sex', 'text'),
-    ('animal_heigth', 'Heigth', 'text'),
-    ('animal_weight', 'Weight', 'text'),
-    ('animal_lifespan', 'Lifespan', 'text'),
-    ('birth_time', 'Birth', 'datetime-local'),
-    ('death_time', 'Death', 'datetime-local'),
-    ('id_father', 'Father ID', 'text'),
-    ('id_mother', 'Mother ID', 'text'),
-    ('breed_name', 'Breed', 'text');
+    ('id_animal', 'ID'),
+    ('id_breed', 'Breed ID'),
+    ('animal_name', 'Name'),
+    ('animal_sex', 'Sex'),
+    ('animal_heigth', 'Heigth'),
+    ('animal_weight', 'Weight'),
+    ('animal_lifespan', 'Lifespan'),
+    ('birth_time', 'Birth'),
+    ('death_time', 'Death'),
+    ('id_father', 'Father ID'),
+    ('id_mother', 'Mother ID'),
+    ('breed_name', 'Breed');
     
 
 
@@ -459,11 +458,26 @@ CREATE VIEW breedingManagement.animalList AS (SELECT
                                                 animal_heigth, 
                                                 animal_weight, 
                                                 animal_lifespan, 
-                                                birth_time
+                                                DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time
                                                   FROM animal
                                                     INNER JOIN breed
                                                             ON animal.id_breed = breed.id_breed
                                                             WHERE death_time = '0000-00-00 00:00:00');
+
+
+-- Creating a view to count the number of animals per breed
+CREATE VIEW breedingManagement.breedCount AS (
+    SELECT 
+        breed_name,
+        COUNT(id_animal) AS breed_count
+    FROM animal
+    INNER JOIN breed
+        ON animal.id_breed = breed.id_breed
+    WHERE death_time = '0000-00-00 00:00:00'
+    GROUP BY breed_name
+    ORDER BY breed_name ASC
+);
+
 
 
 -- Creating a stored procedure to generate a random animal
