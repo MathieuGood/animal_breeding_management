@@ -6,4 +6,5 @@ $_SESSION['breed_filter'] = '';
 $_SESSION['sex_filter'] = '';
 $_SESSION['current_page'] = 1;
 $_SESSION['rows_per_page'] = 10;
+var_dump($_SESSION);
 ?>
