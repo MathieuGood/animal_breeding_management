@@ -60,7 +60,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
         // Set all the parameters stored in SESSION to default
         function resetSearchParameters() {
-            sortAnimalList('id_animal DESC');
             $.ajax({
                 type: "POST",
                 url: "ajax_queries/update_animal_list.php",
