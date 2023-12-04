@@ -33,9 +33,9 @@ class Animal
                     AND `animal_sex` LIKE '%" . $sex_filter . "%'
                     ORDER BY " . $sort . " 
                     LIMIT " . $limit . " OFFSET " . $offset;
-        echo '<br/>';
-        echo '<br/>getAllFilteredAndSortedAnimals';
-        var_dump($query);
+        // echo '<br/>';
+        // echo '<br/>getAllFilteredAndSortedAnimals';
+        // var_dump($query);
         return $db_connect->sendQuery(
             $query,
             "num"
@@ -55,9 +55,9 @@ class Animal
                                   AND `animal_sex` LIKE '%" . $sex_filter . "%'
                                     GROUP BY breed_name
                                         ORDER BY breed_name ASC";
-        echo '<br/>';
-        echo '<br/>getAllFilteredAndSortedBreeds';
-        var_dump($query);
+        // echo '<br/>';
+        // echo '<br/>getAllFilteredAndSortedBreeds';
+        // var_dump($query);
         return $db_connect->sendQuery(
             $query,
             "num"
@@ -77,9 +77,9 @@ class Animal
                                     AND `animal_sex` LIKE '%" . $sex_filter . "%'
                                         GROUP BY animal_sex
                                             ORDER BY breed_name ASC";
-        echo '<br/>';
-        echo '<br/>getAllFilteredAndSortedSex';
-        var_dump($query);
+        // echo '<br/>';
+        // echo '<br/>getAllFilteredAndSortedSex';
+        // var_dump($query);
         return $db_connect->sendQuery(
             $query,
             "num"
