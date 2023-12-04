@@ -33,6 +33,7 @@ class Animal
                     AND `animal_sex` LIKE '%" . $sex_filter . "%'
                     ORDER BY " . $sort . " 
                     LIMIT " . $limit . " OFFSET " . $offset;
+        echo '<br/>';
         var_dump($query);
         return $db_connect->sendQuery(
             $query,
@@ -53,6 +54,7 @@ class Animal
                                   AND `animal_sex` LIKE '%" . $sex_filter . "%'
                                     GROUP BY breed_name
                                         ORDER BY breed_name ASC";
+        echo '<br/>';
         var_dump($query);
         return $db_connect->sendQuery(
             $query,
