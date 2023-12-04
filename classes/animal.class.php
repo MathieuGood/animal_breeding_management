@@ -11,12 +11,6 @@ class Animal
         $this->id = $id;
     }
 
-    public function getAllAnimals()
-    {
-        $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "`", "num");
-    }
-
     public function getAllLiveAnimals()
     {
         $db_connect = new dbConnect();
@@ -39,6 +33,26 @@ class Animal
                     AND `animal_sex` LIKE '%" . $sex_filter . "%'
                     ORDER BY " . $sort . " 
                     LIMIT " . $limit . " OFFSET " . $offset;
+        var_dump($query);
+        return $db_connect->sendQuery(
+            $query,
+            "num"
+        );
+    }
+
+    public function getAllFilteredAndSortedBreeds($name_filter, $breed_filter, $sex_filter)
+    {
+        $db_connect = new dbConnect();
+        $query = "    SELECT breed_name, COUNT(id_animal) AS breed_count
+                        FROM animal
+                        INNER JOIN breed
+                                ON animal.id_breed = breed.id_breed
+                                WHERE death_time = '0000-00-00 00:00:00'
+                                  AND `animal_name` LIKE '%" . $name_filter . "%'
+                                  AND `breed_name` LIKE '%" . $breed_filter . "%'
+                                  AND `animal_sex` LIKE '%" . $sex_filter . "%'
+                                    GROUP BY breed_name
+                                        ORDER BY breed_name ASC";
         var_dump($query);
         return $db_connect->sendQuery(
             $query,
@@ -158,23 +172,10 @@ class Animal
     }
 
 
-
-    public function selectAll()
-    {
-        $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "`");
-    }
-
     public function getColumnNames()
     {
         $db_connect = new dbConnect();
         return $db_connect->getColumnNames('animalList');
-    }
-
-    public function getColumnNamesAndInputType()
-    {
-        $db_connect = new dbConnect();
-        return $db_connect->getColumnNamesAndInputType($this->table);
     }
 }
 

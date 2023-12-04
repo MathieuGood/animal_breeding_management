@@ -93,13 +93,6 @@ class dbConnect
         $this->sendQuery($query);
     }
 
-    // Get
-    public function select($table, $id, $col)
-    {
-        $query = "SELECT `" . $col . "` FROM `" . $table . "` WHERE `id_" . $table . "` = " . $id;
-        $result = $this->sendQuery($query);
-        return $result[0][0];
-    }
 
     public function getColumnNames($table)
     {
