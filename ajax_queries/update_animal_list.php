@@ -46,17 +46,11 @@ $animal = new Animal();
 $animal_count = $animal->countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter);
 $_SESSION['animal_count'] = $animal_count;
 
-
-
-
-
 // Number of pages to display all animals
 $total_page = ceil($animal_count / $rows_per_page);
 
-
 // Calculate offset to inject in query
 $offset = ($current_page - 1) * $rows_per_page;
-
 
 // Send query to get the animals
 $filtered_animal_data = $animal->getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $rows_per_page, $offset);
@@ -65,6 +59,25 @@ $filtered_breed_list = $animal->getAllFilteredAndSortedBreeds($name_filter, $bre
 
 $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_filter, $sex_filter);
 ?>
+
+
+<div class="snake_count">
+    <?php
+    // Display the total number of animals
+    $sex_count = $animal->countAllAliveAnimalsBySex();
+
+    $total_count = $sex_count[1]['count'] + $sex_count[0]['count'];
+
+    echo "Total number of " . $_SESSION['animal_specie_plural'] . " : " . $total_count;
+    echo "<br>";
+    // echo "Male : " . $count_male;
+    echo "Male : " . $sex_count[1]['count'];
+    echo "<br>";
+    // echo "Female : " . $count_female;
+    echo "Female : " . $sex_count[0]['count'];
+    echo "<br>";
+    ?>
+</div>
 
 <!-- Dropdown selector for breed filter -->
 <br>
