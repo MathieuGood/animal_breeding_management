@@ -12,23 +12,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     // Instantiate new Animal object
     $animal = new Animal();
 
-    // Display the total number of animals
-    // REFRESHES ON PAGE RELOAD ONLY
-    // FOR FUTURE : make it part of AJAX query when creating animals
-
-    $sex_count = $animal->countAllAliveAnimalsBySex();
-
-    $total_count = $sex_count[1]['count'] + $sex_count[0]['count'];
-
-    echo "Total number of " . $_SESSION['animal_specie_plural'] . " : " . $total_count;
-    echo "<br>";
-    // echo "Male : " . $count_male;
-    echo "Male : " . $sex_count[1]['count'];
-    echo "<br>";
-    // echo "Female : " . $count_female;
-    echo "Female : " . $sex_count[0]['count'];
-    echo "<br>";
-
 
     if (isset($_POST['random_animal'])) {
         $animal->createRandomAnimal($_POST['amount_to_create']);
@@ -38,8 +21,8 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         value="Add new custom <?php echo $_SESSION['animal_specie'] ?>">
 
 
-    <form method="POST" action="">
-        <input type=number step="1" min="1" max="50000" name="amount_to_create" value="1">
+    <form id="create_multiple_animals" method="POST" action="">
+        <input type=number step="1" min="1" max="1000" name="amount_to_create" value="1">
         <input class="button" type="submit" name="random_animal"
             value="Create random <?php echo $_SESSION['animal_specie_plural'] ?> ">
     </form>
@@ -75,6 +58,19 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                     let animal_list_table = document.getElementById("animal_list");
                     animal_list_table.innerHTML = data;
                 }
+            });
+        }
+
+
+        function createRandomAnimalsAndUpdateList(number) {
+            $.ajax({
+                type: "POST",
+                url: "ajax_queries/create_random_animal.php",
+                data: {
+                    amount_to_create: number,
+                },
+                // If the ajax query returns a success, update the table
+                success: resetSearchParameters()
             });
         }
 
@@ -132,6 +128,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
             });
         }
 
+
         // When the user clicks on the button, navigate to input current_page number
         function pageAnimalList(page_number) {
             $.ajax({
@@ -147,6 +144,12 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 }
             });
         }
+
+        // Add event listener to watch for click on form id="create_multiple_animals"
+        // and execute createRandomAnimalsAndUpdateList() with the input value as parameter
+        document.getElementById("button").addEventListener("click", createRandomAnimalsAndUpdateList())
+
+        
 
 
     </script>
