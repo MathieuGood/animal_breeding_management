@@ -7,6 +7,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
 <?php
 } else {
-    header("Location: index.php?page=admin");
+    header("Location: index.php?page=login");
 }
 ?>

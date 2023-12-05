@@ -122,9 +122,9 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
 
 </div>
 
-<table>
+<table class="table table-striped table-hover animal_table">
     <!-- Header row -->
-    <tr id="animal_list_header">
+    <tr id="animal_list_header" style="background-color:#282a36">
         <th></th>
         <?php
         $animal_columns = $animal->getColumnNames();

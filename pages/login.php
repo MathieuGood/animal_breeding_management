@@ -1,7 +1,7 @@
 <h3>User login</h3>
 <?php
 
-// Connexion à la base de données
+// Instantiate a new User object to connect to database
 $user_db = new User();
 
 
