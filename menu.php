@@ -31,7 +31,10 @@ if(isset($_POST['logout'])) {
                     <li class="nav-item">
                         <a class="nav-link pink_link" href="index.php?page=breed_animals">Breeding</a>
                     </li>
-                    <li class="nav-item" id="login_logout">
+                    <li class="nav-item">
+                        <a class="nav-link pink_link" href="index.php?page=breed_animals">Evolution</a>
+                    </li>
+                    <li class="nav-item">
                         <form method="POST" action="">
                             <input class="button" type="submit" name="logout" value="Logout">
                         </form>
@@ -49,7 +52,7 @@ if(isset($_POST['logout'])) {
 
 
 <script>
-    login_logout_link = document.getElementById("login_logout");
+    let login_logout_link = document.getElementById("login_logout");
     // When user clicks on the login/logout button
     login_logout_link.addEventListener("click", function () {
         // If the content of document.getElementById("login_logout") is 'Logout'
@@ -67,5 +70,7 @@ if(isset($_POST['logout'])) {
             });
         }
     });
+
+
 
 </script>

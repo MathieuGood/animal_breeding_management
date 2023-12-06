@@ -16,8 +16,8 @@ $post_values_to_save_in_session = [
 
 
 // Save the POST values mentionned in the $post_values_to_save_in_session to SESSION
-foreach ($post_values_to_save_in_session as $value) {
-    if (isset($_POST[$value])) {
+foreach($post_values_to_save_in_session as $value) {
+    if(isset($_POST[$value])) {
         $_SESSION[$value] = $_POST[$value];
     }
 }
@@ -61,41 +61,28 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
 ?>
 
 
-<div class="snake_count">
-    <?php
-    // Display the total number of animals
-    $sex_count = $animal->countAllAliveAnimalsBySex();
-
-    $total_count = $sex_count[1]['count'] + $sex_count[0]['count'];
-
-    echo "Total number of " . $_SESSION['animal_specie_plural'] . " : " . $total_count;
-    echo "<br>";
-    // echo "Male : " . $count_male;
-    echo "Male : " . $sex_count[1]['count'];
-    echo "<br>";
-    // echo "Female : " . $count_female;
-    echo "Female : " . $sex_count[0]['count'];
-    echo "<br>";
-    ?>
-</div>
-
 <!-- Dropdown selector for breed filter -->
 <br>
+
 <div class="btn-group">
+
+    <!-- Name filter -->
+    <input type="text" name="name_filter" id="name_filter">
+
     <!-- Sex filter -->
-    <div class="dropdown">
+    <span class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Sex
         </button>
         <ul class="dropdown-menu">
             <?php
-            foreach ($filtered_sex_list as $one_sex) {
+            foreach($filtered_sex_list as $one_sex) {
                 echo "<li><a class='dropdown-item' href='#' 
-                    onclick='filterAnimalListBySex(\"" . $one_sex['animal_sex'] . "\")'>" . $one_sex['animal_sex'] . " (" . $one_sex['sex_count'] . ")</a></li>";
+                    onclick='filterAnimalListBySex(\"".$one_sex['animal_sex']."\")'>".$one_sex['animal_sex']." (".$one_sex['sex_count'].")</a></li>";
             }
             ?>
         </ul>
-    </div>
+    </span>
 
     <!-- Breed filter -->
     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -104,9 +91,9 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
     <ul class="dropdown-menu">
         <?php
 
-        foreach ($filtered_breed_list as $one_breed) {
+        foreach($filtered_breed_list as $one_breed) {
             echo "<li><a class='dropdown-item' href='#' 
-                    onclick='filterAnimalListByBreed(\"" . $one_breed['breed_name'] . "\")'>" . $one_breed['breed_name'] . " (" . $one_breed['breed_count'] . ")</a></li>";
+                    onclick='filterAnimalListByBreed(\"".$one_breed['breed_name']."\")'>".$one_breed['breed_name']." (".$one_breed['breed_count'].")</a></li>";
         }
 
         ?>
@@ -114,11 +101,11 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
 </div>
 
 <!-- Reset filters -->
-<div class="reset-filters">
+<span class="reset-filters">
     <button class="btn btn-secondary" onclick="resetSearchParameters()">
         Reset all filters
     </button>
-</div>
+</span>
 
 </div>
 
@@ -129,8 +116,8 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
         <?php
         $animal_columns = $animal->getColumnNames();
         // Display each column name
-        foreach ($animal_columns as $column) {
-            echo "<th>" . $column['label'];
+        foreach($animal_columns as $column) {
+            echo "<th>".$column['label'];
             // For debugging
             // var_dump($column);
             ?>
@@ -157,15 +144,15 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
 
     <?php
     // Build row for each animal
-    foreach ($filtered_animal_data as $one_animal) {
+    foreach($filtered_animal_data as $one_animal) {
         echo "<tr>
             <td>
-            <a href='index.php?page=declare_death&id=" . $one_animal['id_animal'] . "'>💀</a>
-            <a href='index.php?page=edit_animal&choice=edit&id=" . $one_animal['id_animal'] . "'>✏️</a>
+            <a href='index.php?page=declare_death&id=".$one_animal['id_animal']."'>💀</a>
+            <a href='index.php?page=edit_animal&choice=edit&id=".$one_animal['id_animal']."'>✏️</a>
             </td>";
         // In each column of one row, display the value of one of the animal characteristics
-        foreach ($one_animal as $value) {
-            echo "<td>" . $value . "</td>";
+        foreach($one_animal as $value) {
+            echo "<td>".$value."</td>";
         }
         echo "</tr>";
     }

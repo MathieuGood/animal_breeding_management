@@ -60,7 +60,7 @@ th {
     padding-top: 0.3em;
 }
 
-.animal_table td{
+.animal_table td {
     color: #f8f8f2
 }
 
@@ -115,34 +115,35 @@ img#animal_logo {
 
 /* Pagination restyling */
 
-.pagination > li > a
-{
-    background-color: #f8f8f2;
+.pagination>li>a {
+    background-color: #282a36;
     color: #ff79c6;
 }
 
-.pagination > li > a:focus,
-.pagination > li > a:hover,
-.pagination > li > span:focus,
-.pagination > li > span:hover
-{
-    color: #282a36;
-    background-color: #D3D3D3
-    ;
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>li>span:focus,
+.pagination>li>span:hover {
+    color: #D3D3D3;
+    background-color: #282a36;
     border-color: #ddd;
 }
 
-.pagination > .active > a
-{
-    color: #f8f8f2;
-    background-color: #50fa7b !Important;
-    border: solid 1px #50fa7b !Important;
+.pagination>.active>a {
+    color: #282a36;
+    background-color: #ff79c6 !Important;
+    border: solid 1px #ddd !Important;
 }
 
-.pagination > .active > a:hover
-{
-    background-color: #3dba5d !Important;
-    border: solid 1px #3dba5d;
+.pagination>.disabled>a {
+    color: #D3D3D3 !Important;
+    background-color: #282a36 !Important;
+    border: solid 1px #ddd !Important;
+}
+
+.pagination>.active>a:hover {
+    background-color: #ff79c6 !Important;
+    border: solid 1px #ff79c6;
 }
 
 #main_content {
@@ -151,12 +152,23 @@ img#animal_logo {
 
 
 /* Media query to remove left and right padding on #main_content when the screen gets smaller than 1000px */
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1200px) {
     #main_content {
         padding-left: 0;
         padding-right: 0;
-        margin-left: 0;
-        margin-right: 0;
-        max-width: none;
+        margin-left: 1em;
+        margin-right: 2em;
+        max-width: 95vw;
+    }
+
+    .navbar-brand {
+        font-size: 1em;
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+    .snake_count {
+        margin-top: 1em;
     }
 }
