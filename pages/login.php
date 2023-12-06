@@ -14,7 +14,7 @@ if (isset($_POST["form_submit"])) {
         $_SESSION['open'] = 1;
         $_SESSION['user_name'] = $_POST["user_name"];
         // Rafraîchir la page pour recharger le menu avec les nouvelles entrées pour admin
-        echo "<meta http-equiv='refresh' content='0'>";
+        header("Location: index.php?page=animal_list");
     } else {
         echo "Username or password not valid.<br /><br />";
     }
@@ -49,8 +49,7 @@ if (!isset($_SESSION['open']) || $_SESSION['open'] < 1) {
 
 <?php 
 } else {
-    // echo "<meta http-equiv='refresh' content='0'>";
-    echo "Hello ".$_SESSION["user_name"]." and welcome to your ".$_SESSION['animal_specie']." breeding management<br /><br />";
+    header("Location: index.php?page=animal_list");
 ?>
 
 <form method="POST" action="">

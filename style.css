@@ -148,3 +148,15 @@ img#animal_logo {
 #main_content {
     padding-top: 1em;
 }
+
+
+/* Media query to remove left and right padding on #main_content when the screen gets smaller than 1000px */
+@media only screen and (max-width: 1000px) {
+    #main_content {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 0;
+        margin-right: 0;
+        max-width: none;
+    }
+}

@@ -40,7 +40,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
             resetSearchParameters();
         }
 
-
+        
         // Set all the parameters stored in SESSION to default
         function resetSearchParameters() {
             $.ajax({
@@ -149,12 +149,11 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         // and execute createRandomAnimalsAndUpdateList() with the input value as parameter
         document.getElementById("button").addEventListener("click", createRandomAnimalsAndUpdateList())
 
-        
-
 
     </script>
     <?php
 } else {
+    // If the user is not logged in, redirect to login page
     header("Location: index.php?page=login");
 }
 ?>

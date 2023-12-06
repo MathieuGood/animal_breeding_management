@@ -14,9 +14,9 @@ if(isset($_POST['logout'])) {
     <div class="container-fluid">
         <span class="navbar-brand">
             <img src="images/snake.svg" id="animal_logo" alt="Animal Logo">
-            Snake Breeding Management
+            Breeding Management
         </span>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
