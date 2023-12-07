@@ -172,3 +172,16 @@ img#animal_logo {
         margin-top: 1em;
     }
 }
+
+.btn-group {
+    margin: 1em 0 1em 0;
+}
+
+.top-part {
+    margin: 0;
+    padding: 0;
+}
+
+.create_animal {
+    padding: 0;
+}
