@@ -35,6 +35,8 @@ class dbConnect
             // Dans le cas d'un INSERT, on récupère l'id du nouvel élément créé dans la base
             if ($startquery[0] == 'INSERT' || $startquery[0] == 'CALL') {
                 $result = $this->connect->lastInsertId();
+                echo '<br> Last inserted ID : '.$result. '<br>';
+                echo $query;
             }
             // Renvoi du résultat
             return $result;
@@ -80,7 +82,9 @@ class dbConnect
         // echo "SQL Query : ".$query."<br />";
 
         $result = $this->sendQuery($query);
-        return $result[0][0];
+        echo "<br> Result  of insert multiple : ";
+        var_dump($result);
+        return $result;
     }
 
     public function update($table, $id, $col, $value)

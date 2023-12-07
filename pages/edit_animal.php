@@ -81,10 +81,14 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
 
         // Creating new animal
         if ($choice == 'new') {
-            $animal->createAnimal($columns, $values);
+            $new_id = $animal->createAnimal($columns, $values);
+            $animal_values = $animal->getAnimalDataById($new_id);
+            var_dump($animal_values);
+        } else {
+            // Retrieve the update values of the edited/created animal
+            $animal_values = $animal->getCurrentAnimalData();
         }
-        // Retrieve the update values of the edited/created animal
-        $animal_values = $animal->getCurrentAnimalData();
+
     }
 } else {
     header("Location: index.php?page=login");
@@ -144,7 +148,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             <tr>
                 <td>Heigth</td>
                 <td>
-                    <input type=number step="1" min="1" max="1400" name="animal_heigth"
+                    <input type=number step="1" min="1" max="30000" name="animal_heigth"
                         value="<?php echo $animal_values['animal_heigth'] ?>">
                 </td>
             </tr>
@@ -168,16 +172,14 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             <tr>
                 <td>Birth</td>
                 <td>
-                    <input type=datetime-local name="birth_time"
-                        value="<?php echo $animal_values['birth_time'] ?>">
+                    <input type=datetime-local name="birth_time" value="<?php echo $animal_values['birth_time'] ?>">
                 </td>
             </tr>
 
             <tr>
                 <td>Death</td>
                 <td>
-                    <input type=datetime-local name="death_time"
-                        value="<?php echo $animal_values['death_time'] ?>">
+                    <input type=datetime-local name="death_time" value="<?php echo $animal_values['death_time'] ?>">
                 </td>
             </tr>
 
@@ -188,7 +190,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                         <option value='0'>No known father</option>
                         <?php
                         // Get the list of all male animal names
-                        $males = $animal->getAllPossibleParentAnimalNames('M');
+                        $males = $animal->getAllPossibleParentAnimalNames('M', $choice);
 
                         foreach ($males as $male) {
                             echo '<option ';
@@ -209,7 +211,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                         <option value='0'>No known mother</option>
                         <?php
                         // Get the list of all male animal names
-                        $females = $animal->getAllPossibleParentAnimalNames('F');
+                        $females = $animal->getAllPossibleParentAnimalNames('F', $choice);
 
                         foreach ($females as $female) {
                             echo '<option ';

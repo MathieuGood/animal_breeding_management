@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 body {
     /* font-size: 62.5%; */
@@ -47,21 +47,22 @@ td {
 
 th,
 td {
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
     text-align: left;
 }
 
 th {
     background-color: #282a36;
     color: #ff79c6;
-    font-weight: 400;
+    font-weight: 300;
     padding-bottom: 0.3em;
     padding-top: 0.3em;
 }
 
 .animal_table td {
-    color: #f8f8f2
+    color: #f8f8f2;
+    background-color: #6c757d;
 }
 
 .button {

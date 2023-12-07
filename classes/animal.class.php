@@ -119,25 +119,64 @@ class Animal
         return $db_connect->sendQuery("SELECT id_animal, animal_name, id_father, id_mother FROM animal WHERE animal_sex = '" . $sex . "' AND death_time = '0';");
     }
 
-    public function getAllPossibleParentAnimalNames($sex)
+    public function getAllPossibleParentAnimalNames($sex, $choice)
     {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery(
-            "SELECT id_animal, animal_name
-               FROM `" . $this->table . "` 
-                WHERE `animal_sex` ='" . $sex . "' 
-                AND `id_animal` != '" . $this->id . "' 
-                AND `death_time` = '0000-00-00 00:00:00' 
-                AND `birth_time` < (SELECT birth_time 
-                                            FROM `" . $this->table . "` 
-                                            WHERE `id_" . $this->table . "` = '" . $this->id . "')"
-        );
+
+        // If the animal exists (edit animal), exclude it from the list of possible parents
+        // Not needed if creating a new animal
+        if ($choice != 'new') {
+            $exclude_id1 = "AND `id_animal` != '" . $this->id . "'";
+            $exclude_id2 = "AND `birth_time` < (SELECT birth_time 
+                                                  FROM `" . $this->table .
+                "` WHERE `id_" . $this->table . "` = '" . $this->id . "')";
+        }
+
+        $query = "SELECT id_animal, animal_name
+                    FROM `" . $this->table .
+                    "` WHERE `animal_sex` ='" . $sex . "'"
+                    . $exclude_id1 . "AND `death_time` = '0000-00-00 00:00:00'" . $exclude_id2;
+
+        return $db_connect->sendQuery($query);
+    }
+
+    // Get all compatible parteners for breeding
+    // Filter animals based on sex
+    public function getAllCompatiblePartners($sex, $id = '')
+    {
+        $db_connect = new dbConnect();
+
+
+        // If no animal id is provided, exclude no animal
+        // If animal id is provided, filter partners that share the same breed and exclude the animal itself
+        if ($id != '') {
+            $same_breed_as_id = "AND `id_animal` != '" . $id . "'"
+                                . "AND `id_breed` = (SELECT id_breed 
+                                                        FROM `" . $this->table . 
+                                                        "` WHERE `id_" . $this->table . "` = '" . $id . "')";
+        }
+
+        $query = "SELECT id_animal, animal_name, breed_name
+                    FROM `" . $this->table . "`
+                    INNER JOIN `breed`
+                            ON `" . $this->table . "`.id_breed = `breed`.id_breed
+                                WHERE `animal_sex` ='" . $sex . "'
+                                AND `death_time` = '0000-00-00 00:00:00'";
+
+        return $db_connect->sendQuery($query);
     }
 
     public function getCurrentAnimalData()
     {
         $db_connect = new dbConnect();
         return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "` WHERE `id_" . $this->table . "` = " . $this->id)[0];
+    }
+
+    public function getAnimalDataById($id)
+    {
+        echo "<br> Retrieving animal data from id : " . $id . "<br>";
+        $db_connect = new dbConnect();
+        return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "` WHERE `id_" . $this->table . "` = " . $id)[0];
     }
 
     // Get animal_name from id
