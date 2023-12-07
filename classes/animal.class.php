@@ -156,7 +156,7 @@ class Animal
                                                         "` WHERE `id_" . $this->table . "` = '" . $id . "')";
         }
 
-        $query = "SELECT id_animal, animal_name, breed_name
+        $query = "SELECT id_animal, animal_name, breed_name, DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time
                     FROM `" . $this->table . "`
                     INNER JOIN `breed`
                             ON `" . $this->table . "`.id_breed = `breed`.id_breed
