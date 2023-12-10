@@ -21,7 +21,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             'id_breed' => '',
             'animal_name' => '',
             'animal_sex' => '',
-            'animal_heigth' => '',
+            'animal_height' => '',
             'animal_weight' => '',
             'animal_lifespan' => '',
             'birth_time' => '',
@@ -146,10 +146,10 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             </tr>
 
             <tr>
-                <td>Heigth</td>
+                <td>Height</td>
                 <td>
-                    <input type=number step="1" min="1" max="30000" name="animal_heigth"
-                        value="<?php echo $animal_values['animal_heigth'] ?>">
+                    <input type=number step="1" min="1" max="30000" name="animal_height"
+                        value="<?php echo $animal_values['animal_height'] ?>">
                 </td>
             </tr>
 
