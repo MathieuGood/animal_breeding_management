@@ -134,8 +134,8 @@ class Animal
 
         $query = "SELECT id_animal, animal_name
                     FROM `" . $this->table .
-                    "` WHERE `animal_sex` ='" . $sex . "'"
-                    . $exclude_id1 . "AND `death_time` = '0000-00-00 00:00:00'" . $exclude_id2;
+            "` WHERE `animal_sex` ='" . $sex . "'"
+            . $exclude_id1 . "AND `death_time` = '0000-00-00 00:00:00'" . $exclude_id2;
 
         return $db_connect->sendQuery($query);
     }
@@ -151,12 +151,12 @@ class Animal
         // If animal id is provided, filter partners that share the same breed and exclude the animal itself
         if ($id != '') {
             $same_breed_as_id = "AND `id_animal` != '" . $id . "'"
-                                . "AND `id_breed` = (SELECT id_breed 
-                                                        FROM `" . $this->table . 
-                                                        "` WHERE `id_" . $this->table . "` = '" . $id . "')";
+                . "AND `id_breed` = (SELECT id_breed 
+                                                        FROM `" . $this->table .
+                "` WHERE `id_" . $this->table . "` = '" . $id . "')";
         }
 
-        $query = "SELECT id_animal, animal_name, breed_name, DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time
+        $query = "SELECT id_animal, animal_name, id_breed breed_name, DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time
                     FROM `" . $this->table . "`
                     INNER JOIN `breed`
                             ON `" . $this->table . "`.id_breed = `breed`.id_breed
@@ -207,16 +207,22 @@ class Animal
     }
 
     // Create one (default) or several (int as parameter) new random animal
-    // with data consistent with its breed characteristics
+    // with data consistent with its breed characteristics,
+    // specifying sex and breed as parameters,
     // using the createRandomAnimal() stored procedure in database
-    public function createRandomAnimal($number = 1)
+    public function createRandomAnimal($number = 1, $sex = 'NULL', $id_breed = 'NULL')
     {
         $db_connect = new dbConnect();
         if ($number == '' or $number > 1000) {
             $number = 0;
         }
-        return $db_connect->sendQuery('CALL createRandomAnimals(' . $number . ');');
+        // Calling procedure with NULL for animal_sex and id_breed to have complete random animal
+        $query = 'CALL createRandomAnimals(' . $number . ', ' . $sex . ', ' . $id_breed . ');';
+        echo $query;
+
+        return $db_connect->sendQuery($query);
     }
+
 
     public function declareDead($death_time)
     {
