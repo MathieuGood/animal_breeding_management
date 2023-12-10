@@ -12,7 +12,7 @@ Features include :
 - Data for each animal
  - Name
  - Breed
- - Heigth
+ - Height
  - Weight
  - Lifespan
  - Birth date
