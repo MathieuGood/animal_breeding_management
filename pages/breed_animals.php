@@ -1,42 +1,50 @@
-<h3>Generate population evolution</h3>
+<h3>Breed animals together</h3>
 
 <?php
 if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     $animal = new Animal();
     ?>
 
-    <div class="row">
-        <div class="col-auto">
-            <select name="select_breed" id="select_breed" value="---">
+    <div class="container" id="main-content">
 
-                <option>Select breed</option>
-                <?php
-                // Get the list of breeds base on the animals in the animal table
-                $breeds = $animal->getCurrentBreeds();
-                foreach ($breeds as $breed) {
-                    echo '<option value="' . $breed['id_breed'] . '">'
-                        . $breed['breed_name'] .
-                        '</option>';
-                }
-                ;
-                ?>
-            </select>
+        <div class="row">
+            <div class="col-auto">
+                <select name="select_breed" id="select_breed" value="---">
+
+                    <option>Select breed</option>
+                    <?php
+                    // Get the list of breeds base on the animals in the animal table
+                    $breeds = $animal->getCurrentBreeds();
+                    foreach ($breeds as $breed) {
+                        echo '<option value="' . $breed['id_breed'] . '">'
+                            . $breed['breed_name'] .
+                            '</option>';
+                    }
+                    ;
+                    ?>
+                </select>
+            </div>
         </div>
-    </div>
 
-    <div class="row" id="select_animals_to_breed">
-
+        <div class="row" id="select_animals_to_breed">
 
 
-    </div>
-
-    <div class="row">
-
-        <div class="col-auto">
-
-            <button class="button" type="submit" name="start_mating"  id="start_mating">Animal mating</button>
 
         </div>
+
+        <div class="row">
+
+            <div class="col-auto">
+
+                <!-- <button class="button" type="submit" name="start_mating"  id="start_mating">Animal mating</button> -->
+                <a href="#" class="btn btn-primary" id="start_mating">Animal mating</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="new_animal_popup">
+
     </div>
 
     <script>
@@ -54,7 +62,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         // Event listener on breed selection
         select_breed.addEventListener('change', () => {
 
-            console.log(select_breed.value)
             if (select_breed.value != 'Select breed') {
                 updateCompatiblePartners(select_breed.value)
                 // Make male and female select enabled if breed chosen
@@ -71,20 +78,50 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
 
         // When button clicked
-       
         start_mating.addEventListener('click', () => {
-            console.log("Mating clicked")
-             // Get values male and female from select
+
+            // Get values breed, male and female from select
+            let breed = document.getElementById('select_breed').value
             let male = document.getElementById('select_male').value
             let female = document.getElementById('select_female').value
 
+            // If there is a valid input for each id, create new animal
+            if (breed > 0 && male > 0 && female > 0) {
 
-            // Insert ajax call to create new animal
-            
+                createNewAnimal(breed, male, female)
+
+            } else {
+                
+                console.log('Data missing')
+            }
+
 
         })
 
 
+
+        // AJAX function for creating new animal
+        function createNewAnimal(id_breed, id_father, id_mother) {
+            $.ajax({
+                type: "POST",
+                url: "ajax_queries/create_new_animal.php",
+                data: {
+                    id_breed: id_breed,
+                    id_father: id_father,
+                    id_mother: id_mother
+                },
+                // If the ajax query returns a success, display pop-up
+                // and remove the content in the background
+                success: function (data) {
+
+                    let new_animal_popup = document.getElementById("new_animal_popup");
+                    new_animal_popup.innerHTML = data;
+
+                    let main_content = document.getElementById("main-content")
+                    main_content.remove()
+                }
+            });
+        }
 
 
         // AJAX function for filtering by breed
@@ -97,8 +134,8 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 },
                 // If the ajax query returns a success, update the table
                 success: function (data) {
-                    let compatible_partners = document.getElementById("select_animals_to_breed");
-                    compatible_partners.innerHTML = data;
+                    let compatible_partners = document.getElementById("select_animals_to_breed")
+                    compatible_partners.innerHTML = data
                 }
             });
         }
