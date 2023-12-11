@@ -34,7 +34,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
         <div class="col-auto">
 
-            <input class="button" type="submit" name="start_mating" value="Animal mating">
+            <button class="button" type="submit" name="start_mating"  id="start_mating">Animal mating</button>
 
         </div>
     </div>
@@ -48,6 +48,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         let select_breed = document.getElementById('select_breed')
         let select_male = document.getElementById('select_male')
         let select_female = document.getElementById('select_female')
+        let start_mating = document.getElementById('start_mating')
 
 
         // Event listener on breed selection
@@ -68,15 +69,21 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
             }
         })
 
-        select_male.addEventListener('change', () => {
-            // updateCompatiblePartners(select_male.value)
-            console.log(select_male.value)
+
+        // When button clicked
+       
+        start_mating.addEventListener('click', () => {
+            console.log("Mating clicked")
+             // Get values male and female from select
+            let male = document.getElementById('select_male').value
+            let female = document.getElementById('select_female').value
+
+
+            // Insert ajax call to create new animal
+            
+
         })
 
-        select_female.addEventListener('change', () => {
-            // updateCompatiblePartners(select_male.value)
-            console.log(select_female.value)
-        })
 
 
 
