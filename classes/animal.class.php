@@ -200,7 +200,7 @@ class Animal
         return $db_connect->update($this->table, $this->id, $col, $value);
     }
 
-    public function createAnimal($cols, $values)
+    public function createCustomAnimal($cols, $values)
     {
         $db_connect = new dbConnect();
         return $db_connect->insertMultiple($this->table, $cols, $values);
@@ -210,14 +210,14 @@ class Animal
     // with data consistent with its breed characteristics,
     // specifying sex and breed as parameters,
     // using the createRandomAnimal() stored procedure in database
-    public function createRandomAnimal($number = 1, $sex = 'NULL', $id_breed = 'NULL')
+    public function createRandomAnimal($number = 1, $id_breed = 'NULL', $id_father = 0, $id_mother = 0)
     {
         $db_connect = new dbConnect();
         if ($number == '' or $number > 1000) {
             $number = 0;
         }
         // Calling procedure with NULL for animal_sex and id_breed to have complete random animal
-        $query = 'CALL createRandomAnimals(' . $number . ', ' . $sex . ', ' . $id_breed . ');';
+        $query = 'CALL createRandomAnimals(' . $number . ', ' . $id_breed . ', ' . $id_father . ', ' . $id_mother . ');';
         echo $query;
 
         return $db_connect->sendQuery($query);

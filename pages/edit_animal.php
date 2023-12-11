@@ -68,7 +68,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                 // Trim value from spaces
                 $value = trim($value);
 
-                // Add column names and values $columns and $values for createAnimal()
+                // Add column names and values $columns and $values for createCustomAnimal()
                 array_push($columns, $key);
                 array_push($values, $value);
 
@@ -81,7 +81,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
 
         // Creating new animal
         if ($choice == 'new') {
-            $new_id = $animal->createAnimal($columns, $values);
+            $new_id = $animal->createCustomAnimal($columns, $values);
             $animal_values = $animal->getAnimalDataById($new_id);
             var_dump($animal_values);
         } else {
