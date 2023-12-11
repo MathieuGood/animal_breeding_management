@@ -62,42 +62,42 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
 
 <div class="btn-group filters">
 
-<!-- Sex filter -->
-<span class="dropdown">
+    <!-- Sex filter -->
+    <span class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Sex
+        </button>
+        <ul class="dropdown-menu">
+            <?php
+            foreach ($filtered_sex_list as $one_sex) {
+                echo "<li><a class='dropdown-item' href='#' 
+                    onclick='filterAnimalListBySex(\"" . $one_sex['animal_sex'] . "\")'>" . $one_sex['animal_sex'] . " (" . $one_sex['sex_count'] . ")</a></li>";
+            }
+            ?>
+        </ul>
+    </span>
+
+    <!-- Breed filter -->
     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Sex
+        Breed
     </button>
     <ul class="dropdown-menu">
         <?php
-        foreach ($filtered_sex_list as $one_sex) {
+
+        foreach ($filtered_breed_list as $one_breed) {
             echo "<li><a class='dropdown-item' href='#' 
-                    onclick='filterAnimalListBySex(\"" . $one_sex['animal_sex'] . "\")'>" . $one_sex['animal_sex'] . " (" . $one_sex['sex_count'] . ")</a></li>";
+                    onclick='filterAnimalListByBreed(\"" . $one_breed['breed_name'] . "\")'>" . $one_breed['breed_name'] . " (" . $one_breed['breed_count'] . ")</a></li>";
         }
+
         ?>
     </ul>
-</span>
 
-<!-- Breed filter -->
-<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Breed
-</button>
-<ul class="dropdown-menu">
-    <?php
-
-    foreach ($filtered_breed_list as $one_breed) {
-        echo "<li><a class='dropdown-item' href='#' 
-                    onclick='filterAnimalListByBreed(\"" . $one_breed['breed_name'] . "\")'>" . $one_breed['breed_name'] . " (" . $one_breed['breed_count'] . ")</a></li>";
-    }
-
-    ?>
-</ul>
-
-<!-- Reset filters -->
-<span class="reset-filters">
-    <button class="btn btn-secondary" onclick="resetSearchParameters()">
-        Reset all filters
-    </button>
-</span>
+    <!-- Reset filters -->
+    <span class="reset-filters">
+        <button class="btn btn-secondary" onclick="resetSearchParameters()">
+            Reset all filters
+        </button>
+    </span>
 
 </div>
 
@@ -156,8 +156,8 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
 
 
 <div class="row justify-content-center">
-<?php
-// Include navigation component
-include('../components/pagination.php');
-?>
+    <?php
+    // Include navigation component
+    include('../components/pagination.php');
+    ?>
 </div>
