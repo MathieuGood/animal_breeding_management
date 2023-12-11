@@ -238,7 +238,6 @@ class Animal
         }
         // Calling procedure with NULL for animal_sex and id_breed to have complete random animal
         $query = 'CALL createRandomAnimals(' . $number . ', ' . $id_breed . ', ' . $id_father . ', ' . $id_mother . ');';
-        echo $query;
 
         return $db_connect->sendQuery($query);
     }
