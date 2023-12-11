@@ -26,43 +26,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
     <div class="row" id="select_animals_to_breed">
 
-        <!-- <div class="col-auto">
 
-            <select name='male_animal' id='select_male' value="---" disabled>
-                <option>Select male animal</option>
-                <?php
-                // Get the list of all male animal names
-                $males = $animal->getAllCompatiblePartners('M');
-
-                foreach ($males as $male) {
-                    echo '<option value="' . $male['id_animal'] . '">
-                            #' . $male['id_animal'] . ' ' . $male['animal_name'] . ' > ' . $male['breed_name'] .
-                        '</option>';
-                }
-                ?>
-
-            </select>
-
-        </div>
-
-
-        <div class="col-auto">
-
-            <select name='female_animal' id='select_female' value="---" disabled>
-                <option value='0'>Select female animal</option>
-                <?php
-                // Get the list of all male animal names
-                $females = $animal->getAllCompatiblePartners('F');
-
-                foreach ($females as $female) {
-                    echo '<option ';
-                    echo 'value="' . $female['id_animal'] . '">
-                     #' . $female['id_animal'] . ' ' . $female['animal_name'] . ' > ' . $female['breed_name'] . '</option>';
-                }
-                ?>
-            </select>
-
-        </div> -->
 
     </div>
 
@@ -88,7 +52,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
         // Event listener on breed selection
         select_breed.addEventListener('change', () => {
-            
+
             console.log(select_breed.value)
             if (select_breed.value != 'Select breed') {
                 updateCompatiblePartners(select_breed.value)
