@@ -186,3 +186,37 @@ img#animal_logo {
 .create_animal {
     padding: 0;
 }
+
+.card-body {
+    background-color: #D3D3D3;
+    color: #282a36;
+    /* font-size: 1em; */
+
+}
+
+.card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -143px;
+    margin-top: -107px;
+}
+
+.btn-primary, .btn-primary:active, .btn-primary:hover, .btn-primary:visited {
+    background-color: #282a36;
+    border: 0;
+    box-shadow: 0 0 0 0.08rem rgba(80,250,123,.5);
+}
+
+.btn-primary, .btn-primary:active {
+    color: #50fa7b;
+}
+
+.btn-primary:hover {
+    color: #ff79c6;
+}
+
+#snake_name {
+    color: #ff79c6;
+    font-weight: 800;
+}
