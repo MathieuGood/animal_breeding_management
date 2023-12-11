@@ -33,10 +33,19 @@ class dbConnect
                 }
             }
             // Dans le cas d'un INSERT, on récupère l'id du nouvel élément créé dans la base
-            if ($startquery[0] == 'INSERT' || $startquery[0] == 'CALL') {
+            if ($startquery[0] == 'INSERT') {
+
                 $result = $this->connect->lastInsertId();
-                echo '<br> Last inserted ID : '.$result. '<br>';
-                echo $query;
+
+                // echo '<br> Last inserted ID (PDO) : '.$result. '<br>';
+
+            } else if ($startquery[0] == 'CALL') {
+
+                $result = $this->connect->query("SELECT MAX(id_animal) AS last_insert FROM animal");
+                $result = $result->fetchAll(PDO::FETCH_ASSOC)[0]['last_insert'];
+
+                // echo '<br> Last inserted ID (SQL) : '.$result. '<br>';
+
             }
             // Renvoi du résultat
             return $result;
@@ -82,8 +91,8 @@ class dbConnect
         // echo "SQL Query : ".$query."<br />";
 
         $result = $this->sendQuery($query);
-        echo "<br> Result  of insert multiple : ";
-        var_dump($result);
+        // echo "<br> Result  of insert multiple : ";
+        // var_dump($result);
         return $result;
     }
 
