@@ -107,6 +107,20 @@ class Animal
         return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "` WHERE death_time != '0000-00-00 00:00:00'", "num");
     }
 
+    // Get breed IDs and names based on animals population in animal table
+    public function getCurrentBreeds()
+    {
+        $db_connect = new dbConnect();
+        $query = "SELECT animal.id_breed, breed_name
+                    FROM animal
+                    INNER JOIN breed
+                            on animal.id_breed = breed.id_breed
+                    WHERE death_time = '0000-00-00 00:00:00'
+                    GROUP BY breed_name
+                    ORDER BY breed_name";
+        return $db_connect->sendQuery($query);
+    }
+
     public function getAnimalBreeds()
     {
         $db_connect = new dbConnect();
@@ -142,26 +156,29 @@ class Animal
 
     // Get all compatible parteners for breeding
     // Filter animals based on sex
-    public function getAllCompatiblePartners($sex, $id = '')
+    public function getAllCompatiblePartners($sex, $id = '', $id_breed = '')
     {
         $db_connect = new dbConnect();
 
-
-        // If no animal id is provided, exclude no animal
-        // If animal id is provided, filter partners that share the same breed and exclude the animal itself
         if ($id != '') {
-            $same_breed_as_id = "AND `id_animal` != '" . $id . "'"
-                . "AND `id_breed` = (SELECT id_breed 
-                                                        FROM `" . $this->table .
+            // If animal id is provided, filter partners that share the same breed and exclude the animal itself
+            $breed_query = "AND `id_animal` != '" . $id . "'"
+                . "AND `animal`.id_breed = (SELECT id_breed 
+                                        FROM `" . $this->table .
                 "` WHERE `id_" . $this->table . "` = '" . $id . "')";
+        } else {
+            // If no animal id is provided, exclude no animal
+            $breed_query = "AND animal.id_breed = '" . $id_breed . "'";
+
         }
 
-        $query = "SELECT id_animal, animal_name, id_breed breed_name, DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time
+        $query = "SELECT id_animal, animal_name, breed_name, DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time
                     FROM `" . $this->table . "`
                     INNER JOIN `breed`
                             ON `" . $this->table . "`.id_breed = `breed`.id_breed
                                 WHERE `animal_sex` ='" . $sex . "'
-                                AND `death_time` = '0000-00-00 00:00:00'";
+                                AND `death_time` = '0000-00-00 00:00:00'"
+            . $breed_query;
 
         return $db_connect->sendQuery($query);
     }
