@@ -480,17 +480,98 @@ CREATE VIEW breedingManagement.breedCount AS (
 
 
 
--- Creating a stored procedure to generate random animals with optional parameters (amount to create, sex, breed)
+-- Creating a stored procedure to generate random animals with optional parameters (amount to create, breed, id_father, id_mother)
+-- DELIMITER //
+
+-- CREATE PROCEDURE breedingManagement.createRandomAnimals(
+--     IN numCalls INT,
+--     IN optionalSex CHAR(1),
+--     IN optionalBreed INT
+-- )
+-- BEGIN
+--     DECLARE i INT DEFAULT 1;
+--     DECLARE breedIdExists INT;
+
+--     WHILE i <= numCalls DO
+--         -- Random or specified id_breed
+--         IF optionalBreed IS NULL THEN
+--             SET breedIdExists = (SELECT 1 FROM breed ORDER BY RAND() LIMIT 1);
+--             SELECT id_breed INTO @id_breed FROM breed WHERE breedIdExists = 1 ORDER BY RAND() LIMIT 1;
+--         ELSE
+--             SET @id_breed = optionalBreed;
+--         END IF;
+
+--         -- Random animal_name
+--         SELECT id_name_source INTO @id_name_source FROM name_source ORDER BY RAND() LIMIT 1;
+--         SELECT name_example INTO @animal_name FROM name_source WHERE id_name_source = @id_name_source;
+
+--         -- Random or specified animal_sex
+--         IF optionalSex IS NULL OR LENGTH(optionalSex) <> 1 THEN
+--             SELECT sex_example INTO @animal_sex FROM name_source WHERE id_name_source = @id_name_source;
+--         ELSE
+--             SET @animal_sex = optionalSex;
+--         END IF;
+
+--         -- Random animal_height
+--         SELECT min_avg_height INTO @min_avg_height FROM breed WHERE id_breed = @id_breed;
+--         SELECT max_avg_height INTO @max_avg_height FROM breed WHERE id_breed = @id_breed;
+--         SELECT FLOOR(@min_avg_height + RAND() * (@max_avg_height - @min_avg_height + 1)) INTO @animal_height;
+
+--         -- Random animal_weight
+--         SELECT min_avg_weight INTO @min_avg_weight FROM breed WHERE id_breed = @id_breed;
+--         SELECT max_avg_weight INTO @max_avg_weight FROM breed WHERE id_breed = @id_breed;
+--         SELECT FLOOR(@min_avg_weight + RAND() * (@max_avg_weight - @min_avg_weight + 1)) INTO @animal_weight;
+
+--         -- Random animal_lifespan
+--         SELECT min_avg_lifespan INTO @min_avg_lifespan FROM breed WHERE id_breed = @id_breed;
+--         SELECT max_avg_lifespan INTO @max_avg_lifespan FROM breed WHERE id_breed = @id_breed;
+--         SELECT FLOOR(@min_avg_lifespan + RAND() * (@max_avg_lifespan - @min_avg_lifespan + 1)) INTO @animal_lifespan;
+
+--         -- Random datetime in the last 7 days
+--         SELECT DATE_FORMAT(CURRENT_TIMESTAMP() - INTERVAL FLOOR(RAND() * 604800) SECOND, '%Y-%m-%d %H:%i') INTO @birth_time;
+
+--         -- Create new animal with random or specified values
+--         INSERT INTO animal (
+--             id_breed,
+--             animal_name,
+--             animal_sex,
+--             animal_height,
+--             animal_weight,
+--             animal_lifespan,
+--             birth_time
+--         )
+--         VALUES (
+--             @id_breed,
+--             @animal_name,
+--             @animal_sex,
+--             @animal_height,
+--             @animal_weight,
+--             @animal_lifespan,
+--             @birth_time
+--         );
+
+--         SET i = i + 1;
+--     END WHILE;
+
+-- END//
+
+-- DELIMITER ;
+
+
+
 DELIMITER //
 
 CREATE PROCEDURE breedingManagement.createRandomAnimals(
     IN numCalls INT,
-    IN optionalSex CHAR(1),
-    IN optionalBreed INT
+    IN optionalBreed INT,
+    IN id_father_param INT,
+    IN id_mother_param INT
 )
 BEGIN
     DECLARE i INT DEFAULT 1;
     DECLARE breedIdExists INT;
+    DECLARE id_father INT;
+    DECLARE id_mother INT;
 
     WHILE i <= numCalls DO
         -- Random or specified id_breed
@@ -501,16 +582,34 @@ BEGIN
             SET @id_breed = optionalBreed;
         END IF;
 
-        -- Random animal_name
-        SELECT id_name_source INTO @id_name_source FROM name_source ORDER BY RAND() LIMIT 1;
-        SELECT name_example INTO @animal_name FROM name_source WHERE id_name_source = @id_name_source;
-
-        -- Random or specified animal_sex
-        IF optionalSex IS NULL OR LENGTH(optionalSex) <> 1 THEN
-            SELECT sex_example INTO @animal_sex FROM name_source WHERE id_name_source = @id_name_source;
+        -- Random id_father
+        IF id_father_param IS NULL THEN
+            -- Select a random existing animal_id where death_time = 0 and animal_sex = 'M'
+            SELECT id_animal INTO id_father
+            FROM animal
+            WHERE death_time = 0 AND animal_sex = 'M'
+            ORDER BY RAND()
+            LIMIT 1;
         ELSE
-            SET @animal_sex = optionalSex;
+            SET id_father = id_father_param;
         END IF;
+
+        -- Random id_mother
+        IF id_mother_param IS NULL THEN
+            -- Select a random existing animal_id where death_time = 0 and animal_sex = 'F'
+            SELECT id_animal INTO id_mother
+            FROM animal
+            WHERE death_time = 0 AND animal_sex = 'F'
+            ORDER BY RAND()
+            LIMIT 1;
+        ELSE
+            SET id_mother = id_mother_param;
+        END IF;
+
+        -- Random animal_name and animal_sex
+        SELECT (SELECT id_name_source FROM name_source ORDER BY RAND() LIMIT 1) INTO @id_name_source;
+        SELECT (SELECT name_example FROM name_source WHERE id_name_source = @id_name_source) INTO @animal_name;
+        SELECT (SELECT sex_example FROM name_source WHERE id_name_source = @id_name_source) INTO @animal_sex;
 
         -- Random animal_height
         SELECT min_avg_height INTO @min_avg_height FROM breed WHERE id_breed = @id_breed;
@@ -538,7 +637,9 @@ BEGIN
             animal_height,
             animal_weight,
             animal_lifespan,
-            birth_time
+            birth_time,
+            id_father,
+            id_mother
         )
         VALUES (
             @id_breed,
@@ -547,7 +648,9 @@ BEGIN
             @animal_height,
             @animal_weight,
             @animal_lifespan,
-            @birth_time
+            @birth_time,
+            id_father,
+            id_mother
         );
 
         SET i = i + 1;
@@ -558,8 +661,9 @@ END//
 DELIMITER ;
 
 
+
 -- Generating 20 random animals to populate the `animal` table
-CALL createRandomAnimals(20, NULL, NULL);
+CALL createRandomAnimals(20, NULL, 0, 0);
 
 
 
