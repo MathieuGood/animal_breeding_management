@@ -130,7 +130,10 @@ class Animal
     public function getAllAliveAnimalsAndParentsBySex($sex)
     {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT id_animal, animal_name, id_father, id_mother FROM animal WHERE animal_sex = '" . $sex . "' AND death_time = '0';");
+        return $db_connect->sendQuery("SELECT id_animal, animal_name, id_father, id_mother 
+                                        FROM animal 
+                                        WHERE animal_sex = '" . $sex . 
+                                        "' AND death_time = '0';");
     }
 
     public function getAllPossibleParentAnimalNames($sex, $choice)
