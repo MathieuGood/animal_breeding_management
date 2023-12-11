@@ -12,7 +12,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     // Instantiate new Animal object
     $animal = new Animal();
 
-
     if (isset($_POST['random_animal'])) {
         $animal->createRandomAnimal($_POST['amount_to_create']);
     }
