@@ -69,14 +69,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
         <div id="animal_list">
 
-
-
-
-
-            <!-- </div> -->
-
-            <!-- </div> -->
-
             <script>
                 // When the page loads, execute sortAnimalList() with 'animal_id DESC' as default parameter 
                 window.onload = function () {
