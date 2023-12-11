@@ -663,7 +663,7 @@ DELIMITER ;
 
 
 -- Generating 20 random animals to populate the `animal` table
-CALL createRandomAnimals(20, NULL, 0, 0);
+CALL createRandomAnimals(50, NULL, 0, 0);
 
 
 
