@@ -78,11 +78,8 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
                 // Name search filter
                 var name_filter_input = document.getElementById("name_filter")
-                console.log(name_filter_input)
-                console.log(name_filter_input.value)
                 name_filter_input.addEventListener("keyup", () => {
                     filterAnimalListByName(name_filter_input.value)
-                    console.log("Change detected in text input")
                 })
 
 
