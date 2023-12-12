@@ -10,13 +10,13 @@ if (isset($_POST['logout'])) {
 }
 ?>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" id="menu_navbar">
+<nav class="navbar navbar-expand-md bg-body-tertiary" id="menu_navbar">
     <div class="container-fluid">
         <span class="navbar-brand">
             <a href="index.php?page=animal_list">
                 <img src="images/snake.svg" id="animal_logo" alt="Animal Logo">
             </a>
-            Breeding Manager
+            Breeding Management
         </span>
         <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -20,16 +20,19 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         <div class="container row top-part">
 
             <div class="create_animal col-sm-auto">
-                <input class="button" style="width:100%; margin:0.3em 0 0.5em 0;" type="button"
+
+                <input class="btn btn-primary" style="width:100%; margin:0.3em 0 0.5em 0;" type="button"
                     onclick="window.location.href='index.php?page=edit_animal&choice=new'"
                     value="Add new custom <?php echo $_SESSION['animal_specie'] ?>">
 
                 <span class="create_multiple_animals">
+
                     <form id="create_multiple_animals" method="POST" action="">
                         <input type=number step="1" min="1" max="1000" name="amount_to_create" value="1">
-                        <input class="button" style="width:auto; margin:0" type="submit" name="random_animal"
+                        <input class="btn btn-primary" style="width:auto; margin:0" type="submit" name="random_animal"
                             value="Create random <?php echo $_SESSION['animal_specie_plural'] ?> ">
                     </form>
+
                 </span>
 
             </div>
@@ -61,7 +64,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
         </div>
 
-        <span>
+        <span class="pt-2">
             <!-- Name filter -->
             <input type="text" name="name_filter" id="name_filter" placeholder="Name search">
 
