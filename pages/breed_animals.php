@@ -1,14 +1,18 @@
-<h3>Breed animals together</h3>
-
 <?php
 if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     $animal = new Animal();
     ?>
 
-    <div class="container" id="main-content">
+    <div class="container d-flex flex-column" id="main-content">
 
-        <div class="row">
+        <!-- <span class="d-flex justify-content-center text-align-center"> -->
+            <h3 class="justify-content-center">Breed animals together</h3>
+        <!-- </span> -->
+
+        <div class="row d-flex justify-content-center">
+
             <div class="col-auto">
+
                 <select name="select_breed" id="select_breed" value="---">
 
                     <option>Select breed</option>
@@ -23,21 +27,25 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                     ;
                     ?>
                 </select>
+
             </div>
-        </div>
-
-        <div class="row" id="select_animals_to_breed">
-
-
 
         </div>
 
-        <div class="row">
+
+
+        <div class="row d-flex justify-content-center pt-3" id="select_animals_to_breed">
+
+
+
+        </div>
+
+        <div class="row d-flex justify-content-center pt-3">
 
             <div class="col-auto">
 
-                <!-- <button class="button" type="submit" name="start_mating"  id="start_mating">Animal mating</button> -->
                 <a href="#" class="btn btn-primary" id="start_mating">Animal mating</a>
+
             </div>
         </div>
 
@@ -91,7 +99,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 createNewAnimal(breed, male, female)
 
             } else {
-                
+
                 console.log('Data missing')
             }
 

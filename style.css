@@ -202,13 +202,17 @@ img#animal_logo {
     margin-top: -107px;
 }
 
-.btn-primary, .btn-primary:active, .btn-primary:hover, .btn-primary:visited {
+.btn-primary,
+.btn-primary:active,
+.btn-primary:hover,
+.btn-primary:visited {
     background-color: #282a36;
     border: 0;
-    box-shadow: 0 0 0 0.08rem rgba(80,250,123,.5);
+    box-shadow: 0 0 0 0.08rem rgba(80, 250, 123, .5);
 }
 
-.btn-primary, .btn-primary:active {
+.btn-primary,
+.btn-primary:active {
     color: #50fa7b;
 }
 
@@ -219,4 +223,63 @@ img#animal_logo {
 #snake_name {
     color: #ff79c6;
     font-weight: 800;
+}
+
+/* Animated heart used on breed_animals.php */
+.heart-container {
+    display: flex;
+    height: 160px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    animation: 2s ease 0.5s infinite pulse;
+}
+
+.heart-box {
+    height: 90%;
+    max-height: 400px;
+}
+
+#heart {
+    height: 100%;
+    margin-left: auto;
+    animation: 2.5s ease 0s infinite beat;
+}
+
+@keyframes beat {
+
+    0%,
+    50%,
+    100% {
+        transform: scale(1, 1);
+    }
+
+    30%,
+    80% {
+        transform: scale(0.92, 0.95);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    50%,
+    100% {
+        background: transparent;
+    }
+
+    30%,
+    80% {
+        background: transparent;
+    }
+}
+
+
+
+@media only screen and (max-width: 575px) {
+
+    /* CSS rules for screens smaller than 576px */
+    #heart-main {
+        display: none !Important;
+    }
 }

@@ -16,7 +16,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         $animal->createRandomAnimal($_POST['amount_to_create']);
     }
     ?>
-    <div class="page-content">
+    <div class="page-content d-flex flex-column justify-content-center">
         <div class="container row top-part">
 
             <div class="create_animal col-sm-auto">
