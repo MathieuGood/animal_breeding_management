@@ -103,11 +103,19 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
 </div>
 
 <table class="table table-striped table-hover animal_table">
+
     <!-- Header row -->
     <tr id="animal_list_header" style="background-color:#282a36">
         <th></th>
         <?php
-        $animal_columns = $animal->getColumnNames();
+        
+        if ($alive == true) {
+            $view = "animalList";
+        } else {
+            $view = "deceasedAnimalList";
+        }
+
+        $animal_columns = $animal->getColumnNames($view);
         // Display each column name
         foreach ($animal_columns as $column) {
             echo "<th>" . $column['label'];
@@ -139,11 +147,15 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
     // Build row for each animal
     foreach ($filtered_animal_data as $one_animal) {
         echo "<tr>
-            <td>
-            <a href='index.php?page=declare_death&id=" . $one_animal['id_animal'] . "'>💀</a>
-            <a href='index.php?page=edit_animal&choice=edit&id=" . $one_animal['id_animal'] . "'>✏️</a>
-            <a href='index.php?page=&choice=family_tree&id=" . $one_animal['id_animal'] . "'>👪</a>
+            <td>";
+        if ($alive == true) {
+            echo "<a href='index.php?page=declare_death&id=" . $one_animal['id_animal'] . "'>💀</a>
+            <a href='index.php?page=edit_animal&choice=edit&id=" . $one_animal['id_animal'] . "'>✏️</a>";
+        }
+
+        echo "<a href='index.php?page=&choice=family_tree&id=" . $one_animal['id_animal'] . "'>👪</a>
             </td>";
+
         // In each column of one row, display the value of one of the animal characteristics
         foreach ($one_animal as $value) {
             echo "<td>" . $value . "</td>";

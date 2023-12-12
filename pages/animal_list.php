@@ -4,11 +4,11 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
     // If $_GET['choice'] exists and is equal to 'deceased', 
     if (isset($_GET['choice']) && $_GET['choice'] == 'deceased') {
-        echo 'Show deceased animals';
         $_SESSION['alive'] = false;
+        $title = 'Deceased animals list';
     } else {
-        echo 'Alive animals';
         $_SESSION['alive'] = true;
+        $title = 'Animal list';
     }
 
     // On page load, reset all filters, sorting and pagination stored in $_SESSION
@@ -23,7 +23,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     ?>
 
     <h3>
-        <?php echo ucfirst($_SESSION['animal_specie']) ?> list
+        <?php echo $title ?>
     </h3>
 
     <div class="page-content d-flex flex-column justify-content-center">
@@ -38,9 +38,11 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 <span class="create_multiple_animals">
 
                     <form id="create_multiple_animals" method="POST" action="">
+
                         <input type=number step="1" min="1" max="1000" name="amount_to_create" value="1">
                         <input class="btn btn-primary" style="width:auto; margin:0" type="submit" name="random_animal"
                             value="Create random <?php echo $_SESSION['animal_specie_plural'] ?> ">
+                            
                     </form>
 
                 </span>

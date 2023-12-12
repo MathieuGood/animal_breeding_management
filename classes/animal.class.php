@@ -281,10 +281,10 @@ class Animal
     }
 
 
-    public function getColumnNames()
+    public function getColumnNames($view)
     {
         $db_connect = new dbConnect();
-        return $db_connect->getColumnNames('animalList');
+        return $db_connect->getColumnNames($view);
     }
 }
 
