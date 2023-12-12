@@ -449,7 +449,7 @@ ALTER TABLE column_label
     ADD KEY id_column_label (id_column_label);
 
 
--- Creating a view to generate the content for animal_list.php
+-- Creating a view to get live animals for animal_list.php
 CREATE VIEW breedingManagement.animalList AS (SELECT 
                                                 id_animal, 
                                                 animal_name, 
@@ -462,7 +462,24 @@ CREATE VIEW breedingManagement.animalList AS (SELECT
                                                   FROM animal
                                                     INNER JOIN breed
                                                             ON animal.id_breed = breed.id_breed
-                                                            WHERE death_time = '0000-00-00 00:00:00');
+                                                                WHERE death_time = '0000-00-00 00:00:00');
+
+
+-- Creating a view to get live animals for animal_list.php
+CREATE VIEW breedingManagement.deceasedAnimalList AS (SELECT 
+                                                id_animal, 
+                                                animal_name, 
+                                                animal_sex,                                                 
+                                                breed_name,
+                                                animal_height, 
+                                                animal_weight, 
+                                                animal_lifespan, 
+                                                DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time,
+                                                DATE_FORMAT(death_time, '%d/%m/%Y %H:%i') AS death_time
+                                                  FROM animal
+                                                    INNER JOIN breed
+                                                            ON animal.id_breed = breed.id_breed
+                                                                WHERE death_time != '0000-00-00 00:00:00');
 
 
 -- Creating a view to count the number of animals per breed
