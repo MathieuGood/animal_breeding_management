@@ -286,7 +286,28 @@ class Animal
         $db_connect = new dbConnect();
         return $db_connect->getColumnNames($view);
     }
-}
 
+
+    public function getParentDetails($id, $parent_type)
+    {
+        $db_connect = new dbConnect();
+
+        $query = "CALL getParentDetails(" . $id . ", '" . $parent_type . "');";
+
+        return $db_connect->sendQuery($query);
+    }
+
+
+    public function getChildrenDetails($id)
+    {
+        $db_connect = new dbConnect();
+
+        $query = "CALL getChildrenDetails(" . $id . ");";
+
+        return $db_connect->sendQuery($query);
+    }
+
+
+}
 
 ?>
