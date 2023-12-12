@@ -32,6 +32,7 @@ if (isset($_POST['logout'])) {
 // Si l'id_login est vide ou inférieur à 1, on affiche le formulaire de connexion
 if (!isset($_SESSION['open']) || $_SESSION['open'] < 1) {
 ?>
+<div class="container">
 <form method="POST" action="">
     <table class="formtable">
         <tr>
@@ -45,6 +46,7 @@ if (!isset($_SESSION['open']) || $_SESSION['open'] < 1) {
     </table>
         <input class="button" type="submit" name="form_submit" value="Submit">
 </form>
+</div>
 
 
 <?php 
