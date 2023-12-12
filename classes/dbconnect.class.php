@@ -26,14 +26,11 @@ class dbConnect
             // Traitement du résultat
             // Dans le cas d'un SELECT, on convertit le résulat de la queryuête en tableau PHP
             if ($startquery[0] == 'SELECT' || str_contains($startquery[1], 'get')) {
+                
                 if ($fetch_type == "num") {
                     $result = $result->fetchAll(PDO::FETCH_ASSOC);
                 } else {
                     $result = $result->fetchAll();
-                    echo '<br>';
-                    echo '<br>';
-                    echo 'NO NUM :';
-                    var_dump($result);
                 }
             }
             // Dans le cas d'un INSERT, on récupère l'id du nouvel élément créé dans la base
