@@ -141,6 +141,7 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
             <td>
             <a href='index.php?page=declare_death&id=" . $one_animal['id_animal'] . "'>💀</a>
             <a href='index.php?page=edit_animal&choice=edit&id=" . $one_animal['id_animal'] . "'>✏️</a>
+            <a href='index.php?page=&choice=family_tree&id=" . $one_animal['id_animal'] . "'>👪</a>
             </td>";
         // In each column of one row, display the value of one of the animal characteristics
         foreach ($one_animal as $value) {
