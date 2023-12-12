@@ -24,16 +24,14 @@ $_SESSION['animal_specie_plural'] = "snakes";
     <link rel="stylesheet" href="style.css" type="text/css" />
     <link rel="icon" href="images/snake.ico" />
     <title>
-        <?php echo ucfirst($_SESSION['animal_specie']) ?> Breeding Management
+        <?php echo ucfirst($_SESSION['animal_specie']) ?> Breeding Manager
     </title>
 </head>
 
 <body>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <!-- <h1>
-        <?php echo ucfirst($_SESSION['animal_specie']) ?> Breeding Management
-    </h1> -->
+
     <?php
     include('menu.php');
     ?>
