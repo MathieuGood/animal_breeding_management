@@ -275,7 +275,6 @@ img#animal_logo {
 }
 
 
-
 @media only screen and (max-width: 575px) {
 
     /* CSS rules for screens smaller than 576px */
@@ -295,4 +294,4 @@ a:active {
 .navbar-nav li:last-of-type {
     position: absolute;
     right: 5%;
-  }
+}
