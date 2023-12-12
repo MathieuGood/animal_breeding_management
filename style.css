@@ -195,6 +195,10 @@ img#animal_logo {
     margin-top: -107px;
 }
 
+.card {
+    background-color: #D3D3D3;
+}
+
 .card-body {
     background-color: #D3D3D3;
     color: #282a36;
@@ -208,6 +212,11 @@ img#animal_logo {
 
 .card li {
     font-size: 0.85rem;
+}
+
+.animal-card {
+    padding: 0 1em 0 1em;
+    width: 17rem;
 }
 
 .btn-primary,
