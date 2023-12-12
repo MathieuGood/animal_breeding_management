@@ -22,7 +22,7 @@ $animal_name = $animal->getAnimalName();
 
 ?>
 
-<div class="card text-center mb-3" style="width: 18rem;">
+<div class="card card-popup text-center mb-3" style="width: 18rem;">
     <div class="card-body">
         <h5 class="card-title">Welcome to the world
             <span id="snake_name">
