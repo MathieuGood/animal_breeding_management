@@ -6,7 +6,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     <div class="container d-flex flex-column" id="main-content">
 
         <!-- <span class="d-flex justify-content-center text-align-center"> -->
-            <h3 class="justify-content-center">Breed animals together</h3>
+        <h3 class="justify-content-center">Breed animals together</h3>
         <!-- </span> -->
 
         <div class="row d-flex justify-content-center">

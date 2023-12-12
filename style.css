@@ -158,7 +158,7 @@ img#animal_logo {
         padding-left: 0;
         padding-right: 0;
         margin-left: 1em;
-        margin-right: 2em;
+        margin-right: 1em;
         max-width: 95vw;
     }
 
@@ -282,4 +282,12 @@ img#animal_logo {
     #heart-main {
         display: none !Important;
     }
+}
+
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
 }

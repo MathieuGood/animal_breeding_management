@@ -1,6 +1,6 @@
 <?php
 // Si l'utilisateur se déconnecte, on remet id_login à 0 et on détruit la session
-if(isset($_POST['logout'])) {
+if (isset($_POST['logout'])) {
     $_SESSION['open'] = 0;
     unset($_SESSION['open']);
     unset($_SESSION['user_name']);
@@ -13,7 +13,9 @@ if(isset($_POST['logout'])) {
 <nav class="navbar navbar-expand-lg bg-body-tertiary" id="menu_navbar">
     <div class="container-fluid">
         <span class="navbar-brand">
-            <img src="images/snake.svg" id="animal_logo" alt="Animal Logo">
+            <a href="index.php?page=animal_list">
+                <img src="images/snake.svg" id="animal_logo" alt="Animal Logo">
+            </a>
             Breeding Management
         </span>
         <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -23,7 +25,7 @@ if(isset($_POST['logout'])) {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <?php
-                if(isset($_SESSION['open']) && $_SESSION['open'] > 0) {
+                if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                     ?>
                     <li class="nav-item">
                         <a class="nav-link pink_link" aria-current="page" href="index.php?page=animal_list">Animal List</a>
