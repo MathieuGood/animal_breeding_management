@@ -295,5 +295,4 @@ a:active {
 .navbar-nav li:last-of-type {
     position: absolute;
     right: 5%;
-    /* bottom: 0; */
   }
