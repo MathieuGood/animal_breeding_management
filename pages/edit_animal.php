@@ -109,7 +109,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                     <select name="id_breed">
                         <?php
                         // Get the list of all breeds for the select options input
-                        $breeds = $animal->getAnimalBreeds();
+                        $breeds = $animal->getAllAnimalBreeds();
                         foreach ($breeds as $breed) {
                             echo '<option ';
                             if ($breed['id_breed'] == $animal_values['id_breed']) {
