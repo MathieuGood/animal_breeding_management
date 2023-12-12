@@ -32,7 +32,7 @@ if (isset($_POST['logout'])) {
 if (!isset($_SESSION['open']) || $_SESSION['open'] < 1) {
     ?>
     <div class="container">
-    <h3>User login</h3>
+        <h3>User login</h3>
 
         <div class="col-auto">
 
@@ -53,7 +53,9 @@ if (!isset($_SESSION['open']) || $_SESSION['open'] < 1) {
 
                 </table>
 
-                <input class="btn btn-primary" type="submit" name="form_submit" value="Submit">
+                <div class="pt-3">
+                    <input class="btn btn-primary" type="submit" name="form_submit" value="Submit">
+                </div>
 
             </form>
 

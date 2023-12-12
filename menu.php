@@ -16,7 +16,7 @@ if (isset($_POST['logout'])) {
             <a href="index.php?page=animal_list">
                 <img src="images/snake.svg" id="animal_logo" alt="Animal Logo">
             </a>
-            Breeding Management
+            Breeding Manager
         </span>
         <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@ if (isset($_POST['logout'])) {
                     </li>
                     <li class="nav-item">
                         <form method="POST" action="">
-                            <input class="button" type="submit" name="logout" value="Logout">
+                            <input class="btn btn-primary" type="submit" name="logout" value="Logout">
                         </form>
                     </li>
 
