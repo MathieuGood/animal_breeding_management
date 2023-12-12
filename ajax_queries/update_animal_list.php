@@ -108,7 +108,7 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
     <tr id="animal_list_header" style="background-color:#282a36">
         <th></th>
         <?php
-        
+
         if ($alive == true) {
             $view = "animalList";
         } else {
@@ -153,7 +153,7 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
             <a href='index.php?page=edit_animal&choice=edit&id=" . $one_animal['id_animal'] . "'>✏️</a>";
         }
 
-        echo "<a href='index.php?page=&choice=family_tree&id=" . $one_animal['id_animal'] . "'>👪</a>
+        echo "<a href='index.php?page=&choice=family_tree&id=" . $one_animal['id_animal'] . "'> 👪</a>
             </td>";
 
         // In each column of one row, display the value of one of the animal characteristics
