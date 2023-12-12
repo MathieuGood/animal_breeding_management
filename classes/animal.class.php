@@ -190,7 +190,8 @@ class Animal
         return $db_connect->sendQuery($query);
     }
 
-    public function getAnimalDetails($id='')
+
+    public function getAnimalDetails($id = '')
     {
         $db_connect = new dbConnect();
 
@@ -203,6 +204,41 @@ class Animal
                                         INNER JOIN breed ON animal.id_breed=breed.id_breed 
                                         WHERE `id_" . $this->table . "` = " . $id)[0];
     }
+
+
+    public function getParentDetails($parent_type, $id = '')
+    {
+        $db_connect = new dbConnect();
+
+        if ($id == '') {
+            $id = $this->id;
+        }
+
+        $query = "CALL getParentDetails(" . $id . ", '" . $parent_type . "');";
+
+        $result = $db_connect->sendQuery($query);
+        if (isset($result) && $result != []) {
+            return $result[0];
+        }
+    }
+
+
+    public function getChildrenDetails($id = '')
+    {
+        if ($id == '') {
+            $id = $this->id;
+        }
+
+        $db_connect = new dbConnect();
+
+        $query = "CALL getChildrenDetails(" . $id . ");";
+
+        $result = $db_connect->sendQuery($query)[0];
+        if (isset($result)) {
+            return $result;
+        }
+    }
+
 
 
     // Get animal_name from id
@@ -280,36 +316,6 @@ class Animal
         $db_connect = new dbConnect();
         return $db_connect->getColumnNames($view);
     }
-
-
-    public function getParentDetails($parent_type, $id='')
-    {
-        $db_connect = new dbConnect();
-
-        if ($id == '') {
-            $id = $this->id;
-        }
-
-        $query = "CALL getParentDetails(" . $id . ", '" . $parent_type . "');";
-
-        return $db_connect->sendQuery($query);
-    }
-
-
-    public function getChildrenDetails($id='')
-    {
-        if ($id == '') {
-            $id = $this->id;
-        }
-
-        $db_connect = new dbConnect();
-
-        $query = "CALL getChildrenDetails(" . $id . ");";
-
-        return $db_connect->sendQuery($query);
-    }
-
-
 }
 
 ?>
