@@ -1,4 +1,3 @@
-<h3>User login</h3>
 <?php
 
 // Instantiate a new User object to connect to database
@@ -31,30 +30,45 @@ if (isset($_POST['logout'])) {
 
 // Si l'id_login est vide ou inférieur à 1, on affiche le formulaire de connexion
 if (!isset($_SESSION['open']) || $_SESSION['open'] < 1) {
-?>
-<div class="container">
-<form method="POST" action="">
-    <table class="formtable">
-        <tr>
-            <td>User name</td>
-            <td><input type="text" name="user_name" value=""></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="password" name="password" value=""></td>
-        </tr>
-    </table>
-        <input class="button" type="submit" name="form_submit" value="Submit">
-</form>
-</div>
+    ?>
+    <div class="container">
+    <h3>User login</h3>
+
+        <div class="col-auto">
 
 
-<?php 
+            <form method="POST" action="">
+
+                <table class="formtable">
+
+                    <tr>
+                        <td>User name</td>
+                        <td><input type="text" class="form-control" name="user_name" value=""></td>
+                    </tr>
+
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="password" class="form-control" name="password" value=""></td>
+                    </tr>
+
+                </table>
+
+                <input class="btn btn-primary" type="submit" name="form_submit" value="Submit">
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+    <?php
 } else {
     header("Location: index.php?page=animal_list");
-?>
+    ?>
 
-<form method="POST" action="">
-    <input class="button" type="submit" name="logout" value="Logout">
-</form>
+    <form method="POST" action="">
+        <input class="button" type="submit" name="logout" value="Logout">
+    </form>
 <?php } ?>
