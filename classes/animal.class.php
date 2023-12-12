@@ -198,7 +198,10 @@ class Animal
             $id = $this->id;
         }
 
-        return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "` WHERE `id_" . $this->table . "` = " . $id)[0];
+        return $db_connect->sendQuery("SELECT * 
+                                        FROM `" . $this->table . "` 
+                                        INNER JOIN breed ON animal.id_breed=breed.id_breed 
+                                        WHERE `id_" . $this->table . "` = " . $id)[0];
     }
 
 
