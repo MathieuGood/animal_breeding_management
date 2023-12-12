@@ -27,27 +27,36 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     </h3>
 
     <div class="page-content d-flex flex-column justify-content-center">
+
         <div class="container row top-part">
 
-            <div class="create_animal col-sm-auto">
+            <?php
 
-                <input class="btn btn-primary" style="width:100%; margin:0.3em 0 0.5em 0;" type="button"
-                    onclick="window.location.href='index.php?page=edit_animal&choice=new'"
-                    value="Add new custom <?php echo $_SESSION['animal_specie'] ?>">
+            if ($_SESSION['alive'] == true) {
+                ?>
 
-                <span class="create_multiple_animals">
+                <div class="create_animal col-sm-auto">
 
-                    <form id="create_multiple_animals" method="POST" action="">
+                    <input class="btn btn-primary" style="width:100%; margin:0.3em 0 0.5em 0;" type="button"
+                        onclick="window.location.href='index.php?page=edit_animal&choice=new'"
+                        value="Add new custom <?php echo $_SESSION['animal_specie'] ?>">
 
-                        <input type=number step="1" min="1" max="1000" name="amount_to_create" value="1">
-                        <input class="btn btn-primary" style="width:auto; margin:0" type="submit" name="random_animal"
-                            value="Create random <?php echo $_SESSION['animal_specie_plural'] ?> ">
-                            
-                    </form>
+                    <span class="create_multiple_animals">
 
-                </span>
+                        <form id="create_multiple_animals" method="POST" action="">
 
-            </div>
+                            <input type=number step="1" min="1" max="1000" name="amount_to_create" value="1">
+                            <input class="btn btn-primary" style="width:auto; margin:0" type="submit" name="random_animal"
+                                value="Create random <?php echo $_SESSION['animal_specie_plural'] ?> ">
+
+                        </form>
+
+                    </span>
+
+                </div>
+                <?php
+            }
+            ?>
 
             <div class="snake_count col-sm-auto">
                 <?php
