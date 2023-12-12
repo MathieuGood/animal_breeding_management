@@ -133,20 +133,12 @@ class Animal
         return $db_connect->sendQuery($query);
     }
 
-    public function getAnimalBreeds()
+    public function getAllAnimalBreeds()
     {
         $db_connect = new dbConnect();
         return $db_connect->sendQuery("SELECT id_breed, breed_name FROM `breed`");
     }
 
-    public function getAllAliveAnimalsAndParentsBySex($sex)
-    {
-        $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT id_animal, animal_name, id_father, id_mother 
-                                        FROM animal 
-                                        WHERE animal_sex = '" . $sex .
-            "' AND death_time = '0';");
-    }
 
     public function getAllPossibleParentAnimalNames($sex, $choice)
     {
@@ -198,18 +190,17 @@ class Animal
         return $db_connect->sendQuery($query);
     }
 
-    public function getCurrentAnimalData()
+    public function getAnimalDetails($id='')
     {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "` WHERE `id_" . $this->table . "` = " . $this->id)[0];
-    }
 
-    public function getAnimalDataById($id)
-    {
-        echo "<br> Retrieving animal data from id : " . $id . "<br>";
-        $db_connect = new dbConnect();
+        if ($id == '') {
+            $id = $this->id;
+        }
+
         return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "` WHERE `id_" . $this->table . "` = " . $id)[0];
     }
+
 
     // Get animal_name from id
     public function getAnimalName()
@@ -288,9 +279,13 @@ class Animal
     }
 
 
-    public function getParentDetails($id, $parent_type)
+    public function getParentDetails($parent_type, $id='')
     {
         $db_connect = new dbConnect();
+
+        if ($id == '') {
+            $id = $this->id;
+        }
 
         $query = "CALL getParentDetails(" . $id . ", '" . $parent_type . "');";
 
@@ -298,8 +293,12 @@ class Animal
     }
 
 
-    public function getChildrenDetails($id)
+    public function getChildrenDetails($id='')
     {
+        if ($id == '') {
+            $id = $this->id;
+        }
+
         $db_connect = new dbConnect();
 
         $query = "CALL getChildrenDetails(" . $id . ");";

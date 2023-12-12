@@ -38,7 +38,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
         // Change the header of page to "Edit"
         $title_display = "Edit";
         // Get all the values of the animal to edit
-        $animal_values = $animal->getCurrentAnimalData();
+        $animal_values = $animal->getAnimalDetails();
 
         // For debugging :
         // echo '<pre>'; var_dump($animal_values); echo '</pre>';
@@ -82,11 +82,11 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
         // Creating new animal
         if ($choice == 'new') {
             $new_id = $animal->createCustomAnimal($columns, $values);
-            $animal_values = $animal->getAnimalDataById($new_id);
-            var_dump($animal_values);
+            $animal_values = $animal->getAnimalDetails($new_id);
+
         } else {
             // Retrieve the update values of the edited/created animal
-            $animal_values = $animal->getCurrentAnimalData();
+            $animal_values = $animal->getAnimalDetails();
         }
 
     }
