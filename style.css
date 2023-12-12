@@ -291,3 +291,9 @@ a:hover,
 a:active {
     text-decoration: none;
 }
+
+.navbar-nav li:last-of-type {
+    position: absolute;
+    right: 5%;
+    /* bottom: 0; */
+  }
