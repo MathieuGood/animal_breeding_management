@@ -30,6 +30,10 @@ class dbConnect
                     $result = $result->fetchAll(PDO::FETCH_ASSOC);
                 } else {
                     $result = $result->fetchAll();
+                    echo '<br>';
+                    echo '<br>';
+                    echo 'NO NUM :';
+                    var_dump($result);
                 }
             }
             // Dans le cas d'un INSERT, on récupère l'id du nouvel élément créé dans la base
@@ -37,30 +41,18 @@ class dbConnect
 
                 $result = $this->connect->lastInsertId();
 
-                // echo '<br> Last inserted ID (PDO) : '.$result. '<br>';
-
-            } else if ($startquery[0] == 'CALL') {
-                echo $startquery[1];
+            } else if (str_contains($startquery[1], 'create')) {
 
                 $result = $this->connect->query("SELECT MAX(id_animal) AS last_insert FROM animal");
                 $result = $result->fetchAll(PDO::FETCH_ASSOC)[0]['last_insert'];
 
-                // echo '<br> Last inserted ID (SQL) : '.$result. '<br>';
-
             }
-            // Renvoi du résultat
             return $result;
         } else {
             return FALSE;
         }
     }
 
-    // Alternative insert function
-    public function insert($table, $col, $value)
-    {
-        $query = "INSERT INTO `" . $table . "` (`" . $col . "`) VALUES ('" . $value . "')";
-        return $this->sendQuery($query);
-    }
 
     // Insert
     // execInsert($table, ['col1', 'col2', 'col3,], ['value1', value2', 'value3'])
