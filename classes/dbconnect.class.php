@@ -25,7 +25,7 @@ class dbConnect
             $result = $this->connect->query($query);
             // Traitement du résultat
             // Dans le cas d'un SELECT, on convertit le résulat de la queryuête en tableau PHP
-            if ($startquery[0] == 'SELECT') {
+            if ($startquery[0] == 'SELECT' || str_contains($startquery[1], 'get')) {
                 if ($fetch_type == "num") {
                     $result = $result->fetchAll(PDO::FETCH_ASSOC);
                 } else {
@@ -40,6 +40,7 @@ class dbConnect
                 // echo '<br> Last inserted ID (PDO) : '.$result. '<br>';
 
             } else if ($startquery[0] == 'CALL') {
+                echo $startquery[1];
 
                 $result = $this->connect->query("SELECT MAX(id_animal) AS last_insert FROM animal");
                 $result = $result->fetchAll(PDO::FETCH_ASSOC)[0]['last_insert'];
