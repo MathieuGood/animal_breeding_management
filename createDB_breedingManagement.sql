@@ -496,8 +496,49 @@ CREATE VIEW breedingManagement.breedCount AS (
 );
 
 
+-- Stored procedure to get parent details
+-- Input parameters : id_animal, parent_type (father, mother)
 
--- Creating a stored procedure to generate random animals with optional parameters (amount to create, breed, id_father, id_mother)
+DELIMITER //
+
+CREATE PROCEDURE breedingManagement.getParentDetails(IN in_id INT, IN parent_type VARCHAR(10))
+BEGIN
+    IF parent_type = 'father' THEN
+        SELECT id_animal, animal_name, breed.id_breed, breed_name, birth_time, death_time
+        FROM animal
+        INNER JOIN breed ON animal.id_breed = breed.id_breed
+        WHERE id_animal = (SELECT id_father FROM animal WHERE id_animal = in_id);
+    ELSEIF parent_type = 'mother' THEN
+        SELECT id_animal, animal_name, breed.id_breed, breed_name, birth_time, death_time
+        FROM animal
+        INNER JOIN breed ON animal.id_breed = breed.id_breed
+        WHERE id_animal = (SELECT id_mother FROM animal WHERE id_animal = in_id);
+    END IF;
+END //
+
+DELIMITER ;
+
+
+-- Stored procedure to get children details
+-- Input parameters : id_animal, parent_type (father, mother)
+
+DELIMITER //
+
+CREATE PROCEDURE breedingManagement.getChildrenDetails(IN in_id INT)
+BEGIN
+    SELECT id_animal, animal_name, animal_sex, breed.id_breed, breed_name, birth_time, death_time
+    FROM animal
+    INNER JOIN breed ON animal.id_breed = breed.id_breed
+    WHERE id_father = in_id
+       OR id_mother = in_id;
+
+END //
+
+DELIMITER ;
+
+
+-- Stored procedure to generate random animals
+-- Input parameters amount to create, breed, id_father, id_mother
 
 DELIMITER //
 
