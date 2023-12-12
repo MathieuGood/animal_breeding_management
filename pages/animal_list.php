@@ -60,10 +60,28 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
             <div class="snake_count col-sm-auto">
                 <?php
+
                 // Display the total number of animals
                 $sex_count = $animal->countAllAnimalsBySex($_SESSION['alive']);
 
-                $total_count = $sex_count[1]['count'] + $sex_count[0]['count'];
+                if ($sex_count != []) {
+
+                    if (!isset($sex_count[0]['count'])) {
+                        $male_count = 0;
+                    } else {
+                        $male_count = $sex_count[0]['count'];
+                    }
+                    if (!isset($sex_count[1]['count'])) {
+                        $female_count = 0;
+                    } else {
+                        $female_count = $sex_count[1]['count'];
+                    }
+                } else {
+                    $male_count = 0;
+                    $female_count = 0;
+                }
+
+                $total_count = $male_count + $female_count;
 
                 ?>
                 <h6>
@@ -72,12 +90,12 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
 
                 <h6>
                     Male :
-                    <?php echo $sex_count[1]['count'] ?>
+                    <?php echo $male_count ?>
                 </h6>
 
                 <h6>
                     Female :
-                    <?php echo $sex_count[0]['count'] ?>
+                    <?php echo $female_count ?>
                 </h6>
 
             </div>
