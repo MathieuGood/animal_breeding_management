@@ -8,6 +8,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
 
     <div class="container" id="main-content">
 
+
         <h3>Genealogy</h3>
 
 
@@ -15,32 +16,38 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
 
             <div class="col-auto">
 
-
             </div>
 
         </div>
 
+
+        <div class="row" id="parents">
+
+            <div class="col-auto">
+
+            </div>
+
+        </div>
 
 
         <div class="row" id="current_animal">
 
             <div class="col-auto">
 
-
             </div>
 
         </div>
-        
+
 
 
         <div class="row" id="children">
 
             <div class="col-auto">
 
-
             </div>
 
         </div>
+
 
     </div>
 
