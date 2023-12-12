@@ -32,7 +32,7 @@ if(isset($_POST['logout'])) {
                         <a class="nav-link pink_link" href="index.php?page=breed_animals">Breeding</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link pink_link" href="index.php?page=breed_animals">Evolution</a>
+                        <a class="nav-link pink_link" href="index.php?page=animal_history">Animal history</a>
                     </li>
                     <li class="nav-item">
                         <form method="POST" action="">
