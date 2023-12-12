@@ -11,23 +11,19 @@ class Animal
         $this->id = $id;
     }
 
-    public function getAllLiveAnimals()
-    {
-        $db_connect = new dbConnect();
-        return $db_connect->sendQuery(
-            "SELECT *
-               FROM `" . $this->table . "` 
-               WHERE death_time = '0000-00-00 00:00:00' 
-               ORDER BY id_animal DESC",
-            "num"
-        );
-    }
 
-    public function getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $limit, $offset)
+    public function getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $limit, $offset, $alive)
     {
         $db_connect = new dbConnect();
+
+        if ($alive == true) {
+            $view = 'animalList';
+        } else {
+            $view = 'deceasedAnimalList';
+        }
+
         $query = "SELECT * 
-                    FROM animalList 
+                    FROM " . $view . " 
                     WHERE `animal_name` LIKE '%" . $name_filter . "%' 
                     AND `breed_name` LIKE '%" . $breed_filter . "%' 
                     AND `animal_sex` LIKE '%" . $sex_filter . "%'
@@ -42,14 +38,21 @@ class Animal
         );
     }
 
-    public function getAllFilteredAndSortedBreeds($name_filter, $breed_filter, $sex_filter)
+    public function getAllFilteredAndSortedBreeds($name_filter, $breed_filter, $sex_filter, $alive)
     {
         $db_connect = new dbConnect();
+
+        if ($alive == false) {
+            $death_parameter = '!';
+        } else {
+            $death_parameter = '';
+        }
+
         $query = "    SELECT breed_name, COUNT(id_animal) AS breed_count
                         FROM animal
                         INNER JOIN breed
                                 ON animal.id_breed = breed.id_breed
-                                WHERE death_time = '0000-00-00 00:00:00'
+                                WHERE death_time " . $death_parameter . "= '0000-00-00 00:00:00'
                                   AND `animal_name` LIKE '%" . $name_filter . "%'
                                   AND `breed_name` LIKE '%" . $breed_filter . "%'
                                   AND `animal_sex` LIKE '%" . $sex_filter . "%'
@@ -64,14 +67,21 @@ class Animal
         );
     }
 
-    public function getAllFilteredAndSortedSex($name_filter, $breed_filter, $sex_filter)
+    public function getAllFilteredAndSortedSex($name_filter, $breed_filter, $sex_filter, $alive)
     {
         $db_connect = new dbConnect();
+
+        if ($alive == false) {
+            $death_parameter = '!';
+        } else {
+            $death_parameter = '';
+        }
+
         $query = "    SELECT animal_sex, COUNT(id_animal) AS sex_count
                         FROM animal
                         INNER JOIN breed
                                 ON animal.id_breed = breed.id_breed
-                                WHERE death_time = '0000-00-00 00:00:00'
+                                WHERE death_time " . $death_parameter . "= '0000-00-00 00:00:00'
                                     AND `animal_name` LIKE '%" . $name_filter . "%'
                                     AND `breed_name` LIKE '%" . $breed_filter . "%'
                                     AND `animal_sex` LIKE '%" . $sex_filter . "%'
@@ -86,11 +96,18 @@ class Animal
         );
     }
 
-    public function countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter)
+    public function countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $alive)
     {
         $db_connect = new dbConnect();
+
+        if ($alive == false) {
+            $view = 'deceasedAnimalList';
+        } else {
+            $view = 'animalList';
+        }
+
         $query = "SELECT COUNT(*) AS animal_count
-                    FROM animalList 
+                    FROM " . $view . "
                     WHERE `animal_name` LIKE '%" . $name_filter . "%' 
                     AND `breed_name` LIKE '%" . $breed_filter . "%' 
                     AND `animal_sex` LIKE '%" . $sex_filter . "%' 
@@ -101,11 +118,6 @@ class Animal
         )[0]['animal_count'];
     }
 
-    public function getAllDeadAnimals()
-    {
-        $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT * FROM `" . $this->table . "` WHERE death_time != '0000-00-00 00:00:00'", "num");
-    }
 
     // Get breed IDs and names based on animals population in animal table
     public function getCurrentBreeds()
@@ -132,8 +144,8 @@ class Animal
         $db_connect = new dbConnect();
         return $db_connect->sendQuery("SELECT id_animal, animal_name, id_father, id_mother 
                                         FROM animal 
-                                        WHERE animal_sex = '" . $sex . 
-                                        "' AND death_time = '0';");
+                                        WHERE animal_sex = '" . $sex .
+            "' AND death_time = '0';");
     }
 
     public function getAllPossibleParentAnimalNames($sex, $choice)
@@ -250,15 +262,22 @@ class Animal
     }
 
 
-    public function countAllAliveAnimalsBySex()
+    public function countAllAnimalsBySex($alive)
     {
         $db_connect = new dbConnect();
-        return $db_connect->sendQuery(
-            "SELECT animal_sex, COUNT(*) as count
-                FROM `" . $this->table . "` 
-                WHERE death_time = '0000-00-00 00:00:00'
-                    GROUP BY animal_sex"
-        );
+
+        if ($alive == false) {
+            $death_parameter = '!';
+        } else {
+            $death_parameter = '';
+        }
+
+        $query = "SELECT animal_sex, COUNT(*) as count
+                    FROM `" . $this->table . "` 
+                        WHERE death_time " . $death_parameter . "= '0000-00-00 00:00:00'
+                            GROUP BY animal_sex";
+
+        return $db_connect->sendQuery($query);
     }
 
 

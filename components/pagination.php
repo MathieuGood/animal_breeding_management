@@ -3,7 +3,7 @@
 
 <?php
 // Send query to count the animals and store the value in SESSION
-$animals_count = $animal->countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter);
+$animals_count = $animal->countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $_SESSION['alive']);
 $_SESSION['animal_count'] = $animals_count;
 
 

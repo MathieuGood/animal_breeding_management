@@ -38,12 +38,13 @@ $breed_filter = $_SESSION['breed_filter'];
 $sex_filter = $_SESSION['sex_filter'];
 $current_page = intval($_SESSION['current_page']);
 $rows_per_page = $_SESSION['rows_per_page'];
+$alive = $_SESSION['alive'];
 
 // Create instance of Animal object
 $animal = new Animal();
 
 // Send query to count the animals and store the value in SESSION
-$animal_count = $animal->countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter);
+$animal_count = $animal->countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $alive);
 $_SESSION['animal_count'] = $animal_count;
 
 // Number of pages to display all animals
@@ -53,11 +54,11 @@ $total_page = ceil($animal_count / $rows_per_page);
 $offset = ($current_page - 1) * $rows_per_page;
 
 // Send query to get the animals
-$filtered_animal_data = $animal->getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $rows_per_page, $offset);
+$filtered_animal_data = $animal->getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $rows_per_page, $offset, $alive);
 
-$filtered_breed_list = $animal->getAllFilteredAndSortedBreeds($name_filter, $breed_filter, $sex_filter);
+$filtered_breed_list = $animal->getAllFilteredAndSortedBreeds($name_filter, $breed_filter, $sex_filter, $alive);
 
-$filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_filter, $sex_filter);
+$filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_filter, $sex_filter, $alive);
 ?>
 
 <div class="btn-group filters">

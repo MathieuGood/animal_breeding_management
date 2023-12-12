@@ -1,10 +1,15 @@
-<h3>
-    <?php echo ucfirst($_SESSION['animal_specie']) ?> list
-</h3>
-
 <?php
 // If the user is logged in
 if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
+
+    // If $_GET['choice'] exists and is equal to 'deceased', 
+    if (isset($_GET['choice']) && $_GET['choice'] == 'deceased') {
+        echo 'Show deceased animals';
+        $_SESSION['alive'] = false;
+    } else {
+        echo 'Alive animals';
+        $_SESSION['alive'] = true;
+    }
 
     // On page load, reset all filters, sorting and pagination stored in $_SESSION
     include('ajax_queries/reset_search_parameters.php');
@@ -16,6 +21,11 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         $animal->createRandomAnimal($_POST['amount_to_create']);
     }
     ?>
+
+    <h3>
+        <?php echo ucfirst($_SESSION['animal_specie']) ?> list
+    </h3>
+
     <div class="page-content d-flex flex-column justify-content-center">
         <div class="container row top-part">
 
@@ -40,7 +50,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
             <div class="snake_count col-sm-auto">
                 <?php
                 // Display the total number of animals
-                $sex_count = $animal->countAllAliveAnimalsBySex();
+                $sex_count = $animal->countAllAnimalsBySex($_SESSION['alive']);
 
                 $total_count = $sex_count[1]['count'] + $sex_count[0]['count'];
 
