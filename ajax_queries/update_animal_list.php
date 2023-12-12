@@ -100,6 +100,10 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
         </button>
     </span>
 
+    <span id="showing-entries">
+        Showing <?php echo $animal_count ?> entr<?php if ($animal_count < 2) {echo 'y';} else {echo 'ies';} ?>
+    </span>
+
 </div>
 
 <table class="table table-striped table-hover animal_table">
