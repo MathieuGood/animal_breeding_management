@@ -69,82 +69,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
         }
     }
 
-
-    // Build one html animal presentation card for genealogy display
-    // Input value $animal_data is the return of getAnimalDetails, getParentDetails, getChildrenDetails
-    function buildAnimalCard($animal_data, $image = '')
-    {
-        // Check if there is data
-        if ($animal_data) {
-
-            // If a family side is specified, include it and capitalize the string
-            if (isset($animal_data['family_side'])) {
-                $family_side = '<br>' . ucfirst($animal_data['family_side']) . '\'s side';
-            } else {
-                $family_side = '';
-            }
-
-            // If a relative name is specified, include it and capitalize the string
-            if (isset($animal_data['relative'])) {
-                $relative = ucfirst($animal_data['relative']);
-            } else {
-                $relative = '';
-            }
-
-            if ($family_side != '' || $relative != '') {
-                $add_header = '
-                <p class="card-text card-topinfo">
-                ' . $relative . '
-                ' . $family_side . '        
-                </p>
-                ';
-            } else {
-                $add_header = '';
-            }
-
-            if ($image != '') {
-                $add_image = '<div class="card-topinfo"><img src="' . $image . '" class="card-custom-img img-fluid"></div>';
-            } else {
-                $add_image = '';
-            }
-
-            echo '
-        <div class="animal-card card text-center mb-3 mx-2">
-        <div class="card-body">
-
-                ' . $add_header . '
-                ' . $add_image . '        
-            
-            <h5 class="card-title">
-                <span id="snake_name">
-                ' . $animal_data['animal_name'] . '
-                </span>
-            </h5>
-
-            <p class="card-text">
-
-            <ul>
-
-                <li>Birth :
-                    ' . $animal_data['birth_time'] . '
-                </li>
-
-                <li>Death :
-                    ' . $animal_data['death_time'] . '
-                </li>
-
-            </ul>
-
-            </p>
-
-        </div>
-    </div>
-        ';
-
-        }
-
-    }
-
     ?>
 
 
@@ -167,7 +91,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
             foreach ($grandparents as $grandparent) {
 
                 if ($grandparent) {
-                    buildAnimalCard($grandparent);
+                    $animal->buildAnimalCard($grandparent);
                 }
             }
 
@@ -185,7 +109,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
             foreach ($parents as $parent) {
 
                 if ($parent) {
-                    buildAnimalCard($parent);
+                    $animal->buildAnimalCard($parent);
                 }
             }
             ?>
@@ -202,7 +126,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
 
             <?php
 
-            buildAnimalCard($animal_data, 'images/snake_looking_right.svg');
+            $animal->buildAnimalCard($animal_data, 'images/snake_looking_right.svg');
 
             ?>
         </div>
