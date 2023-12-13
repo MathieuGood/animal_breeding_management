@@ -5,16 +5,17 @@ class Animal
 
     private $table = "animal";
     private $id;
+    private $db_connect;
 
     public function __construct($id = '')
     {
         $this->id = $id;
+        $this->db_connect = new dbConnect();
     }
 
 
     public function getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $limit, $offset, $alive)
     {
-        $db_connect = new dbConnect();
 
         if ($alive == true) {
             $view = 'animalList';
@@ -32,7 +33,7 @@ class Animal
         // echo '<br/>';
         // echo '<br/>getAllFilteredAndSortedAnimals';
         // var_dump($query);
-        return $db_connect->sendQuery(
+        return $this->db_connect->sendQuery(
             $query,
             "num"
         );
@@ -40,7 +41,6 @@ class Animal
 
     public function getAllFilteredAndSortedBreeds($name_filter, $breed_filter, $sex_filter, $alive)
     {
-        $db_connect = new dbConnect();
 
         if ($alive == false) {
             $death_parameter = '!';
@@ -61,7 +61,7 @@ class Animal
         // echo '<br/>';
         // echo '<br/>getAllFilteredAndSortedBreeds';
         // var_dump($query);
-        return $db_connect->sendQuery(
+        return $this->db_connect->sendQuery(
             $query,
             "num"
         );
@@ -69,7 +69,6 @@ class Animal
 
     public function getAllFilteredAndSortedSex($name_filter, $breed_filter, $sex_filter, $alive)
     {
-        $db_connect = new dbConnect();
 
         if ($alive == false) {
             $death_parameter = '!';
@@ -90,7 +89,7 @@ class Animal
         // echo '<br/>';
         // echo '<br/>getAllFilteredAndSortedSex';
         // var_dump($query);
-        return $db_connect->sendQuery(
+        return $this->db_connect->sendQuery(
             $query,
             "num"
         );
@@ -98,7 +97,6 @@ class Animal
 
     public function countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $alive)
     {
-        $db_connect = new dbConnect();
 
         if ($alive == false) {
             $view = 'deceasedAnimalList';
@@ -112,7 +110,7 @@ class Animal
                     AND `breed_name` LIKE '%" . $breed_filter . "%' 
                     AND `animal_sex` LIKE '%" . $sex_filter . "%' 
                     ORDER BY " . $sort;
-        return $db_connect->sendQuery(
+        return $this->db_connect->sendQuery(
             $query,
             "num"
         )[0]['animal_count'];
@@ -122,7 +120,6 @@ class Animal
     // Get breed IDs and names based on animals population in animal table
     public function getCurrentBreeds()
     {
-        $db_connect = new dbConnect();
         $query = "SELECT animal.id_breed, breed_name
                     FROM animal
                     INNER JOIN breed
@@ -130,20 +127,17 @@ class Animal
                     WHERE death_time = '0000-00-00 00:00:00'
                     GROUP BY breed_name
                     ORDER BY breed_name";
-        return $db_connect->sendQuery($query);
+        return $this->db_connect->sendQuery($query);
     }
 
     public function getAllAnimalBreeds()
     {
-        $db_connect = new dbConnect();
-        return $db_connect->sendQuery("SELECT id_breed, breed_name FROM `breed`");
+        return $this->db_connect->sendQuery("SELECT id_breed, breed_name FROM `breed`");
     }
 
 
     public function getAllPossibleParentAnimalNames($sex, $choice)
     {
-        $db_connect = new dbConnect();
-
         // If the animal exists (edit animal), exclude it from the list of possible parents
         // Not needed if creating a new animal
         if ($choice != 'new') {
@@ -161,15 +155,13 @@ class Animal
             "` WHERE `animal_sex` ='" . $sex . "'"
             . $exclude_id1 . "AND `death_time` = '0000-00-00 00:00:00'" . $exclude_id2;
 
-        return $db_connect->sendQuery($query);
+        return $this->db_connect->sendQuery($query);
     }
 
     // Get all compatible parteners for breeding
     // Filter animals based on sex
     public function getAllCompatiblePartners($sex, $id = '', $id_breed = '')
     {
-        $db_connect = new dbConnect();
-
         if ($id != '') {
             // If animal id is provided, filter partners that share the same breed and exclude the animal itself
             $breed_query = "AND `id_animal` != '" . $id . "'"
@@ -190,19 +182,17 @@ class Animal
                                 AND `death_time` = '0000-00-00 00:00:00'"
             . $breed_query;
 
-        return $db_connect->sendQuery($query);
+        return $this->db_connect->sendQuery($query);
     }
 
 
     public function getAnimalDetails($id = '')
     {
-        $db_connect = new dbConnect();
-
         if ($id == '') {
             $id = $this->id;
         }
 
-        return $db_connect->sendQuery("SELECT *,
+        return $this->db_connect->sendQuery("SELECT *,
                                         DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time_formatted,
                                         DATE_FORMAT(death_time, '%d/%m/%Y %H:%i') AS death_time_formatted
                                         FROM `" . $this->table . "` 
@@ -213,15 +203,13 @@ class Animal
 
     public function getParentDetails($parent_type, $id = '')
     {
-        $db_connect = new dbConnect();
-
         if ($id == '') {
             $id = $this->id;
         }
 
         $query = "CALL getParentDetails(" . $id . ", '" . $parent_type . "');";
 
-        $result = $db_connect->sendQuery($query);
+        $result = $this->db_connect->sendQuery($query);
         if (isset($result) && $result != []) {
             return $result[0];
         }
@@ -234,11 +222,9 @@ class Animal
             $id = $this->id;
         }
 
-        $db_connect = new dbConnect();
-
         $query = "CALL getChildrenDetails(" . $id . ");";
 
-        $result = $db_connect->sendQuery($query)[0];
+        $result = $this->db_connect->sendQuery($query)[0];
         if (isset($result)) {
             return $result;
         }
@@ -249,28 +235,24 @@ class Animal
     // Get animal_name from id
     public function getAnimalName()
     {
-        $db_connect = new dbConnect();
-        $result = $db_connect->sendQuery("SELECT `animal_name` FROM `" . $this->table . "` WHERE id_" . $this->table . " = '" . $this->id . "'");
+        $result = $this->db_connect->sendQuery("SELECT `animal_name` FROM `" . $this->table . "` WHERE id_" . $this->table . " = '" . $this->id . "'");
         return $result[0]['animal_name'];
     }
 
     public function getBreedName($id_breed)
     {
-        $db_connect = new dbConnect();
-        $result = $db_connect->sendQuery("SELECT `breed_name` FROM `breed` WHERE id_breed = '" . $id_breed . "'");
+        $result = $this->db_connect->sendQuery("SELECT `breed_name` FROM `breed` WHERE id_breed = '" . $id_breed . "'");
         return $result[0]['breed_name'];
     }
 
     public function update($col, $value)
     {
-        $db_connect = new dbConnect();
-        return $db_connect->update($this->table, $this->id, $col, $value);
+        return $this->db_connect->update($this->table, $this->id, $col, $value);
     }
 
     public function createCustomAnimal($cols, $values)
     {
-        $db_connect = new dbConnect();
-        return $db_connect->insertMultiple($this->table, $cols, $values);
+        return $this->db_connect->insertMultiple($this->table, $cols, $values);
     }
 
     // Create one (default) or several (int as parameter) new random animal
@@ -279,28 +261,24 @@ class Animal
     // using the createRandomAnimal() stored procedure in database
     public function createRandomAnimal($number = 1, $id_breed = 'NULL', $id_father = 0, $id_mother = 0)
     {
-        $db_connect = new dbConnect();
         if ($number == '' or $number > 1000) {
             $number = 0;
         }
         // Calling procedure with NULL for animal_sex and id_breed to have complete random animal
         $query = 'CALL createRandomAnimals(' . $number . ', ' . $id_breed . ', ' . $id_father . ', ' . $id_mother . ');';
 
-        return $db_connect->sendQuery($query);
+        return $this->db_connect->sendQuery($query);
     }
 
 
     public function declareDead($death_time)
     {
-        $db_connect = new dbConnect();
-        return $db_connect->sendQuery("UPDATE `" . $this->table . "` SET `death_time` = '" . $death_time . "' WHERE `id_" . $this->table . "` = " . $this->id);
+        return $this->db_connect->sendQuery("UPDATE `" . $this->table . "` SET `death_time` = '" . $death_time . "' WHERE `id_" . $this->table . "` = " . $this->id);
     }
 
 
     public function countAllAnimalsBySex($alive)
     {
-        $db_connect = new dbConnect();
-
         if ($alive == false) {
             $death_parameter = '!';
         } else {
@@ -312,14 +290,13 @@ class Animal
                         WHERE death_time " . $death_parameter . "= '0000-00-00 00:00:00'
                             GROUP BY animal_sex";
 
-        return $db_connect->sendQuery($query);
+        return $this->db_connect->sendQuery($query);
     }
 
 
     public function getColumnNames($view)
     {
-        $db_connect = new dbConnect();
-        return $db_connect->getColumnNames($view);
+        return $this->db_connect->getColumnNames($view);
     }
 
 
@@ -407,11 +384,10 @@ class Animal
 
     public function letPopulationEvolve()
     {
-        $db_connect = new dbConnect();
         $query1 = "CALL setDeathTime();";
         $query2 = "CALL letPopulationEvolve();";
-        $db_connect->sendQuery($query1);
-        $db_connect->sendQuery($query2);
+        $this->db_connect->sendQuery($query1);
+        $this->db_connect->sendQuery($query2);
     }
 
 }
