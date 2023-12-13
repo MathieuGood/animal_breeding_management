@@ -405,6 +405,15 @@ class Animal
 
     }
 
+    public function letPopulationEvolve()
+    {
+        $db_connect = new dbConnect();
+        $query1 = "CALL setDeathTime();";
+        $query2 = "CALL letPopulationEvolve();";
+        $db_connect->sendQuery($query1);
+        $db_connect->sendQuery($query2);
+    }
+
 }
 
 ?>
