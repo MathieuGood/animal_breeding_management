@@ -252,7 +252,9 @@ img#animal_logo {
 }
 
 .btn-primary:hover {
-    color: #ff79c6;
+    /* color: #D3D3D3; */
+    color: #50fa7b;
+    box-shadow: 0 0 0 0.08rem rgba(255, 121, 198, .5);
 }
 
 #snake_name {
