@@ -31,7 +31,7 @@ A MySQL/MariaDB server is required to host the database.
 
 ### Set up the database
 
-Run the SQL script `createDB_breedingManagement.sql` through your PHPMyAdmin interface or with other means.
+Run the SQL script `createDB_breedingManager.sql` through your PHPMyAdmin interface or with other means.
 
 ### Enter your credentials
 
@@ -41,5 +41,5 @@ Your login information to the database can be filled in the `__construct` functi
 - `$u` is the username
 - `$pw` is the password
 ```php
-public function __construct($h='localhost', $db='breedingManagement', $u='user_name', $pw='password')
+public function __construct($h='localhost', $db='breedingManager', $u='user_name', $pw='password')
 ```

@@ -10,7 +10,7 @@ class dbConnect
     private $connect;
 
     // Constructeur
-    public function __construct($h = 'localhost', $db = 'breedingManagement', $u = 'mariadb', $pw = 'mariadb*1')
+    public function __construct($h = 'localhost', $db = 'breedingManager', $u = 'mariadb', $pw = 'mariadb*1')
     {
         $this->connect = new PDO("mysql:host=" . $h . ";dbname=" . $db, $u, $pw);
         $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

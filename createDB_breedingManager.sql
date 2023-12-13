@@ -1,4 +1,4 @@
--- Creation of 'breedingManagement' database
+-- Creation of 'breedingManager' database
 
 -- Setting start of commit
 SET AUTOCOMMIT = 0;
@@ -6,13 +6,13 @@ START TRANSACTION;
 
 -- Deleting database if one exists with the same name
 DROP DATABASE
-    IF EXISTS breedingManagement;
+    IF EXISTS breedingManager;
 
 -- Creating database
-CREATE DATABASE breedingManagement
+CREATE DATABASE breedingManager
     DEFAULT CHARACTER SET utf8mb4
     COLLATE utf8mb4_general_ci;
-USE breedingManagement;
+USE breedingManager;
 
 
 -- `user` table : login and passwords for users
@@ -450,7 +450,7 @@ ALTER TABLE column_label
 
 
 -- Creating a view to get live animals for animal_list.php
-CREATE VIEW breedingManagement.animalList AS (SELECT 
+CREATE VIEW breedingManager.animalList AS (SELECT 
                                                 id_animal, 
                                                 animal_name, 
                                                 animal_sex,                                                 
@@ -466,7 +466,7 @@ CREATE VIEW breedingManagement.animalList AS (SELECT
 
 
 -- Creating a view to get live animals for animal_list.php
-CREATE VIEW breedingManagement.deceasedAnimalList AS (SELECT 
+CREATE VIEW breedingManager.deceasedAnimalList AS (SELECT 
                                                 id_animal, 
                                                 animal_name, 
                                                 animal_sex,                                                 
@@ -483,7 +483,7 @@ CREATE VIEW breedingManagement.deceasedAnimalList AS (SELECT
 
 
 -- Creating a view to count the number of animals per breed
-CREATE VIEW breedingManagement.breedCount AS (
+CREATE VIEW breedingManager.breedCount AS (
     SELECT 
         breed_name,
         COUNT(id_animal) AS breed_count
@@ -501,7 +501,7 @@ CREATE VIEW breedingManagement.breedCount AS (
 
 DELIMITER //
 
-CREATE PROCEDURE breedingManagement.getParentDetails(IN in_id INT, IN parent_type VARCHAR(10))
+CREATE PROCEDURE breedingManager.getParentDetails(IN in_id INT, IN parent_type VARCHAR(10))
 BEGIN
     IF parent_type = 'father' THEN
         SELECT id_animal, animal_name, breed.id_breed, breed_name,
@@ -528,7 +528,7 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE breedingManagement.getChildrenDetails(IN in_id INT)
+CREATE PROCEDURE breedingManager.getChildrenDetails(IN in_id INT)
 BEGIN
     SELECT id_animal, animal_name, animal_sex, breed.id_breed, breed_name,
             DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time,
@@ -548,7 +548,7 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE breedingManagement.createRandomAnimals(
+CREATE PROCEDURE breedingManager.createRandomAnimals(
     IN numCalls INT,
     IN optionalBreed INT,
     IN id_father_param INT,
@@ -652,7 +652,7 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE breedingManagement.letPopulationEvolve()
+CREATE PROCEDURE breedingManager.letPopulationEvolve()
 BEGIN
 
 CALL createRandomAnimals(1, NULL, NULL, NULL);
@@ -669,7 +669,7 @@ CALL createRandomAnimals(50, NULL, 0, 0);
 -- Creating a stored procedure to set death_time if lifespan reached
 DELIMITER //
 
-CREATE PROCEDURE breedingManagement.setDeathTime()
+CREATE PROCEDURE breedingManager.setDeathTime()
 BEGIN
     UPDATE animal
     SET death_time = DATE_ADD(birth_time, INTERVAL animal_lifespan SECOND)
