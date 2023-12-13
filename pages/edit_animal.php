@@ -108,7 +108,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                 <tr>
                     <td>Breed</td>
                     <td>
-                        <select name="id_breed">
+                        <select name="id_breed" class="form-control">
                             <?php
                             // Get the list of all breeds for the select options input
                             $breeds = $animal->getAllAnimalBreeds();
@@ -127,46 +127,46 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                 <tr>
                     <td>Name</td>
                     <td>
-                        <input type=text name="animal_name" value="<?php echo $animal_values['animal_name'] ?>">
+                        <input type=text class="form-control" name="animal_name"
+                            value="<?php echo $animal_values['animal_name'] ?>">
                     </td>
                 </tr>
 
                 <tr>
                     <td>Sex</td>
                     <td>
-                        <?php
-                        foreach (['M', 'F'] as $sex) {
-                            echo '<div=><input type="radio" id="' . $sex . '" name="animal_sex" value="' . $sex . '"';
-                            if ($sex == $animal_values['animal_sex']) {
-                                echo ' checked';
+                            <?php
+                            foreach (['M', 'F'] as $sex) {
+                                echo '<input type="radio" class="form-check-input" id="' . $sex . '" name="animal_sex" value="' . $sex . '" ';
+                                if ($sex == $animal_values['animal_sex']) {
+                                    echo ' checked';
+                                }
+                                echo '>&nbsp;<label for="' . $sex . '">' . $sex . '</label>&nbsp;&nbsp;';
                             }
-                            echo '>&nbsp;<label for="' . $sex . '">' . $sex . '</label></div>&nbsp;&nbsp;';
-
-                        }
-                        ?>
+                            ?>
                     </td>
                 </tr>
 
                 <tr>
-                    <td>Height</td>
+                    <td>Height (cm)</td>
                     <td>
-                        <input type=number step="1" min="1" max="30000" name="animal_height"
+                        <input type=number step="1" min="1" max="30000" name="animal_height" class="form-control"
                             value="<?php echo $animal_values['animal_height'] ?>">
                     </td>
                 </tr>
 
                 <tr>
-                    <td>Weight</td>
+                    <td>Weight (g)</td>
                     <td>
-                        <input type=number step="1" min="1" max="200000" name="animal_weight"
+                        <input type=number step="1" min="1" max="200000" name="animal_weight" class="form-control"
                             value="<?php echo $animal_values['animal_weight'] ?>">
                     </td>
                 </tr>
 
                 <tr>
-                    <td>Lifespan</td>
+                    <td>Lifespan (s)</td>
                     <td>
-                        <input type=number step="1" min="1" max="11000" name="animal_lifespan"
+                        <input type=number step="1" min="1" max="11000" name="animal_lifespan" class="form-control"
                             value="<?php echo $animal_values['animal_lifespan'] ?>">
                     </td>
                 </tr>
@@ -174,21 +174,23 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                 <tr>
                     <td>Birth</td>
                     <td>
-                        <input type=datetime-local name="birth_time" value="<?php echo $animal_values['birth_time'] ?>">
+                        <input type=datetime-local class="form-control" name="birth_time"
+                            value="<?php echo $animal_values['birth_time'] ?>">
                     </td>
                 </tr>
 
                 <tr>
                     <td>Death</td>
                     <td>
-                        <input type=datetime-local name="death_time" value="<?php echo $animal_values['death_time'] ?>">
+                        <input type=datetime-local class="form-control" name="death_time"
+                            value="<?php echo $animal_values['death_time'] ?>">
                     </td>
                 </tr>
 
                 <tr>
                     <td>Father</td>
                     <td>
-                        <select name="id_father">
+                        <select name="id_father" class="form-control">
                             <option value='0'>No known father</option>
                             <?php
                             // Get the list of all male animal names
@@ -209,7 +211,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                 <tr>
                     <td>Mother</td>
                     <td>
-                        <select name="id_mother">
+                        <select name="id_mother" class="form-control">
                             <option value='0'>No known mother</option>
                             <?php
                             // Get the list of all male animal names
