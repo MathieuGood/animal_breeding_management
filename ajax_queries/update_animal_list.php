@@ -65,7 +65,7 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
 
     <!-- Sex filter -->
     <span class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-secondary dropdown-toggle mx-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Sex
         </button>
         <ul class="dropdown-menu">
@@ -79,7 +79,8 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
     </span>
 
     <!-- Breed filter -->
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle mx-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         Breed
     </button>
     <ul class="dropdown-menu">
@@ -92,16 +93,17 @@ $filtered_sex_list = $animal->getAllFilteredAndSortedSex($name_filter, $breed_fi
 
         ?>
     </ul>
+    </span>
 
     <!-- Reset filters -->
     <span class="reset-filters">
-        <button class="btn btn-secondary" onclick="resetSearchParameters()">
+        <button class="btn btn-secondary mx-1" onclick="resetSearchParameters()">
             Reset all filters
         </button>
     </span>
 
     <span id="showing-entries">
-        Showing <?php echo $animal_count ?> entr<?php if ($animal_count < 2) {echo 'y';} else {echo 'ies';} ?>
+        Displaying <?php echo $animal_count ?> entr<?php if ($animal_count < 2) {echo 'y';} else {echo 'ies';} ?>
     </span>
 
 </div>

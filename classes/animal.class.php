@@ -199,7 +199,9 @@ class Animal
             $id = $this->id;
         }
 
-        return $db_connect->sendQuery("SELECT * 
+        return $db_connect->sendQuery("SELECT *,
+                                        DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time_formatted,
+                                        DATE_FORMAT(death_time, '%d/%m/%Y %H:%i') AS death_time_formatted
                                         FROM `" . $this->table . "` 
                                         INNER JOIN breed ON animal.id_breed=breed.id_breed 
                                         WHERE `id_" . $this->table . "` = " . $id)[0];
@@ -356,9 +358,18 @@ class Animal
                 $add_image = '';
             }
 
+            if ($animal_data['death_time'] != '00/00/0000 00:00') {
+                $add_death_time = '<li>Death :
+                                ' . $animal_data['death_time'] . '
+                                </li>';
+            } else {
+                $add_death_time = '';
+            }
+
+
             echo '
         <div class="animal-card card text-center mb-3 mx-2">
-        <div class="card-body">
+        <div class="card-body p-0 pt-1">
 
                 ' . $add_header . '
                 ' . $add_image . '        
@@ -377,9 +388,7 @@ class Animal
                     ' . $animal_data['birth_time'] . '
                 </li>
 
-                <li>Death :
-                    ' . $animal_data['death_time'] . '
-                </li>
+                '.$add_death_time.'
 
             </ul>
 

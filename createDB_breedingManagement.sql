@@ -421,7 +421,7 @@ INSERT INTO column_label (id_column_label, label)
     ('id_breed', 'Breed ID'),
     ('animal_name', 'Name'),
     ('animal_sex', 'Sex'),
-    ('animal_height', 'height'),
+    ('animal_height', 'Height'),
     ('animal_weight', 'Weight'),
     ('animal_lifespan', 'Lifespan'),
     ('birth_time', 'Birth'),
@@ -455,9 +455,9 @@ CREATE VIEW breedingManagement.animalList AS (SELECT
                                                 animal_name, 
                                                 animal_sex,                                                 
                                                 breed_name,
-                                                animal_height, 
-                                                animal_weight, 
-                                                animal_lifespan, 
+                                                CONCAT(animal_height, ' cm') AS animal_height, 
+                                                CONCAT(animal_weight, ' g') AS animal_weight,
+                                                CONCAT(animal_lifespan, ' s') AS animal_lifespan, 
                                                 DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time
                                                   FROM animal
                                                     INNER JOIN breed
@@ -471,9 +471,9 @@ CREATE VIEW breedingManagement.deceasedAnimalList AS (SELECT
                                                 animal_name, 
                                                 animal_sex,                                                 
                                                 breed_name,
-                                                animal_height, 
-                                                animal_weight, 
-                                                animal_lifespan, 
+                                                CONCAT(animal_height, ' cm') AS animal_height, 
+                                                CONCAT(animal_weight, ' g') AS animal_weight,
+                                                CONCAT(animal_lifespan, ' s') AS animal_lifespan, 
                                                 DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time,
                                                 DATE_FORMAT(death_time, '%d/%m/%Y %H:%i') AS death_time
                                                   FROM animal
@@ -504,12 +504,16 @@ DELIMITER //
 CREATE PROCEDURE breedingManagement.getParentDetails(IN in_id INT, IN parent_type VARCHAR(10))
 BEGIN
     IF parent_type = 'father' THEN
-        SELECT id_animal, animal_name, breed.id_breed, breed_name, birth_time, death_time
+        SELECT id_animal, animal_name, breed.id_breed, breed_name,
+                DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time,
+                DATE_FORMAT(death_time, '%d/%m/%Y %H:%i') AS death_time
         FROM animal
         INNER JOIN breed ON animal.id_breed = breed.id_breed
         WHERE id_animal = (SELECT id_father FROM animal WHERE id_animal = in_id);
     ELSEIF parent_type = 'mother' THEN
-        SELECT id_animal, animal_name, breed.id_breed, breed_name, birth_time, death_time
+        SELECT id_animal, animal_name, breed.id_breed, breed_name,
+                DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time,
+                DATE_FORMAT(death_time, '%d/%m/%Y %H:%i') AS death_time
         FROM animal
         INNER JOIN breed ON animal.id_breed = breed.id_breed
         WHERE id_animal = (SELECT id_mother FROM animal WHERE id_animal = in_id);
@@ -526,7 +530,9 @@ DELIMITER //
 
 CREATE PROCEDURE breedingManagement.getChildrenDetails(IN in_id INT)
 BEGIN
-    SELECT id_animal, animal_name, animal_sex, breed.id_breed, breed_name, birth_time, death_time
+    SELECT id_animal, animal_name, animal_sex, breed.id_breed, breed_name,
+            DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time,
+            DATE_FORMAT(death_time, '%d/%m/%Y %H:%i') AS death_time
     FROM animal
     INNER JOIN breed ON animal.id_breed = breed.id_breed
     WHERE id_father = in_id

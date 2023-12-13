@@ -154,7 +154,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             </tr>
 
             <tr>
-                <td>Weigth</td>
+                <td>Weight</td>
                 <td>
                     <input type=number step="1" min="1" max="200000" name="animal_weight"
                         value="<?php echo $animal_values['animal_weight'] ?>">

@@ -8,6 +8,8 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
 
     $animal_data = $animal->getAnimalDetails();
     // var_dump($animal_data);
+    $animal_data['birth_time'] = $animal_data['birth_time_formatted'];
+    $animal_data['death_time'] = $animal_data['death_time_formatted'];
 
 
     $father_data = $animal->getParentDetails('father', $id);
@@ -68,7 +70,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
             $motherside_grandmother_data = '';
         }
     }
-
+    
     ?>
 
 
