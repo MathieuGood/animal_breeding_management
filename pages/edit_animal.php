@@ -88,146 +88,150 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
             // Retrieve the update values of the edited/created animal
             $animal_values = $animal->getAnimalDetails();
         }
+        header("Location: index.php?page=animal_list");
 
     }
 } else {
     header("Location: index.php?page=login");
 }
 ?>
+<div class="main-content container">
 
-<h3>
-    <?php echo $title_display . " " . $_SESSION['animal_specie'] ?>
-</h3>
+    <h3>
+        <?php echo $title_display . " " . $_SESSION['animal_specie'] ?>
+    </h3>
 
-<form class="userform" method="POST" action="">
-    <table class="formtable">
-        <p>
+    <form class="userform" method="POST" action="">
+        <table class="formtable">
+            <p>
 
-            <tr>
-                <td>Breed</td>
-                <td>
-                    <select name="id_breed">
-                        <?php
-                        // Get the list of all breeds for the select options input
-                        $breeds = $animal->getAllAnimalBreeds();
-                        foreach ($breeds as $breed) {
-                            echo '<option ';
-                            if ($breed['id_breed'] == $animal_values['id_breed']) {
-                                echo ' selected="selected" ';
+                <tr>
+                    <td>Breed</td>
+                    <td>
+                        <select name="id_breed">
+                            <?php
+                            // Get the list of all breeds for the select options input
+                            $breeds = $animal->getAllAnimalBreeds();
+                            foreach ($breeds as $breed) {
+                                echo '<option ';
+                                if ($breed['id_breed'] == $animal_values['id_breed']) {
+                                    echo ' selected="selected" ';
+                                }
+                                echo 'value="' . $breed['id_breed'] . '">' . $breed['breed_name'] . '</option>';
                             }
-                            echo 'value="' . $breed['id_breed'] . '">' . $breed['breed_name'] . '</option>';
+                            ?>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Name</td>
+                    <td>
+                        <input type=text name="animal_name" value="<?php echo $animal_values['animal_name'] ?>">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Sex</td>
+                    <td>
+                        <?php
+                        foreach (['M', 'F'] as $sex) {
+                            echo '<div=><input type="radio" id="' . $sex . '" name="animal_sex" value="' . $sex . '"';
+                            if ($sex == $animal_values['animal_sex']) {
+                                echo ' checked';
+                            }
+                            echo '>&nbsp;<label for="' . $sex . '">' . $sex . '</label></div>&nbsp;&nbsp;';
+
                         }
                         ?>
-                    </select>
-                </td>
-            </tr>
+                    </td>
+                </tr>
 
-            <tr>
-                <td>Name</td>
-                <td>
-                    <input type=text name="animal_name" value="<?php echo $animal_values['animal_name'] ?>">
-                </td>
-            </tr>
+                <tr>
+                    <td>Height</td>
+                    <td>
+                        <input type=number step="1" min="1" max="30000" name="animal_height"
+                            value="<?php echo $animal_values['animal_height'] ?>">
+                    </td>
+                </tr>
 
-            <tr>
-                <td>Sex</td>
-                <td>
-                    <?php
-                    foreach (['M', 'F'] as $sex) {
-                        echo '<div=><input type="radio" id="' . $sex . '" name="animal_sex" value="' . $sex . '"';
-                        if ($sex == $animal_values['animal_sex']) {
-                            echo ' checked';
-                        }
-                        echo '>&nbsp;<label for="' . $sex . '">' . $sex . '</label></div>&nbsp;&nbsp;';
+                <tr>
+                    <td>Weight</td>
+                    <td>
+                        <input type=number step="1" min="1" max="200000" name="animal_weight"
+                            value="<?php echo $animal_values['animal_weight'] ?>">
+                    </td>
+                </tr>
 
-                    }
-                    ?>
-                </td>
-            </tr>
+                <tr>
+                    <td>Lifespan</td>
+                    <td>
+                        <input type=number step="1" min="1" max="11000" name="animal_lifespan"
+                            value="<?php echo $animal_values['animal_lifespan'] ?>">
+                    </td>
+                </tr>
 
-            <tr>
-                <td>Height</td>
-                <td>
-                    <input type=number step="1" min="1" max="30000" name="animal_height"
-                        value="<?php echo $animal_values['animal_height'] ?>">
-                </td>
-            </tr>
+                <tr>
+                    <td>Birth</td>
+                    <td>
+                        <input type=datetime-local name="birth_time" value="<?php echo $animal_values['birth_time'] ?>">
+                    </td>
+                </tr>
 
-            <tr>
-                <td>Weight</td>
-                <td>
-                    <input type=number step="1" min="1" max="200000" name="animal_weight"
-                        value="<?php echo $animal_values['animal_weight'] ?>">
-                </td>
-            </tr>
+                <tr>
+                    <td>Death</td>
+                    <td>
+                        <input type=datetime-local name="death_time" value="<?php echo $animal_values['death_time'] ?>">
+                    </td>
+                </tr>
 
-            <tr>
-                <td>Lifespan</td>
-                <td>
-                    <input type=number step="1" min="1" max="11000" name="animal_lifespan"
-                        value="<?php echo $animal_values['animal_lifespan'] ?>">
-                </td>
-            </tr>
+                <tr>
+                    <td>Father</td>
+                    <td>
+                        <select name="id_father">
+                            <option value='0'>No known father</option>
+                            <?php
+                            // Get the list of all male animal names
+                            $males = $animal->getAllPossibleParentAnimalNames('M', $choice);
 
-            <tr>
-                <td>Birth</td>
-                <td>
-                    <input type=datetime-local name="birth_time" value="<?php echo $animal_values['birth_time'] ?>">
-                </td>
-            </tr>
-
-            <tr>
-                <td>Death</td>
-                <td>
-                    <input type=datetime-local name="death_time" value="<?php echo $animal_values['death_time'] ?>">
-                </td>
-            </tr>
-
-            <tr>
-                <td>Father</td>
-                <td>
-                    <select name="id_father">
-                        <option value='0'>No known father</option>
-                        <?php
-                        // Get the list of all male animal names
-                        $males = $animal->getAllPossibleParentAnimalNames('M', $choice);
-
-                        foreach ($males as $male) {
-                            echo '<option ';
-                            if ($male['id_animal'] == $animal_values['id_father']) {
-                                echo ' selected="selected" ';
+                            foreach ($males as $male) {
+                                echo '<option ';
+                                if ($male['id_animal'] == $animal_values['id_father']) {
+                                    echo ' selected="selected" ';
+                                }
+                                echo 'value="' . $male['id_animal'] . '">#' . $male['id_animal'] . ' ' . $male['animal_name'] . '</option>';
                             }
-                            echo 'value="' . $male['id_animal'] . '">#' . $male['id_animal'] . ' ' . $male['animal_name'] . '</option>';
-                        }
-                        ?>
-                    </select>
-                </td>
-            </tr>
+                            ?>
+                        </select>
+                    </td>
+                </tr>
 
-            <tr>
-                <td>Mother</td>
-                <td>
-                    <select name="id_mother">
-                        <option value='0'>No known mother</option>
-                        <?php
-                        // Get the list of all male animal names
-                        $females = $animal->getAllPossibleParentAnimalNames('F', $choice);
+                <tr>
+                    <td>Mother</td>
+                    <td>
+                        <select name="id_mother">
+                            <option value='0'>No known mother</option>
+                            <?php
+                            // Get the list of all male animal names
+                            $females = $animal->getAllPossibleParentAnimalNames('F', $choice);
 
-                        foreach ($females as $female) {
-                            echo '<option ';
-                            if ($female['id_animal'] == $animal_values['id_mother']) {
-                                echo ' selected="selected" ';
+                            foreach ($females as $female) {
+                                echo '<option ';
+                                if ($female['id_animal'] == $animal_values['id_mother']) {
+                                    echo ' selected="selected" ';
+                                }
+                                echo 'value="' . $female['id_animal'] . '">#' . $female['id_animal'] . ' ' . $female['animal_name'] . '</option>';
                             }
-                            echo 'value="' . $female['id_animal'] . '">#' . $female['id_animal'] . ' ' . $female['animal_name'] . '</option>';
-                        }
-                        ?>
-                    </select>
-                </td>
-            </tr>
+                            ?>
+                        </select>
+                    </td>
+                </tr>
 
-    </table>
-    </p>
-    <input class="button redbutton" type="button" onclick="window.location.href='index.php?page=animal_list'"
-        value="Cancel">
-    <input class="button" type="submit" name="form_submit" value="Submit">
-</form>
+        </table>
+        </p>
+        <input class="button redbutton" type="button" onclick="window.location.href='index.php?page=animal_list'"
+            value="Cancel">
+        <input class="button" id="confirm_button" type="submit" name="form_submit" value="Submit">
+    </form>
+
+</div>

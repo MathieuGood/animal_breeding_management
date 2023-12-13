@@ -96,27 +96,25 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
             // If there is a valid input for each id, create new animal
             if (breed > 0 && male > 0 && female > 0) {
 
-                createNewAnimal(breed, male, female)
+                createNewAnimal(breed, male, female, 'breeding')
 
             } else {
 
                 console.log('Data missing')
             }
-
-
         })
 
 
-
         // AJAX function for creating new animal
-        function createNewAnimal(id_breed, id_father, id_mother) {
+        function createNewAnimal(id_breed, id_father, id_mother, origin_type) {
             $.ajax({
                 type: "POST",
                 url: "components/create_new_animal.php",
                 data: {
                     id_breed: id_breed,
                     id_father: id_father,
-                    id_mother: id_mother
+                    id_mother: id_mother,
+                    origin: origin_type
                 },
                 // If the ajax query returns a success, display pop-up
                 // and remove the content in the background
