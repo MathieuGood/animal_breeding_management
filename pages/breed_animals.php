@@ -112,7 +112,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         function createNewAnimal(id_breed, id_father, id_mother) {
             $.ajax({
                 type: "POST",
-                url: "ajax_queries/create_new_animal.php",
+                url: "components/create_new_animal.php",
                 data: {
                     id_breed: id_breed,
                     id_father: id_father,
@@ -136,7 +136,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
         function updateCompatiblePartners(id_breed) {
             $.ajax({
                 type: "POST",
-                url: "ajax_queries/update_compatible_partners.php",
+                url: "components/update_compatible_partners.php",
                 data: {
                     breed: id_breed,
                 },

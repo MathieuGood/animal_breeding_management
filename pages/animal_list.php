@@ -12,7 +12,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     }
 
     // On page load, reset all filters, sorting and pagination stored in $_SESSION
-    include('ajax_queries/reset_search_parameters.php');
+    include('components/reset_search_parameters.php');
 
     // Instantiate new Animal object
     $animal = new Animal();
@@ -130,7 +130,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 function resetSearchParameters() {
                     $.ajax({
                         type: "POST",
-                        url: "ajax_queries/update_animal_list.php",
+                        url: "components/update_animal_list.php",
                         data: {
                             sort: 'id_animal DESC',
                             breed_filter: '',
@@ -151,7 +151,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 function createRandomAnimalsAndUpdateList(number) {
                     $.ajax({
                         type: "POST",
-                        url: "ajax_queries/create_random_animal.php",
+                        url: "components/create_random_animal.php",
                         data: {
                             amount_to_create: number,
                         },
@@ -165,7 +165,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 function sortAnimalList(type) {
                     $.ajax({
                         type: "POST",
-                        url: "ajax_queries/update_animal_list.php",
+                        url: "components/update_animal_list.php",
                         data: {
                             sort: type,
                             current_page: '1',
@@ -184,7 +184,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 function filterAnimalListByName(type) {
                     $.ajax({
                         type: "POST",
-                        url: "ajax_queries/update_animal_list.php",
+                        url: "components/update_animal_list.php",
                         data: {
                             name_filter: type,
                             current_page: '1',
@@ -202,7 +202,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 function filterAnimalListByBreed(type) {
                     $.ajax({
                         type: "POST",
-                        url: "ajax_queries/update_animal_list.php",
+                        url: "components/update_animal_list.php",
                         data: {
                             breed_filter: type,
                             current_page: '1',
@@ -220,7 +220,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 function filterAnimalListBySex(type) {
                     $.ajax({
                         type: "POST",
-                        url: "ajax_queries/update_animal_list.php",
+                        url: "components/update_animal_list.php",
                         data: {
                             sex_filter: type,
                             current_page: '1',
@@ -238,7 +238,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
                 function pageAnimalList(page_number) {
                     $.ajax({
                         type: "POST",
-                        url: "ajax_queries/update_animal_list.php",
+                        url: "components/update_animal_list.php",
                         data: {
                             current_page: page_number,
                         },
