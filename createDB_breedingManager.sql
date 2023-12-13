@@ -34,8 +34,8 @@ CREATE TABLE animal (
     id_breed INT DEFAULT NULL,
     animal_name VARCHAR(30) DEFAULT NULL,
     animal_sex CHAR(1) DEFAULT NULL,
-    animal_height DECIMAL DEFAULT NULL,
-    animal_weight DECIMAL DEFAULT NULL,
+    animal_height INT DEFAULT NULL,
+    animal_weight INT DEFAULT NULL,
     animal_lifespan INT DEFAULT NULL,
     birth_time TIMESTAMP DEFAULT 0,
     death_time TIMESTAMP DEFAULT 0,
@@ -545,11 +545,11 @@ DELIMITER ;
 
 -- Stored procedure to generate random animals
 -- Input parameters amount to create, breed, id_father, id_mother
--- Could you rewrite this procedure for me ?
 
--- If id_father_param and id_mother_param are NULL, then set @id_breed with a value only if there are at least : one animal with animal_sex='M' and death_time=0, AND one animal with animal_sex='F' and death_time=0 in the animal table.
+-- If id_father_param and id_mother_param are NULL, then set @id_breed with a value,
+-- only if there are at least one male and one female of the same breed
 -- If id_father_param and id_mother_param are not NULL, set @id_breed with a random id_breed in breed table
--- If optionalBreed is not NULL, set @id_breed with input parameter value
+-- If optionalBreed parameter is given, set @id_breed with input parameter value
 
 DELIMITER //
 
@@ -675,10 +675,6 @@ END//
 DELIMITER ;
 
 
--- Generating 20 random animals to populate the `animal` table
-CALL createRandomAnimals(20, NULL, 0, 0);
-
-
 -- Creating a stored procedure to set death_time if lifespan reached
 DELIMITER //
 
@@ -690,6 +686,12 @@ BEGIN
 END//
 
 DELIMITER ;
+
+
+-- Generating 100 random animals to populate the `animal` table
+CALL createRandomAnimals(100, NULL, 0, 0);
+
+
 
 
 -- End of commit
