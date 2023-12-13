@@ -6,5 +6,4 @@ include_once("../classes/dbconnect.class.php");
 $animal = new Animal();
 $animal->letPopulationEvolve();
 
-
 ?>
