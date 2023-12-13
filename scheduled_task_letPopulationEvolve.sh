@@ -9,6 +9,6 @@ while true; do
 
     sleep 2
     
-    elapsed=$((current_time - start_time))
+    php components/let_population_evolve.php
 
 done

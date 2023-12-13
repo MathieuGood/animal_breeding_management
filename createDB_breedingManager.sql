@@ -70,7 +70,7 @@ INSERT INTO breed (
     ('Ball Python', 1, 60, 90, 120, 180, 1200, 1600),
     ('Corn Snake', 1, 65, 100, 120, 150, 300, 600),
     ('Boa Constrictor', 1, 70, 300, 180, 400, 5000, 9000),
-    ('Green Tree Python', 120, 240, 5475, 120, 180, 1000, 1800),
+    ('Green Tree Python', 1, 120, 240, 120, 180, 1000, 1800),
     ('King Cobra', 1, 200, 360, 300, 400, 4000, 6000),
     ('Black Mamba', 1, 100, 220, 200, 250, 1800, 3000),
     ('Reticulated Python', 1, 80, 180, 180, 730, 45000, 91000),
@@ -545,6 +545,11 @@ DELIMITER ;
 
 -- Stored procedure to generate random animals
 -- Input parameters amount to create, breed, id_father, id_mother
+-- Could you rewrite this procedure for me ?
+
+-- If id_father_param and id_mother_param are NULL, then set @id_breed with a value only if there are at least : one animal with animal_sex='M' and death_time=0, AND one animal with animal_sex='F' and death_time=0 in the animal table.
+-- If id_father_param and id_mother_param are not NULL, set @id_breed with a random id_breed in breed table
+-- If optionalBreed is not NULL, set @id_breed with input parameter value
 
 DELIMITER //
 
@@ -556,17 +561,25 @@ CREATE PROCEDURE breedingManager.createRandomAnimals(
 )
 BEGIN
     DECLARE i INT DEFAULT 1;
-    DECLARE breedIdExists INT;
     DECLARE id_father INT;
     DECLARE id_mother INT;
 
     WHILE i <= numCalls DO
-        -- Random or specified id_breed
-        IF optionalBreed IS NULL THEN
-            SET breedIdExists = (SELECT 1 FROM breed ORDER BY RAND() LIMIT 1);
-            SELECT id_breed INTO @id_breed FROM breed WHERE breedIdExists = 1 ORDER BY RAND() LIMIT 1;
-        ELSE
+
+        IF id_father_param IS NULL AND id_mother_param IS NULL AND optionalBreed IS NULL THEN
+            SELECT id_breed INTO @id_breed 
+                FROM (SELECT DISTINCT id_breed FROM animal WHERE animal_sex = 'M'
+                        INTERSECT
+                      SELECT DISTINCT id_breed FROM animal WHERE animal_sex = 'F') AS available_breeds
+                ORDER BY RAND() LIMIT 1;
+
+        ELSEIF optionalBreed > 0 THEN
             SET @id_breed = optionalBreed;
+
+        ELSE
+            SELECT id_breed INTO @id_breed
+                FROM breed
+                ORDER BY RAND() LIMIT 1;
         END IF;
 
         -- Random id_father
@@ -663,7 +676,7 @@ DELIMITER ;
 
 
 -- Generating 20 random animals to populate the `animal` table
-CALL createRandomAnimals(50, NULL, 0, 0);
+CALL createRandomAnimals(20, NULL, 0, 0);
 
 
 -- Creating a stored procedure to set death_time if lifespan reached
