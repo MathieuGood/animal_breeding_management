@@ -648,10 +648,35 @@ END//
 DELIMITER ;
 
 
+-- Stored procedure to add death_time if lifespan reached and generate new random matings
+
+DELIMITER //
+
+CREATE PROCEDURE breedingManagement.letPopulationEvolve()
+BEGIN
+
+CALL createRandomAnimals(50, NULL, NULL, NULL);
+
+END//
+
+DELIMITER ;
+
 
 -- Generating 20 random animals to populate the `animal` table
-CALL createRandomAnimals(50, NULL, 0, 0);
+CALL createRandomAnimals(10, NULL, 0, 0);
 
+
+-- Creating a stored procedure to set death_time if lifespan reached
+DELIMITER //
+
+CREATE PROCEDURE breedingManagement.setDeathTime()
+BEGIN
+    UPDATE animal
+    SET death_time = DATE_ADD(birth_time, INTERVAL animal_lifespan SECOND)
+    WHERE death_time = 0 AND DATE_ADD(birth_time, INTERVAL animal_lifespan SECOND) <= CURRENT_TIMESTAMP();
+END//
+
+DELIMITER ;
 
 
 -- End of commit
