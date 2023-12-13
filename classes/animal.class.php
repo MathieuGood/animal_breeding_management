@@ -150,7 +150,10 @@ class Animal
             $exclude_id1 = "AND `id_animal` != '" . $this->id . "'";
             $exclude_id2 = "AND `birth_time` < (SELECT birth_time 
                                                   FROM `" . $this->table .
-                "` WHERE `id_" . $this->table . "` = '" . $this->id . "')";
+                "` WHERE `id_" . $this->table . "` = '" . $this->id . "')
+                AND `id_breed` = (SELECT id_breed 
+                                    FROM $this->table
+                                    WHERE id_animal = '" . $this->id . "')";
         }
 
         $query = "SELECT id_animal, animal_name
@@ -388,7 +391,7 @@ class Animal
                     ' . $animal_data['birth_time'] . '
                 </li>
 
-                '.$add_death_time.'
+                ' . $add_death_time . '
 
             </ul>
 
