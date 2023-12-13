@@ -67,21 +67,21 @@ INSERT INTO breed (
     min_avg_weight,
     max_avg_weight
 ) VALUES 
-    ('Ball Python', 1, 7300, 10950, 120, 180, 1200, 1600),
-    ('Corn Snake', 1, 3650, 5475, 120, 150, 300, 600),
-    ('Boa Constrictor', 1, 7300, 10950, 180, 400, 5000, 9000),
-    ('Green Tree Python', 1, 3650, 5475, 120, 180, 1000, 1800),
-    ('King Cobra', 1, 3650, 5475, 300, 400, 4000, 6000),
-    ('Black Mamba', 1, 3650, 5475, 200, 250, 1800, 3000),
-    ('Reticulated Python', 1, 7300, 10950, 180, 730, 45000, 91000),
-    ('Garter Snake', 1, 1825, 3650, 50, 70, 100, 300),
-    ('Anaconda', 1, 7300, 10950, 450, 600, 27000, 45000),
-    ('Gaboon Viper', 1, 3650, 5475, 100, 150, 6500, 13000),
-    ('Burmese Python', 1, 7300, 10950, 180, 450, 36000, 68000),
-    ('Indian Python', 1, 7300, 10950, 100, 370, 22000, 45000),
-    ('Carpet Python', 1, 5475, 7300, 180, 240, 3500, 6000),
-    ('Amazon Tree Boa', 1, 3650, 5475, 90, 150, 500, 1000),
-    ('Western Hognose Snake', 1, 3650, 5475, 50, 70, 100, 200);
+    ('Ball Python', 1, 60, 90, 120, 180, 1200, 1600),
+    ('Corn Snake', 1, 65, 100, 120, 150, 300, 600),
+    ('Boa Constrictor', 1, 70, 300, 180, 400, 5000, 9000),
+    ('Green Tree Python', 120, 240, 5475, 120, 180, 1000, 1800),
+    ('King Cobra', 1, 200, 360, 300, 400, 4000, 6000),
+    ('Black Mamba', 1, 100, 220, 200, 250, 1800, 3000),
+    ('Reticulated Python', 1, 80, 180, 180, 730, 45000, 91000),
+    ('Garter Snake', 1, 90, 180, 50, 70, 100, 300),
+    ('Anaconda', 1, 100, 200, 450, 600, 27000, 45000),
+    ('Gaboon Viper', 1, 85, 210, 100, 150, 6500, 13000),
+    ('Burmese Python', 1, 150, 280, 180, 450, 36000, 68000),
+    ('Indian Python', 1, 100, 200, 100, 370, 22000, 45000),
+    ('Carpet Python', 1, 60, 100, 180, 240, 3500, 6000),
+    ('Amazon Tree Boa', 1, 120, 190, 90, 150, 500, 1000),
+    ('Western Hognose Snake', 1, 50, 140, 50, 70, 100, 200);
 
 
 -- `animal_specie` table : references all the animal species
@@ -614,7 +614,7 @@ BEGIN
         SELECT FLOOR(@min_avg_lifespan + RAND() * (@max_avg_lifespan - @min_avg_lifespan + 1)) INTO @animal_lifespan;
 
         -- Random datetime in the last 7 days
-        SELECT DATE_FORMAT(CURRENT_TIMESTAMP() - INTERVAL FLOOR(RAND() * 604800) SECOND, '%Y-%m-%d %H:%i') INTO @birth_time;
+        SELECT DATE_FORMAT(CURRENT_TIMESTAMP() - INTERVAL FLOOR(RAND() * 15) SECOND, '%Y-%m-%d %H:%i:%s') INTO @birth_time;
 
         -- Create new animal with random or specified values
         INSERT INTO animal (
@@ -655,7 +655,7 @@ DELIMITER //
 CREATE PROCEDURE breedingManagement.letPopulationEvolve()
 BEGIN
 
-CALL createRandomAnimals(50, NULL, NULL, NULL);
+CALL createRandomAnimals(1, NULL, NULL, NULL);
 
 END//
 
@@ -663,7 +663,7 @@ DELIMITER ;
 
 
 -- Generating 20 random animals to populate the `animal` table
-CALL createRandomAnimals(10, NULL, 0, 0);
+CALL createRandomAnimals(50, NULL, 0, 0);
 
 
 -- Creating a stored procedure to set death_time if lifespan reached
