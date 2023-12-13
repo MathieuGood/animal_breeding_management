@@ -574,7 +574,7 @@ BEGIN
             -- Select a random existing animal_id where death_time = 0 and animal_sex = 'M'
             SELECT id_animal INTO id_father
             FROM animal
-            WHERE death_time = 0 AND animal_sex = 'M'
+            WHERE death_time = 0 AND animal_sex = 'M' AND id_breed = @id_breed
             ORDER BY RAND()
             LIMIT 1;
         ELSE
@@ -586,7 +586,7 @@ BEGIN
             -- Select a random existing animal_id where death_time = 0 and animal_sex = 'F'
             SELECT id_animal INTO id_mother
             FROM animal
-            WHERE death_time = 0 AND animal_sex = 'F'
+            WHERE death_time = 0 AND animal_sex = 'F' AND id_breed = @id_breed
             ORDER BY RAND()
             LIMIT 1;
         ELSE
