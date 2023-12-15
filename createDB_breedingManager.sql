@@ -458,7 +458,7 @@ CREATE VIEW breedingManager.animalList AS (SELECT
                                                 animal_height, 
                                                 animal_weight,
                                                 animal_lifespan,
-                                                DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time
+                                                DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i:%s') AS birth_time
                                                   FROM animal
                                                     INNER JOIN breed
                                                             ON animal.id_breed = breed.id_breed
@@ -474,8 +474,8 @@ CREATE VIEW breedingManager.deceasedAnimalList AS (SELECT
                                                 animal_height, 
                                                 animal_weight,
                                                 animal_lifespan,
-                                                DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time,
-                                                DATE_FORMAT(death_time, '%d/%m/%Y %H:%i') AS death_time
+                                                DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i:%s') AS birth_time,
+                                                DATE_FORMAT(death_time, '%d/%m/%Y %H:%i:%s') AS death_time
                                                   FROM animal
                                                     INNER JOIN breed
                                                             ON animal.id_breed = breed.id_breed
@@ -505,8 +505,8 @@ CREATE PROCEDURE breedingManager.getParentDetails(IN in_id INT, IN parent_type V
 BEGIN
     IF parent_type = 'father' THEN
         SELECT id_animal, animal_name, breed.id_breed, breed_name,
-                DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i:%s:') AS birth_time,
-                DATE_FORMAT(death_time, '%d/%m/%Y %H:%i:%s:') AS death_time
+                DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i:%s') AS birth_time,
+                DATE_FORMAT(death_time, '%d/%m/%Y %H:%i:%s') AS death_time
         FROM animal
         INNER JOIN breed ON animal.id_breed = breed.id_breed
         WHERE id_animal = (SELECT id_father FROM animal WHERE id_animal = in_id);
