@@ -12,6 +12,6 @@ $animal->letAnimalsDie();
 
 // Generate matings for the animals that are alive
 // Parameter : number of matings to generate
-$animal->letAnimalsMate(2);
+$animal->letAnimalsMate(3);
 
 ?>

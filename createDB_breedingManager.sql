@@ -690,8 +690,8 @@ END//
 DELIMITER ;
 
 
--- Generating 100 random animals to populate the `animal` table
-CALL createRandomAnimals(100, NULL, 0, 0);
+-- Generating 200 random animals to populate the `animal` table
+CALL createRandomAnimals(200, NULL, 0, 0);
 
 
 
