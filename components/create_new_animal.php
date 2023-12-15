@@ -1,39 +1,26 @@
 <?php
 
+// Generate pop-up to notify user that a mating resulted in the birth of a new animal
+
 include_once("../classes/animal.class.php");
 include_once("../classes/dbconnect.class.php");
 
-$popup_origin = $_POST['origin'];
 
+$breed = $_POST['id_breed'];
+$id_father = $_POST['id_father'];
+$id_mother = $_POST['id_mother'];
 
-if ($popup_origin == 'breeding') {
+$animal = new Animal();
+$id_animal = $animal->createRandomAnimal(1, $breed, $id_father, $id_mother);
+$add_image = '<img class="img-fluid" src="images/baby_snake.svg">';
+$add_before_name = 'Welcome to the world ';
+$add_after_name = '!';
 
-    $breed = $_POST['id_breed'];
-    $id_father = $_POST['id_father'];
-    $id_mother = $_POST['id_mother'];
-
-    $animal = new Animal();
-    $id_animal = $animal->createRandomAnimal(1, $breed, $id_father, $id_mother);
-    $add_image = '<img class="img-fluid" src="images/baby_snake.svg">';
-    $add_before_name = 'Welcome to the world ';
-    $add_after_name = '!';
-
-
-} else if ($popup_origin == 'new' || $popup_origin == 'edit') {
-    $id_animal = $_POST['id_animal'];
-    $add_image = '';
-    $add_before_name = ucfirst($_SESSION['animal_specie']).' ';
-    
-    if ($popup_origin == 'new') {$add_after_name = ' has been successfully created';}
-    if ($popup_origin == 'edit') {$add_after_name = ' has been successfully edited';}
-}
 
 $animal = new Animal($id_animal);
 $animal_name = $animal->getAnimalName();
 $add_name = '<span id="snake_name">' . $animal_name . '</span>';
 
-//For debugging
-// var_dump($_POST);
 ?>
 
 <div class="card card-popup text-center mb-3" style="width: 18rem;">

@@ -58,7 +58,6 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
             array_push($grandparents, $motherside_grandfather_data);
         } else {
             $motherside_grandfather_data = '';
-            
         }
 
         $motherside_grandmother_data = $animal->getParentDetails('mother', $mother_data['id_animal']);
@@ -70,7 +69,14 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
             $motherside_grandmother_data = '';
         }
     }
-    
+
+
+    $children = $animal->getChildrenDetails($id);
+
+    foreach ($children as $key => $child) {
+        $children[$key]['relative'] = 'child';
+    }
+
     ?>
 
 
@@ -144,9 +150,14 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
 
         <div class="row d-flex justify-content-center" id="children">
 
-            <div class="col-auto">
+            <?php
+            foreach ($children as $child) {
 
-            </div>
+                if ($child) {
+                    $animal->buildAnimalCard($child);
+                }
+            }
+            ?>
 
         </div>
 

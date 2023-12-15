@@ -1,12 +1,11 @@
 <?php
-// Si l'utilisateur se déconnecte, on remet id_login à 0 et on détruit la session
+
+// If user logs out, destroy SESSION
 if (isset($_POST['logout'])) {
     $_SESSION['open'] = 0;
     unset($_SESSION['open']);
     unset($_SESSION['user_name']);
     session_destroy();
-    // Rafraîchir la page pour recharger le menu et supprimer les liens pour l'accès administrateur
-    // echo "<meta http-equiv='refresh' content='0'>";
 }
 ?>
 
@@ -14,7 +13,7 @@ if (isset($_POST['logout'])) {
     <div class="container-fluid">
         <span class="navbar-brand">
             <a href="index.php?page=animal_list">
-                <img src="images/snake.svg" id="animal_logo" alt="Animal Logo">
+                <img src="images/snake_logo.svg" id="animal_logo" alt="Animal Logo">
             </a>
             Breeding Manager
         </span>

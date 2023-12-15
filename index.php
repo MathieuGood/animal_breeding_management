@@ -14,7 +14,7 @@ $_SESSION['animal_specie_plural'] = "snakes";
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
-
+    <!-- Bootstrap import -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -29,6 +29,7 @@ $_SESSION['animal_specie_plural'] = "snakes";
 </head>
 
 <body>
+    <!-- jQuery import -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -38,8 +39,7 @@ $_SESSION['animal_specie_plural'] = "snakes";
     <div class="container" id="main_content">
             <?php
 
-            // La chaîne de caractères $_GET['page'] doit correspondre exactement au nom du fichier
-            // isset() -> Vérifie que la variable existe
+            // Router
             if(!isset($_GET['page']) || $_GET['page'] == '')
                 $_GET['page'] = 'login';
             $file_import = 'pages/'.$_GET['page'].'.php';

@@ -7,6 +7,11 @@ class Animal
     private $id;
     private $db_connect;
 
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // CONSTRUCTOR
+    /////////////////////////////////////////////////////////////////////////////////
+    
     public function __construct($id = '')
     {
         $this->id = $id;
@@ -14,6 +19,12 @@ class Animal
     }
 
 
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // GETTERS
+    /////////////////////////////////////////////////////////////////////////////////
+
+    // Get all the animals data after filtering and sorting
     public function getAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $limit, $offset, $alive)
     {
 
@@ -30,15 +41,16 @@ class Animal
                     AND `animal_sex` LIKE '%" . $sex_filter . "%'
                     ORDER BY " . $sort . " 
                     LIMIT " . $limit . " OFFSET " . $offset;
-        // echo '<br/>';
-        // echo '<br/>getAllFilteredAndSortedAnimals';
-        // var_dump($query);
+
         return $this->db_connect->sendQuery(
             $query,
             "num"
         );
     }
 
+
+    // Get all the breeds in animal table after filtering and sorting
+    // Used to feed the breed filter dropdown
     public function getAllFilteredAndSortedBreeds($name_filter, $breed_filter, $sex_filter, $alive)
     {
 
@@ -58,15 +70,16 @@ class Animal
                                   AND `animal_sex` LIKE '%" . $sex_filter . "%'
                                     GROUP BY breed_name
                                         ORDER BY breed_name ASC";
-        // echo '<br/>';
-        // echo '<br/>getAllFilteredAndSortedBreeds';
-        // var_dump($query);
+
         return $this->db_connect->sendQuery(
             $query,
             "num"
         );
     }
 
+
+    // Get all the sex data from animal table after filtering and sorting
+    // Used to feed the sex filter dropdown
     public function getAllFilteredAndSortedSex($name_filter, $breed_filter, $sex_filter, $alive)
     {
 
@@ -86,15 +99,15 @@ class Animal
                                     AND `animal_sex` LIKE '%" . $sex_filter . "%'
                                         GROUP BY animal_sex
                                             ORDER BY breed_name ASC";
-        // echo '<br/>';
-        // echo '<br/>getAllFilteredAndSortedSex';
-        // var_dump($query);
+
         return $this->db_connect->sendQuery(
             $query,
             "num"
         );
     }
 
+
+    // Get the count of all the animals after filtering and sorting
     public function countAllFilteredAndSortedAnimals($sort, $name_filter, $breed_filter, $sex_filter, $alive)
     {
 
@@ -130,12 +143,14 @@ class Animal
         return $this->db_connect->sendQuery($query);
     }
 
+    // Get all the existing breeds in breed table
     public function getAllAnimalBreeds()
     {
         return $this->db_connect->sendQuery("SELECT id_breed, breed_name FROM `breed`");
     }
 
 
+    // Get all possible parents (no youger than the animal itself) for assigning a parent to an animal
     public function getAllPossibleParentAnimalNames($sex, $choice)
     {
         // If the animal exists (edit animal), exclude it from the list of possible parents
@@ -157,6 +172,7 @@ class Animal
 
         return $this->db_connect->sendQuery($query);
     }
+
 
     // Get all compatible parteners for breeding
     // Filter animals based on sex
@@ -186,6 +202,8 @@ class Animal
     }
 
 
+    // Get all the data for one animal
+    // Used to edit an animal and display data in family tree
     public function getAnimalDetails($id = '')
     {
         if ($id == '') {
@@ -201,6 +219,7 @@ class Animal
     }
 
 
+    // Get all the data for one animal's parent
     public function getParentDetails($parent_type, $id = '')
     {
         if ($id == '') {
@@ -216,6 +235,7 @@ class Animal
     }
 
 
+    // Get all the data for one animal's children
     public function getChildrenDetails($id = '')
     {
         if ($id == '') {
@@ -224,12 +244,11 @@ class Animal
 
         $query = "CALL getChildrenDetails(" . $id . ");";
 
-        $result = $this->db_connect->sendQuery($query)[0];
+        $result = $this->db_connect->sendQuery($query);
         if (isset($result)) {
             return $result;
         }
     }
-
 
 
     // Get animal_name from id
@@ -239,44 +258,8 @@ class Animal
         return $result[0]['animal_name'];
     }
 
-    public function getBreedName($id_breed)
-    {
-        $result = $this->db_connect->sendQuery("SELECT `breed_name` FROM `breed` WHERE id_breed = '" . $id_breed . "'");
-        return $result[0]['breed_name'];
-    }
 
-    public function update($col, $value)
-    {
-        return $this->db_connect->update($this->table, $this->id, $col, $value);
-    }
-
-    public function createCustomAnimal($cols, $values)
-    {
-        return $this->db_connect->insertMultiple($this->table, $cols, $values);
-    }
-
-    // Create one (default) or several (int as parameter) new random animal
-    // with data consistent with its breed characteristics,
-    // specifying sex and breed as parameters,
-    // using the createRandomAnimal() stored procedure in database
-    public function createRandomAnimal($number = 1, $id_breed = 'NULL', $id_father = 0, $id_mother = 0)
-    {
-        if ($number == '' or $number > 1000) {
-            $number = 0;
-        }
-        // Calling procedure with NULL for animal_sex and id_breed to have complete random animal
-        $query = 'CALL createRandomAnimals(' . $number . ', ' . $id_breed . ', ' . $id_father . ', ' . $id_mother . ');';
-
-        return $this->db_connect->sendQuery($query);
-    }
-
-
-    public function declareDead($death_time)
-    {
-        return $this->db_connect->sendQuery("UPDATE `" . $this->table . "` SET `death_time` = '" . $death_time . "' WHERE `id_" . $this->table . "` = " . $this->id);
-    }
-
-
+    // Count all animals by sex
     public function countAllAnimalsBySex($alive)
     {
         if ($alive == false) {
@@ -294,10 +277,76 @@ class Animal
     }
 
 
+    // Get column names of a database table
     public function getColumnNames($view)
     {
         return $this->db_connect->getColumnNames($view);
     }
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // SETTERS 
+    /////////////////////////////////////////////////////////////////////////////////
+
+    // Update on value in database
+    public function update($col, $value)
+    {
+        return $this->db_connect->update($this->table, $this->id, $col, $value);
+    }
+
+
+    // Create new animal entry inserting multiple values 
+    // Used to create new custom animal
+    public function createCustomAnimal($cols, $values)
+    {
+        return $this->db_connect->insertMultiple($this->table, $cols, $values);
+    }
+
+
+    // Create one (default) or several (int as parameter) new random animal
+    // with data consistent with its breed characteristics,
+    // specifying sex and breed as parameters,
+    // using the createRandomAnimal() stored procedure in database
+    public function createRandomAnimal($number = 1, $id_breed = 'NULL', $id_father = 0, $id_mother = 0)
+    {
+        if ($number == '' or $number > 1000) {
+            $number = 0;
+        }
+        // Calling procedure with NULL for animal_sex and id_breed to have complete random animal
+        $query = 'CALL createRandomAnimals(' . $number . ', ' . $id_breed . ', ' . $id_father . ', ' . $id_mother . ');';
+
+        return $this->db_connect->sendQuery($query);
+    }
+
+
+    // Declare one animal as dead (add death_time)
+    public function declareDead($death_time)
+    {
+        return $this->db_connect->sendQuery("UPDATE `" . $this->table . "` SET `death_time` = '" . $death_time . "' WHERE `id_" . $this->table . "` = " . $this->id);
+    }
+
+
+    // Generate random mating among alive animals
+    public function letAnimalsMate($number_of_offspring = 1)
+    {
+        $query = "CALL createRandomMating(" . $number_of_offspring . ");";
+        $this->db_connect->sendQuery($query);
+    }
+
+
+    // Set animals as dead if they exceeded their lifespan
+    public function letAnimalsDie()
+    {
+        $query = "CALL setDeathTime();";
+        $this->db_connect->sendQuery($query);
+    }
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // BUILDER
+    /////////////////////////////////////////////////////////////////////////////////
 
 
     // Build one html animal presentation card for genealogy display
@@ -355,9 +404,12 @@ class Animal
                 ' . $add_image . '        
             
             <h5 class="card-title">
+            <a href="index.php?page=family_tree&id=' . $animal_data['id_animal'] . '"> 
+            <style="font-size:0.2rem">#' . $animal_data['id_animal'] . '</style>
                 <span id="snake_name">
                 ' . $animal_data['animal_name'] . '
                 </span>
+                </a>
             </h5>
 
             <p class="card-text">
@@ -381,19 +433,7 @@ class Animal
         }
 
     }
-
-    public function letAnimalsMate($number_of_offspring = 1)
-    {
-        $query = "CALL createRandomMating(" . $number_of_offspring . ");";
-        $this->db_connect->sendQuery($query);
-    }
-
-    public function letAnimalsDie()
-    {
-        $query = "CALL setDeathTime();";
-        $this->db_connect->sendQuery($query);
-    }
-
 }
+
 
 ?>

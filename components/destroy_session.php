@@ -1,6 +1,5 @@
 <?php
+// Destroy all data in the session
 session_start();
-unset($_SESSION['open']);
-unset($_SESSION['user_name']);
 session_destroy();
 ?>
