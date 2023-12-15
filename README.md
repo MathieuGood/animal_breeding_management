@@ -20,6 +20,8 @@ Features include :
  - Father
  - Mother
 
+![Animal List](./readme_media/animal_list_screenshot.png)
+
 
 ## Run the app
 
