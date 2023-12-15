@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 body {
     /* font-size: 62.5%; */
@@ -7,6 +7,16 @@ body {
     color: #f8f8f2;
 }
 
+.dracula_pink {
+    color: #ff79c6;
+}
+
+.dracula_green {
+    color: #50fa7b;
+}
+
+
+
 .menu-icon img {
     width: 100px;
     height: auto;
@@ -14,10 +24,14 @@ body {
 }
 
 .top-menu {
-    display:flex;
+    display: flex;
     align-items: center;
-    background-color: #282a36	;
-    color:  #f8f8f2;
+    background-color: #282a36;
+    color: #f8f8f2;
+}
+
+#menu_navbar {
+    background-color: #282a36;
 }
 
 .menu-item {
@@ -33,23 +47,32 @@ body {
     color: #ff79c6;
 }
 
-table, th, td {
+
+table,
+th,
+td {
     border: 1px solid #f8f8f2;
     border-collapse: collapse;
 }
 
-th, td {
-    padding-left: 1em;
-    padding-right: 1em;
+th,
+td {
+    padding-left: 0.8em;
+    padding-right: 0.8em;
     text-align: left;
-  }
+}
 
 th {
     background-color: #282a36;
-    color:#ff79c6;
-    font-weight: 400;
+    color: #ff79c6;
+    font-weight: 300;
     padding-bottom: 0.3em;
     padding-top: 0.3em;
+}
+
+.animal_table td {
+    color: #f8f8f2;
+    background-color: #6c757d;
 }
 
 .button {
@@ -62,7 +85,7 @@ th {
     padding: 0.6em 1em 0.6em 1em;
     font-family: 'Poppins', sans-serif;
     font-size: 0.75em;
-    margin : 0.5em;
+    margin: 0.5em;
 }
 
 .redbutton {
@@ -76,4 +99,248 @@ th {
     border: none;
     padding: 0.4em 0.5em 0.4em 0.5em;
 
+}
+
+img#animal_logo {
+    width: 100px;
+    height: auto;
+    padding: 0.4em;
+}
+
+.pink_link {
+    color: #ff79c6;
+}
+
+.pink_link:hover {
+    color: pink;
+}
+
+.purple_link {
+    color: #bd93f9;
+}
+
+.purple_link:hover {
+    color: lightslategrey;
+}
+
+
+/* Pagination restyling */
+
+.pagination>li>a {
+    background-color: #282a36;
+    color: #ff79c6;
+}
+
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>li>span:focus,
+.pagination>li>span:hover {
+    color: #D3D3D3;
+    background-color: #282a36;
+    border-color: #ddd;
+}
+
+.pagination>.active>a {
+    color: #282a36;
+    background-color: #ff79c6 !Important;
+    border: solid 1px #ddd !Important;
+}
+
+.pagination>.disabled>a {
+    color: #D3D3D3 !Important;
+    background-color: #282a36 !Important;
+    border: solid 1px #ddd !Important;
+}
+
+.pagination>.active>a:hover {
+    background-color: #ff79c6 !Important;
+    border: solid 1px #ff79c6;
+}
+
+#main_content {
+    padding-top: 1em;
+}
+
+
+/* Media query to remove left and right padding on #main_content when the screen gets smaller than 1000px */
+@media only screen and (max-width: 1200px) {
+    #main_content {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 1em;
+        margin-right: 1em;
+        max-width: 95vw;
+    }
+
+    .navbar-brand {
+        font-size: 1em;
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+    .snake_count {
+        margin-top: 1em;
+    }
+}
+
+.btn-group {
+    margin: 1em 0 1em 0;
+}
+
+.top-part {
+    margin: 0;
+    padding: 0;
+}
+
+.create_animal {
+    padding: 0;
+}
+
+.card-popup {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -143px;
+    margin-top: -107px;
+}
+
+.card-topinfo {
+    background-color: #282a36;
+    border-radius: 4px;
+    border: none;
+    color: #D3D3D3;
+
+}
+
+.card {
+    background-color: #D3D3D3;
+}
+
+.card-body {
+    background-color: #D3D3D3;
+    color: #282a36;
+}
+
+.card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card li {
+    font-size: 0.85rem;
+}
+
+.animal-card {
+    padding: 0 1em 0 1em;
+    width: 17rem;
+}
+
+.btn-primary,
+.btn-primary:active,
+.btn-primary:hover,
+.btn-primary:visited {
+    background-color: #282a36;
+    border: 0;
+    box-shadow: 0 0 0 0.08rem rgba(80, 250, 123, .5);
+}
+
+.btn-primary,
+.btn-primary:active {
+    color: #50fa7b;
+}
+
+.btn-primary:hover {
+    /* color: #D3D3D3; */
+    color: #50fa7b;
+    box-shadow: 0 0 0 0.08rem rgba(255, 121, 198, .5);
+}
+
+.form-check-input:checked {
+    background-color: rgba(80, 250, 123, .5);
+    border-color: rgba(80, 250, 123, .5);
+}
+
+#snake_name {
+    color: #ff79c6;
+    font-weight: 800;
+}
+
+/* Animated heart used on breed_animals.php */
+.heart-container {
+    display: flex;
+    height: 160px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    animation: 2s ease 0.5s infinite pulse;
+}
+
+.heart-box {
+    height: 90%;
+    max-height: 400px;
+}
+
+#heart {
+    height: 100%;
+    margin-left: auto;
+    animation: 2.5s ease 0s infinite beat;
+}
+
+@keyframes beat {
+
+    0%,
+    50%,
+    100% {
+        transform: scale(1, 1);
+    }
+
+    30%,
+    80% {
+        transform: scale(0.92, 0.95);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    50%,
+    100% {
+        background: transparent;
+    }
+
+    30%,
+    80% {
+        background: transparent;
+    }
+}
+
+
+@media only screen and (max-width: 575px) {
+
+    /* CSS rules for screens smaller than 576px */
+    #heart-main {
+        display: none !Important;
+    }
+}
+
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+.navbar-nav li:last-of-type {
+    position: absolute;
+    right: 5%;
+}
+
+#showing-entries {
+    font-size: 0.8em;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 1em;
 }

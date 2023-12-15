@@ -1,43 +1,68 @@
-<h3>Generate population evolution</h3>
-
 <?php
 if (isset($_SESSION['open']) && $_SESSION['open'] > 0) {
     $animal = new Animal();
-?>
+    ?>
 
-<select name='male_animal' value="---">
-    <option>Select male animal</option>
-        <?php
-        // Get the list of all male animal names
-        $males = $animal->getAllAliveAnimalsBySex('M');
+    <div class="container d-flex flex-column" id="main-content">
 
-        foreach ($males as $male) {
-            echo '<option ';
-            echo 'value="'.$male['id_animal'].'">#'.$male['id_animal'].' '.$male['animal_name'].'</option>';
-        }
-        ?>
+        <!-- <span class="d-flex justify-content-center text-align-center"> -->
+        <h3 class="justify-content-center">Breed animals together</h3>
+        <!-- </span> -->
 
-</select>
+        <div class="row d-flex justify-content-center">
 
-<select name='female_animal' value="---">
-    <option value='0'>Select female animal</option>
-        <?php
-        // Get the list of all male animal names
-        $females = $animal->getAllAliveAnimalsAndParentsBySex('F');
+            <div class="col-auto">
 
-        foreach ($females as $female) {
-            echo '<option ';
-            echo 'value="'.$female['id_animal'].'">#'.$female['id_animal'].' '.$female['animal_name'].'</option>';
-        }
-        ?>
+                <select name="select_breed" id="select_breed" value="---">
 
-</select>
+                    <option>Select breed</option>
+                    <?php
+                    // Get the list of breeds base on the animals in the animal table
+                    $breeds = $animal->getCurrentBreeds();
+                    foreach ($breeds as $breed) {
+                        echo '<option value="' . $breed['id_breed'] . '">'
+                            . $breed['breed_name'] .
+                            '</option>';
+                    }
+                    ;
+                    ?>
+                </select>
 
-<input class="button" type="submit" name="start_mating" value="Animal mating">
+            </div>
 
-<?php
+        </div>
+
+
+
+        <div class="row d-flex justify-content-center pt-3" id="select_animals_to_breed">
+
+
+
+        </div>
+
+        <div class="row d-flex justify-content-center pt-3">
+
+            <div class="col-auto">
+
+                <a href="#" class="btn btn-primary" id="start_mating">Animal mating</a>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="new_animal_popup">
+
+    </div>
+
+
+    <script src="scripts/breed_animals_scripts.js"></script>
+
+    
+    <?php
 
 } else {
-    header("Location: index.php?page=admin");
+    header("Location: index.php?page=login");
 }
 ?>
