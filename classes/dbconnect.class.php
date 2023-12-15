@@ -10,19 +10,21 @@ class dbConnect
     private $passw;
     private $connect;
 
-    // Connection parameters
+    // Connection parameters passed to constructor
     public function __construct($h = 'localhost', $db = 'breedingManager', $u = 'mariadb', $pw = 'mariadb*1')
     {
         $this->connect = new PDO("mysql:host=" . $h . ";dbname=" . $db, $u, $pw);
         $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+
+
     // Method to check a query to avoid SQL injection and send it to the database
     public function sendQuery($query, $fetch_type = "both")
     {
         $startquery = explode(' ', trim($query));
         // Only allow SELECT, INSERT, UPDATE, DELETE and CALL queries
-        if ($startquery[0] == 'SELECT' || $startquery[0] == 'INSERT' || $startquery[0] == 'UPDATE' || $startquery[0] == 'DELETE' || $startquery[0] == 'CALL') {
+        if ($startquery[0] == 'SELECT' || $startquery[0] == 'INSERT' || $startquery[0] == 'UPDATE' || $startquery[0] == 'DELETE' || $startquery[0] == 'CALL'|| $startquery[0] == '--') {
 
             $result = $this->connect->query($query);
 
