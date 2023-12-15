@@ -16,7 +16,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
         $animal = new Animal();
         // Change the header of page to "Create"
         $title_display = "Create";
-        // Create array with empty strings to initalize form with no values"
+        // Create array with empty strings to initalize form with no values
         $animal_values = array(
             'id_breed' => '',
             'animal_name' => '',

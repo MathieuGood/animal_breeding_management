@@ -421,9 +421,9 @@ INSERT INTO column_label (id_column_label, label)
     ('id_breed', 'Breed ID'),
     ('animal_name', 'Name'),
     ('animal_sex', 'Sex'),
-    ('animal_height', 'Height'),
-    ('animal_weight', 'Weight'),
-    ('animal_lifespan', 'Lifespan'),
+    ('animal_height', 'Height (cm)'),
+    ('animal_weight', 'Weight (g)'),
+    ('animal_lifespan', 'Lifespan (sec)'),
     ('birth_time', 'Birth'),
     ('death_time', 'Death'),
     ('id_father', 'Father ID'),
@@ -455,9 +455,9 @@ CREATE VIEW breedingManager.animalList AS (SELECT
                                                 animal_name, 
                                                 animal_sex,                                                 
                                                 breed_name,
-                                                CONCAT(animal_height, ' cm') AS animal_height, 
-                                                CONCAT(animal_weight, ' g') AS animal_weight,
-                                                CONCAT(animal_lifespan, ' s') AS animal_lifespan, 
+                                                animal_height, 
+                                                animal_weight,
+                                                animal_lifespan,
                                                 DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time
                                                   FROM animal
                                                     INNER JOIN breed
@@ -471,9 +471,9 @@ CREATE VIEW breedingManager.deceasedAnimalList AS (SELECT
                                                 animal_name, 
                                                 animal_sex,                                                 
                                                 breed_name,
-                                                CONCAT(animal_height, ' cm') AS animal_height, 
-                                                CONCAT(animal_weight, ' g') AS animal_weight,
-                                                CONCAT(animal_lifespan, ' s') AS animal_lifespan, 
+                                                animal_height, 
+                                                animal_weight,
+                                                animal_lifespan,
                                                 DATE_FORMAT(birth_time, '%d/%m/%Y %H:%i') AS birth_time,
                                                 DATE_FORMAT(death_time, '%d/%m/%Y %H:%i') AS death_time
                                                   FROM animal
@@ -546,9 +546,9 @@ DELIMITER ;
 -- Stored procedure to generate random animals
 -- Input parameters amount to create, breed, id_father, id_mother
 
--- If id_father_param and id_mother_param are NULL, then set @id_breed with a value,
+-- If optionalFatherID and optionalMotherID are NULL, then set @id_breed with a value,
 -- only if there are at least one male and one female of the same breed
--- If id_father_param and id_mother_param are not NULL, set @id_breed with a random id_breed in breed table
+-- If optionalFatherID and optionalMotherID are not NULL, set @id_breed with a random id_breed in breed table
 -- If optionalBreed parameter is given, set @id_breed with input parameter value
 
 DELIMITER //
@@ -556,8 +556,8 @@ DELIMITER //
 CREATE PROCEDURE breedingManager.createRandomAnimals(
     IN numCalls INT,
     IN optionalBreed INT,
-    IN id_father_param INT,
-    IN id_mother_param INT
+    IN optionalFatherID INT,
+    IN optionalMotherID INT
 )
 BEGIN
     DECLARE i INT DEFAULT 1;
@@ -566,14 +566,14 @@ BEGIN
 
     WHILE i <= numCalls DO
 
-        IF id_father_param IS NULL AND id_mother_param IS NULL AND optionalBreed IS NULL THEN
+        IF optionalFatherID IS NULL AND optionalMotherID IS NULL AND optionalBreed IS NULL THEN
             SELECT id_breed INTO @id_breed 
                 FROM (SELECT DISTINCT id_breed FROM animal WHERE animal_sex = 'M'
                         INTERSECT
                       SELECT DISTINCT id_breed FROM animal WHERE animal_sex = 'F') AS available_breeds
                 ORDER BY RAND() LIMIT 1;
 
-        ELSEIF optionalBreed > 0 THEN
+        ELSEIF optionalBreed IS NOT NULL THEN
             SET @id_breed = optionalBreed;
 
         ELSE
@@ -583,7 +583,7 @@ BEGIN
         END IF;
 
         -- Random id_father
-        IF id_father_param IS NULL THEN
+        IF optionalFatherID IS NULL THEN
             -- Select a random existing animal_id where death_time = 0 and animal_sex = 'M'
             SELECT id_animal INTO id_father
             FROM animal
@@ -591,11 +591,11 @@ BEGIN
             ORDER BY RAND()
             LIMIT 1;
         ELSE
-            SET id_father = id_father_param;
+            SET id_father = optionalFatherID;
         END IF;
 
         -- Random id_mother
-        IF id_mother_param IS NULL THEN
+        IF optionalMotherID IS NULL THEN
             -- Select a random existing animal_id where death_time = 0 and animal_sex = 'F'
             SELECT id_animal INTO id_mother
             FROM animal
@@ -603,7 +603,7 @@ BEGIN
             ORDER BY RAND()
             LIMIT 1;
         ELSE
-            SET id_mother = id_mother_param;
+            SET id_mother = optionalMotherID;
         END IF;
 
         -- Random animal_name and animal_sex
@@ -629,29 +629,31 @@ BEGIN
         -- Random datetime in the last 7 days
         SELECT DATE_FORMAT(CURRENT_TIMESTAMP() - INTERVAL FLOOR(RAND() * 15) SECOND, '%Y-%m-%d %H:%i:%s') INTO @birth_time;
 
-        -- Create new animal with random or specified values
-        INSERT INTO animal (
-            id_breed,
-            animal_name,
-            animal_sex,
-            animal_height,
-            animal_weight,
-            animal_lifespan,
-            birth_time,
-            id_father,
-            id_mother
-        )
-        VALUES (
-            @id_breed,
-            @animal_name,
-            @animal_sex,
-            @animal_height,
-            @animal_weight,
-            @animal_lifespan,
-            @birth_time,
-            id_father,
-            id_mother
-        );
+        IF id_father IS NOT NULL AND id_mother IS NOT NULL THEN
+            -- Create new animal with random or specified values
+            INSERT INTO animal (
+                id_breed,
+                animal_name,
+                animal_sex,
+                animal_height,
+                animal_weight,
+                animal_lifespan,
+                birth_time,
+                id_father,
+                id_mother
+            )
+            VALUES (
+                @id_breed,
+                @animal_name,
+                @animal_sex,
+                @animal_height,
+                @animal_weight,
+                @animal_lifespan,
+                @birth_time,
+                id_father,
+                id_mother
+            );
+        END IF;
 
         SET i = i + 1;
     END WHILE;
@@ -665,10 +667,10 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE breedingManager.letPopulationEvolve()
+CREATE PROCEDURE breedingManager.createRandomMating(IN numCalls INT)
 BEGIN
 
-CALL createRandomAnimals(1, NULL, NULL, NULL);
+CALL createRandomAnimals(numCalls, NULL, NULL, NULL);
 
 END//
 

@@ -382,12 +382,16 @@ class Animal
 
     }
 
-    public function letPopulationEvolve()
+    public function letAnimalsMate($number_of_offspring = 1)
     {
-        $query1 = "CALL setDeathTime();";
-        $query2 = "CALL letPopulationEvolve();";
-        $this->db_connect->sendQuery($query1);
-        $this->db_connect->sendQuery($query2);
+        $query = "CALL createRandomMating(" . $number_of_offspring . ");";
+        $this->db_connect->sendQuery($query);
+    }
+
+    public function letAnimalsDie()
+    {
+        $query = "CALL setDeathTime();";
+        $this->db_connect->sendQuery($query);
     }
 
 }
