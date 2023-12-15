@@ -1,5 +1,6 @@
 <?php
 
+// User class for user login
 class User
 {
 
@@ -13,7 +14,7 @@ class User
 
     }
 
-
+    // Check validity of entered username and password
     public function checkIfPwdIsCorrect($usr_name, $pwd)
     {
         $db_connect = new dbConnect();
