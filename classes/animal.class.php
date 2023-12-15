@@ -1,8 +1,8 @@
 <?php
 
 class Animal
-{
 
+{
     private $table = "animal";
     private $id;
     private $db_connect;
