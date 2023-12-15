@@ -21,6 +21,8 @@ $_SESSION['animal_specie_plural'] = "snakes";
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+    <script src="scripts/ajax_functions.js"></script>
+
     <link rel="stylesheet" href="style.css" type="text/css" />
     <link rel="icon" href="images/snake.ico" />
     <title>
