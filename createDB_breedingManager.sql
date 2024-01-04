@@ -31,13 +31,13 @@ INSERT INTO user (id_user, user_login, user_password)
 -- `animal` table : all the animals that are breeded or have been bred
 CREATE TABLE animal (
     id_animal INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_breed INT DEFAULT NULL,
-    animal_name VARCHAR(30) DEFAULT NULL,
-    animal_sex CHAR(1) DEFAULT NULL,
-    animal_height INT DEFAULT NULL,
-    animal_weight INT DEFAULT NULL,
-    animal_lifespan INT DEFAULT NULL,
-    birth_time TIMESTAMP DEFAULT 0,
+    id_breed INT NOT NULL,
+    animal_name VARCHAR(30) NOT NULL,
+    animal_sex CHAR(1) NOT NULL,
+    animal_height INT NOT NULL,
+    animal_weight INT NOT NULL,
+    animal_lifespan INT NOT NULL,
+    birth_time TIMESTAMP NOT NULL,
     death_time TIMESTAMP DEFAULT 0,
     id_father INT DEFAULT 0,
     id_mother INT DEFAULT 0
