@@ -55,71 +55,76 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
         $values = array();
 
         // Iterating over $_POST form values with keys as input field names
-        try {
-            foreach ($_POST as $key => $value) {
-
-                if ($key != 'form_submit') {
-                    // If the the field in the array has datetime-local value
-                    if (in_array($key, ['birth_time', 'death_time'])) {
-                        // If it is empty, update value to datetime compatible output
-                        if ($value == "") {
-                            $value = "0000-00-00 00:00:00";
-                        } else {
-                            // Trim the "T" from the datetime-local input value
-                            $value = str_replace('T', " ", $value);
-                        }
-                    }
-
-                    // Trim value from spaces
-                    $value = trim($value);
-
-                    // Add column names and values $columns and $values for createCustomAnimal()
-                    array_push($columns, $key);
-                    array_push($values, $value);
-
-                    // Editing existing animal
-                    if ($choice == 'edit') {
-                        $animal->update($key, $value);
-
+        foreach ($_POST as $key => $value) {
+            if ($key != 'form_submit') {
+                // If the the field in the array has datetime-local value
+                if (in_array($key, ['death_time'])) {
+                    // If it is empty, update value to datetime compatible output
+                    if ($value == "") {
+                        $value = "0000-00-00 00:00:00";
+                    } else {
+                        // Trim the "T" from the datetime-local input value
+                        $value = str_replace('T', " ", $value);
                     }
                 }
+
+                // Trim value from spaces
+                $value = trim($value);
+
+                // Add column names and values $columns and $values for createCustomAnimal()
+                array_push($columns, $key);
+                array_push($values, $value);
             }
-
-            // If no error caught, display success message
-            $success_message = $update_success_message;
-            
-            // After displaying success_message, wait for 1 second and then redirect to animal_list
-            echo '<script type="text/javascript">
-            setTimeout(function () {
-                window.location.href = "index.php?page=animal_list";
-            }, 1000);
-            </script>';
-
-
-
-        } catch (PDOException $e) {
-            // echo $e->getMessage();
-            $error_message = $pdo_error_message;
         }
 
         // Creating new animal
         if ($choice == 'new') {
             try {
-            $new_id = $animal->createCustomAnimal($columns, $values);
-            $success_message = $update_success_message;
-                    } catch (PDOException $e) {
-            // echo $e->getMessage();
-            $error_message = $pdo_error_message;
-        }
-            $animal_values = $animal->getAnimalDetails($new_id);
+                $new_id = $animal->createCustomAnimal($columns, $values);
+                $animal_values = $animal->getAnimalDetails($new_id);
+                $success_message = $update_success_message;
+                unset($error_message);
 
-        } else {
-            // Retrieve the update values of the edited/created animal
-            $animal_values = $animal->getAnimalDetails();
-        }
-        // header("Location: index.php?page=animal_list");
+                // After displaying success_message, wait for 1 second and then redirect to animal_list
+                echo '<script type="text/javascript">
+                        setTimeout(function () {
+                            window.location.href = "index.php?page=animal_list";
+                        }, 1000);
+                        </script>';
+            } catch (PDOException $e) {
+                $error_message = $pdo_error_message;
+            }
 
+        } elseif ($choice == 'edit') {
+            try {
+                foreach ($columns as $index => $column) {
+                    $animal->update($column, $values[$index]);
+
+                    // Retrieve the update values of the edited/created animal
+                    $animal_values = $animal->getAnimalDetails();
+                }
+                $success_message = $update_success_message;
+                unset($error_message);
+
+                // After displaying success_message, wait for 1 second and then redirect to animal_list
+                echo '<script type="text/javascript">
+                        setTimeout(function () {
+                            window.location.href = "index.php?page=animal_list";
+                        }, 1000);
+                        </script>';
+            } catch (PDOException $e) {
+                $error_message = $pdo_error_message;
+            }
+
+            // header("Location: index.php?page=animal_list");
+
+        }
     }
+
+
+
+
+
 } else {
     header("Location: index.php?page=login");
 }
@@ -166,15 +171,12 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
                     <td>
                         <?php
                         foreach (['M', 'F'] as $sex) {
-                            echo '<input type="radio" class="form-check-input" id="' . $sex . '" name="animal_sex" value="' . $sex . '" ';
+                            echo '<input type="radio" class="form-check-input" id="' . $sex . '" name="animal_sex" ';
                             if ($sex == $animal_values['animal_sex']) {
                                 echo ' checked';
                             }
-<<<<<<<<< Temporary merge branch 1
-                            echo 'value="'.$sex.'">'.$sex.'</option>';
-=========
-                            echo '>&nbsp;<label for="'.$sex.'">'.$sex.'</label></div>&nbsp;&nbsp;';
->>>>>>>>> Temporary merge branch 2
+                            echo ' value="' . $sex . '">';
+                            echo '&nbsp;<label for="' . $sex . '">' . $sex . '</label>&nbsp;&nbsp;';
                         }
                         ?>
                     </td>
@@ -264,8 +266,12 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($choice)) {
 
         </table>
         </p>
-        <?php if(isset($error_message)) { echo $error_message; }?>
-        <?php if(isset($success_message)) { echo $success_message; }?>
+        <?php if (isset($error_message)) {
+            echo $error_message;
+        } ?>
+        <?php if (isset($success_message)) {
+            echo $success_message;
+        } ?>
         <input class="button redbutton" type="button" onclick="window.location.href='index.php?page=animal_list'"
             value="Cancel">
         <input class="button" id="confirm_button" type="submit" name="form_submit" value="Submit">
