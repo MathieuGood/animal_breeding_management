@@ -95,11 +95,12 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
 
 
             <?php
-
+            $count = 0;
             foreach ($grandparents as $grandparent) {
-
+                
                 if ($grandparent) {
-                    $animal->buildAnimalCard($grandparent);
+                    $animal->buildAnimalCard($grandparent, '', $count);
+                    $count++;
                 }
             }
 
@@ -112,7 +113,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
         <!--  -->
         <!-- Parents -->
         <!--  -->
-        <div id="parents" class="row d-flex justify-content-center flex-row">
+        <div id="parents" class="row d-flex justify-content-evenly flex-row">
             <?php
             foreach ($parents as $parent) {
 
@@ -127,7 +128,7 @@ if (isset($_SESSION['open']) && $_SESSION['open'] > 0 && isset($id)) {
 
 
         <!--  -->
-        <!-- Parents -->
+        <!-- Current animal -->
         <!--  -->
 
         <div id="current_animal" class="row d-flex justify-content-center flex-row">

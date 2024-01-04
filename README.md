@@ -9,6 +9,12 @@ This is a web application to manage an Animal Breeding. It helps you keep you tr
 
 Features include :
 
+- Listing live and dead animals
+- Adding new animals
+- Updating animal data
+  - Manually entering their characteristics
+  - Randomly generating their characteristics
+
 - Data for each animal
 - Name
 - Breed

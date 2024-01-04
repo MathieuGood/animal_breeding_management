@@ -351,7 +351,7 @@ class Animal
 
     // Build one html animal presentation card for genealogy display
     // Input value $animal_data is the return of getAnimalDetails, getParentDetails, getChildrenDetails
-    public function buildAnimalCard($animal_data, $image = '')
+    public function buildAnimalCard($animal_data, $image = '', $count = false)
     {
         // Check if there is data
         if ($animal_data) {
@@ -395,8 +395,11 @@ class Animal
                 $add_death_time = '';
             }
 
-
-            echo '
+        $html = '';
+        if (!empty($family_side)) {
+            $html .= $count % 2 ? '' : '<div class="d-flex col-auto">';
+        }
+        $html .= '
         <div class="animal-card card text-center mb-3 mx-2">
         <div class="card-body p-0 pt-1">
 
@@ -429,6 +432,10 @@ class Animal
         </div>
     </div>
         ';
+        if (!empty($family_side)) {
+            $html .= $count % 2 ? '</div>' : '';
+        }
+        echo $html;
 
         }
 
